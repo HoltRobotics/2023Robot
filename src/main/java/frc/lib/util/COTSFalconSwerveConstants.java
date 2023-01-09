@@ -4,30 +4,30 @@ import edu.wpi.first.math.util.Units;
 
 /* Contains values and required settings for common COTS swerve modules. */
 public class COTSFalconSwerveConstants {
-    public final double wheelDiameter;
-    public final double wheelCircumference;
-    public final double angleGearRatio;
-    public final double driveGearRatio;
-    public final double angleKP;
-    public final double angleKI;
-    public final double angleKD;
-    public final double angleKF;
-    public final boolean driveMotorInvert;
-    public final boolean angleMotorInvert;
-    public final boolean canCoderInvert;
+    public final double m_wheelDiameter;
+    public final double m_wheelCircumference;
+    public final double m_angleGearRatio;
+    public final double m_driveGearRatio;
+    public final double m_angleKP;
+    public final double m_angleKI;
+    public final double m_angleKD;
+    public final double m_angleKF;
+    public final boolean m_driveMotorInvert;
+    public final boolean m_angleMotorInvert;
+    public final boolean m_canCoderInvert;
 
     public COTSFalconSwerveConstants(double wheelDiameter, double angleGearRatio, double driveGearRatio, double angleKP, double angleKI, double angleKD, double angleKF, boolean driveMotorInvert, boolean angleMotorInvert, boolean canCoderInvert){
-        this.wheelDiameter = wheelDiameter;
-        this.wheelCircumference = wheelDiameter * Math.PI;
-        this.angleGearRatio = angleGearRatio;
-        this.driveGearRatio = driveGearRatio;
-        this.angleKP = angleKP;
-        this.angleKI = angleKI;
-        this.angleKD = angleKD;
-        this.angleKF = angleKF;
-        this.driveMotorInvert = driveMotorInvert;
-        this.angleMotorInvert = angleMotorInvert;
-        this.canCoderInvert = canCoderInvert;
+        m_wheelDiameter = wheelDiameter;
+        m_wheelCircumference = wheelDiameter * Math.PI;
+        m_angleGearRatio = angleGearRatio;
+        m_driveGearRatio = driveGearRatio;
+        m_angleKP = angleKP;
+        m_angleKI = angleKI;
+        m_angleKD = angleKD;
+        m_angleKF = angleKF;
+        m_driveMotorInvert = driveMotorInvert;
+        m_angleMotorInvert = angleMotorInvert;
+        m_canCoderInvert = canCoderInvert;
     }
     
     /** Swerve Drive Specialties - MK3 Module*/

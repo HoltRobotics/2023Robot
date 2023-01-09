@@ -27,9 +27,9 @@ public class RobotContainer {
     public RobotContainer() {
         m_swerve.setDefaultCommand(
             new TeleopSwerve(
-                () -> -m_driver.getLeftY(),    // Translation
-                () -> -m_driver.getLeftX(),    // Strafe
-                () -> -m_driver.getRightX(),   // Rotation
+                () -> -m_driver.getLeftY(),     // Translation
+                () -> -m_driver.getLeftX(),     // Strafe
+                () -> -m_driver.getRightX(),    // Rotation
                 () -> m_driver.getLeftBumper(), // Field Centric
                 m_swerve
             )

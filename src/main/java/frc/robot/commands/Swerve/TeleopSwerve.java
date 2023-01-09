@@ -18,13 +18,13 @@ public class TeleopSwerve extends CommandBase {
     private BooleanSupplier m_fieldCentric;
     private Swerve m_swerve;
 
-    public TeleopSwerve(DoubleSupplier translation, DoubleSupplier strafe, DoubleSupplier rotation, BooleanSupplier fieldCentric, Swerve s_Swerve) {
+    public TeleopSwerve(DoubleSupplier translation, DoubleSupplier strafe, DoubleSupplier rotation, BooleanSupplier fieldCentric, Swerve swerve) {
         m_translation = translation;
         m_strafe = strafe;
         m_rotation = rotation;
         m_fieldCentric = fieldCentric;
-        m_swerve = s_Swerve;
-        addRequirements(s_Swerve);
+        m_swerve = swerve;
+        addRequirements(swerve);
     }
 
     @Override
