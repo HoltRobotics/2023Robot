@@ -32,13 +32,19 @@ public class SwerveModule {
         /* Angle Encoder Config */
         m_angleEncoder = new CANCoder(moduleConstants.m_cancoderID);
         configAngleEncoder();
+        configAngleEncoder();
+        configAngleEncoder();
 
         /* Angle Motor Config */
         m_angleMotor = new TalonFX(moduleConstants.m_angleMotorID);
         configAngleMotor();
+        configAngleMotor();
+        configAngleMotor();
 
         /* Drive Motor Config */
         m_driveMotor = new TalonFX(moduleConstants.m_driveMotorID);
+        configDriveMotor();
+        configDriveMotor();
         configDriveMotor();
 
         m_lastAngle = getState().angle;
