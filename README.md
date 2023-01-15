@@ -1,6 +1,3 @@
-# WARNING: As of 1/8/23 This code is untested after being converted from 22 to 23 WPILib.
-**Once ths code is tested on an actual robot sometime in the next week or so, this warning shall be removed.**
-
 # BaseFalconSwerve </br>
 
 **Basic Swerve Code for a Swerve Module using Falcon Motors, a CTRE CANCoder, and a CTRE Pigeon Gyro** </br>
@@ -56,9 +53,6 @@ These instructions are mostly followable from Step
 <br>After completeing characterization and inserting the KS, KV, and KA values into the code, tune the drive motor kP until it doesn't overshoot and doesnt oscilate around a target velocity.
 <br>Leave ```driveKI```, ```driveKD```, and ```driveKF``` at 0.0.
 
-
-
-
 **Controller Mappings**
 ----
 This code is natively setup to use a xbox controller to control the swerve drive. </br>
@@ -66,3 +60,11 @@ This code is natively setup to use a xbox controller to control the swerve drive
 * Right Stick: Rotation Control </br>
 * Y button: Zero Gyro (useful if the gyro drifts mid match, just rotate the robot forwards, and press Y to rezero)
 * Left Bumper: Switches To Robot Centric Control while held
+
+# Checklist
+- Wire chassis
+- Enter Wheel base and Track width
+- Update firmware and program CAN IDs
+- Check gyro rotation
+- Get wheel offsets
+- Characterize robot
