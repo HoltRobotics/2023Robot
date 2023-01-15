@@ -100,6 +100,12 @@ public class Swerve extends SubsystemBase {
         m_gyro.setYaw(0);
     }
 
+    public void resetEncoders() {
+        for(SwerveModule mod : m_swerveMods) {
+            mod.resetToAbsolute();
+        }
+    }
+
     public Rotation2d getYaw() {
         return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - m_gyro.getYaw()) : Rotation2d.fromDegrees(m_gyro.getYaw());
     }
