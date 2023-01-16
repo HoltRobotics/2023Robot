@@ -38,7 +38,7 @@ public class Swerve extends SubsystemBase {
         m_swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
 
         for(SwerveModule mod : m_swerveMods) {
-            DriverStation.reportError("CANCoder on Module " + mod.m_moduleNumber + " took " + mod.m_CANcoderInitTime + " ms to be ready.", false);
+            DriverStation.reportError("CANCoder on Module " + mod.m_moduleNumber + " took " + mod.m_CANcoderInitTime + " ms to be ready.", false);  //TODO: See if encoders work. Delete if they do.
         }
     }
 
@@ -116,10 +116,10 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
-        if (DriverStation.isDisabled()) {
-            resetEncoders();
-        }
-        
+        // if (DriverStation.isDisabled()) { //TODO: See if encoders work. Delete if they do.
+        //     resetEncoders();
+        // }
+
         m_swerveOdometry.update(getYaw(), getModulePositions());  
 
         for(SwerveModule mod : m_swerveMods){

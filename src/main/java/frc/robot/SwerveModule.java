@@ -35,20 +35,20 @@ public class SwerveModule {
         /* Angle Encoder Config */
         m_angleEncoder = new CANCoder(moduleConstants.m_cancoderID);
         configAngleEncoder();
-        configAngleEncoder();
-        configAngleEncoder();
+        // configAngleEncoder(); //TODO: See if encoders work. Delete if they do.
+        // configAngleEncoder();
 
         /* Angle Motor Config */
         m_angleMotor = new TalonFX(moduleConstants.m_angleMotorID);
         configAngleMotor();
-        configAngleMotor();
-        configAngleMotor();
+        // configAngleMotor(); //TODO: See if encoders work. Delete if they do.
+        // configAngleMotor();
 
         /* Drive Motor Config */
         m_driveMotor = new TalonFX(moduleConstants.m_driveMotorID);
         configDriveMotor();
-        configDriveMotor();
-        configDriveMotor();
+        // configDriveMotor(); //TODO: See if encoders work. Delete if they do.
+        // configDriveMotor();
 
         m_lastAngle = getState().angle;
     }
@@ -107,6 +107,7 @@ public class SwerveModule {
 
     public void resetToAbsolute(){
         waitForCanCoder();
+
         double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - m_angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
         m_angleMotor.setSelectedSensorPosition(absolutePosition);
     }
@@ -121,6 +122,7 @@ public class SwerveModule {
         m_angleMotor.configAllSettings(Robot.m_ctreConfigs.m_swerveAngleFXConfig);
         m_angleMotor.setInverted(Constants.Swerve.angleMotorInvert);
         m_angleMotor.setNeutralMode(Constants.Swerve.angleNeutralMode);
+        Timer.delay(0.05);
         resetToAbsolute();
     }
 
