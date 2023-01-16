@@ -116,6 +116,10 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
+        if (DriverStation.isDisabled()) {
+            resetEncoders();
+        }
+        
         m_swerveOdometry.update(getYaw(), getModulePositions());  
 
         for(SwerveModule mod : m_swerveMods){
