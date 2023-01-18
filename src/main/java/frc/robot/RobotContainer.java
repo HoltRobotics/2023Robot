@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.autos.*;
+import frc.robot.commands.Swerve.LockWheels;
 import frc.robot.commands.Swerve.ResetEncoders;
 import frc.robot.commands.Swerve.TeleopSwerve;
 import frc.robot.commands.Swerve.ZeroGyro;
@@ -50,6 +51,7 @@ public class RobotContainer {
         /* Driver Buttons */
         new JoystickButton(m_driver, XboxController.Button.kY.value).onTrue(new ZeroGyro(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ResetEncoders(m_swerve));
+        new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).onTrue(new LockWheels(m_swerve));
     }
 
     /**
