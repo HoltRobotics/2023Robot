@@ -15,14 +15,14 @@ public class TeleopSwerve extends CommandBase {
     private DoubleSupplier m_translation;
     private DoubleSupplier m_strafe;
     private DoubleSupplier m_rotation;
-    private BooleanSupplier m_fieldCentric;
+    private BooleanSupplier m_robotCentric;
     private Swerve m_swerve;
 
-    public TeleopSwerve(DoubleSupplier translation, DoubleSupplier strafe, DoubleSupplier rotation, BooleanSupplier fieldCentric, Swerve swerve) {
+    public TeleopSwerve(DoubleSupplier translation, DoubleSupplier strafe, DoubleSupplier rotation, BooleanSupplier robotCentric, Swerve swerve) {
         m_translation = translation;
         m_strafe = strafe;
         m_rotation = rotation;
-        m_fieldCentric = fieldCentric;
+        m_robotCentric = robotCentric;
         m_swerve = swerve;
         addRequirements(swerve);
     }
@@ -38,7 +38,7 @@ public class TeleopSwerve extends CommandBase {
         m_swerve.drive(
             new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
             rotationVal * Constants.Swerve.maxAngularVelocity, 
-            m_fieldCentric.getAsBoolean(), 
+            !m_robotCentric.getAsBoolean(), 
             true
         );
     }

@@ -60,7 +60,7 @@ This code is natively setup to use a xbox controller to control the swerve drive
 * Right Stick: Rotation Control </br>
 * Y button: Zero Gyro (useful if the gyro drifts mid match, just rotate the robot forwards, and press Y to rezero)
 * X button: Resets steering encoders to CANCoders (useful if the angle of wheel drifts away from the rest)
-* Left Bumper: Switches To Field Centric Control while held
+* Left Bumper: Switches To Robot Centric Control while held
 * Right Bumper: Turns the wheels to 45 degrees so the robot won't slide.
 
 # Checklist
