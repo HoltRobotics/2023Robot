@@ -1,5 +1,9 @@
 package frc.robot;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -8,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.*;
 import frc.robot.commands.Swerve.LockWheels;
 import frc.robot.commands.Swerve.ResetEncoders;
+import frc.robot.commands.Swerve.SlowDrive;
 import frc.robot.commands.Swerve.TeleopSwerve;
 import frc.robot.commands.Swerve.ZeroGyro;
 import frc.robot.subsystems.*;
@@ -24,6 +29,8 @@ public class RobotContainer {
 
     /* Controllers */
     private final XboxController m_driver = new XboxController(0);
+
+    private final PathPlannerTrajectory m_path = PathPlanner.loadPath("New Path", new PathConstraints(1, 1));
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -51,7 +58,14 @@ public class RobotContainer {
         /* Driver Buttons */
         new JoystickButton(m_driver, XboxController.Button.kY.value).onTrue(new ZeroGyro(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ResetEncoders(m_swerve));
-        // new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).onTrue(new LockWheels(m_swerve));
+        new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new LockWheels(m_swerve));
+        new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new SlowDrive(
+            () -> -m_driver.getLeftY(),     // Translation
+            () -> -m_driver.getLeftX(),     // Strafe
+            () -> -m_driver.getRightX(),    // Rotation
+            () -> m_driver.getLeftBumper(), // Field Centric
+            m_swerve)
+        );
     }
 
     /**
@@ -61,6 +75,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new exampleAuto(m_swerve);
+        return new TestPath(m_path, m_swerve);
+        // return new exampleAuto(m_swerve);
     }
 }

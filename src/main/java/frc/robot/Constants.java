@@ -88,6 +88,10 @@ public final class Constants {
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
         public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
+        /*
+         * When calibrating CANCoders have the bevel gear point left
+         */
+        
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
         public static final class Mod0 {
@@ -114,7 +118,7 @@ public final class Constants {
             public static final int driveMotorID = 5;
             public static final int angleMotorID = 6;
             public static final int canCoderID = 3;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(97.73);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(98.34);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -124,7 +128,7 @@ public final class Constants {
             public static final int driveMotorID = 7;
             public static final int angleMotorID = 8;
             public static final int canCoderID = 4;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(189.66);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(188.26);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }

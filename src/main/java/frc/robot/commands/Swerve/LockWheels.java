@@ -13,16 +13,16 @@ public class LockWheels extends CommandBase {
   private final Swerve m_swerve;
   private final SwerveModuleState[] m_states = {
     new SwerveModuleState(0, Rotation2d.fromDegrees(45)),
-    new SwerveModuleState(0, Rotation2d.fromDegrees(135)),
-    new SwerveModuleState(0, Rotation2d.fromDegrees(225)),
-    new SwerveModuleState(0, Rotation2d.fromDegrees(315))
+    new SwerveModuleState(0, Rotation2d.fromDegrees(45)),
+    new SwerveModuleState(0, Rotation2d.fromDegrees(45)),
+    new SwerveModuleState(0, Rotation2d.fromDegrees(45))
   };
 
   /** Creates a new LockWheels. */
   public LockWheels(Swerve swerve) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_swerve = swerve;
-    addRequirements(m_swerve);
+    // addRequirements(m_swerve);
   }
 
   // Called when the command is initially scheduled.
