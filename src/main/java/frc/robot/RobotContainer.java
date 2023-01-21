@@ -51,7 +51,7 @@ public class RobotContainer {
         /* Driver Buttons */
         new JoystickButton(m_driver, XboxController.Button.kY.value).onTrue(new ZeroGyro(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ResetEncoders(m_swerve));
-        new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).onTrue(new LockWheels(m_swerve));
+        // new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).onTrue(new LockWheels(m_swerve));
     }
 
     /**
