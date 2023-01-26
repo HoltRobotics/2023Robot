@@ -13,6 +13,28 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants {
     public static final double stickDeadband = 0.1;
 
+    public static final class Elevator {
+        public static final int elevatorMotorID = 9;
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kP = 0;
+        public static final double kI = 0;
+        public static final double kD = 0;
+    }
+
+    public static final class Arm {
+        public static final int armMotorID = 10;
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kP = 0;
+        public static final double kI = 0;
+        public static final double kD = 0;
+    }
+
+    public static final class Claw {
+        public static final int solonoidID = 1;
+    }
+
     public static final class Swerve {
         public static final int pigeonID = 1;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
