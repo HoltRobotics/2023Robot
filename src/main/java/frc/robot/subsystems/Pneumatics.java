@@ -4,11 +4,17 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Claw extends SubsystemBase {
+public class Pneumatics extends SubsystemBase {
+  private Compressor m_compressor = new Compressor(1, PneumaticsModuleType.CTREPCM);
+
   /** Creates a new Claw. */
-  public Claw() {}
+  public Pneumatics() {
+    m_compressor.enableDigital();
+  }
 
   @Override
   public void periodic() {
