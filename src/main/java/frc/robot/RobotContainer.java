@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.autos.*;
 import frc.robot.commands.Swerve.LockWheels;
+import frc.robot.commands.Swerve.OrbitPiece;
 import frc.robot.commands.Swerve.ResetEncoders;
 import frc.robot.commands.Swerve.SlowDrive;
 import frc.robot.commands.Swerve.TeleopSwerve;
@@ -26,6 +27,8 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Subsystems */
     private final Swerve m_swerve = new Swerve();
+    private final Arm m_arm = new Arm();
+    private final Elevator m_lift = new Elevator();
 
     /* Controllers */
     private final XboxController m_driver = new XboxController(0);
@@ -58,6 +61,7 @@ public class RobotContainer {
         /* Driver Buttons */
         new JoystickButton(m_driver, XboxController.Button.kY.value).onTrue(new ZeroGyro(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ResetEncoders(m_swerve));
+        new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_lift, m_arm));
         new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new LockWheels(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new SlowDrive(
             () -> -m_driver.getLeftY(),     // Translation

@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry m_swerveOdometry;
+    public SwerveDriveKinematics m_kinematics;
     public SwerveModule[] m_swerveMods;
     public Pigeon2 m_gyro;
 
@@ -45,11 +46,12 @@ public class Swerve extends SubsystemBase {
         resetEncoders();
 
         m_swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+        m_kinematics = Constants.Swerve.swerveKinematics;
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         SwerveModuleState[] swerveModuleStates =
-            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+        m_kinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
                                     translation.getX(), 
                                     translation.getY(), 
@@ -122,6 +124,14 @@ public class Swerve extends SubsystemBase {
         return positions;
     }
 
+    public void setKinematic(SwerveDriveKinematics kinematics) {
+        m_kinematics = kinematics;
+    }
+
+    public void resetKinematic() {
+        m_kinematics = Constants.Swerve.swerveKinematics;
+    }
+
     public void zeroGyro(){
         m_gyro.setYaw(0);
     }
@@ -145,6 +155,7 @@ public class Swerve extends SubsystemBase {
         m_swerveOdometry.update(getYaw(), getModulePositions());  
 
         for(SwerveModule mod : m_swerveMods){
+            // TODO: changes this to Shuffleboard
             SmartDashboard.putNumber("Mod " + mod.m_moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.m_moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.m_moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    

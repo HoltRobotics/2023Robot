@@ -26,6 +26,7 @@ public class Elevator extends PIDSubsystem {
   @Override
   public void useOutput(double output, double setpoint) {
     // Use the output here
+    m_liftmotor.setVoltage(output + m_feedforward.calculate(setpoint));
   }
 
   @Override

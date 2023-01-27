@@ -15,6 +15,7 @@ public final class Constants {
 
     public static final class Elevator {
         public static final int elevatorMotorID = 9;
+        //TODO: tune theses
         public static final double kS = 0;
         public static final double kV = 0;
         public static final double kP = 0;
@@ -24,6 +25,7 @@ public final class Constants {
 
     public static final class Arm {
         public static final int armMotorID = 10;
+        //TODO: tune theses
         public static final double kS = 0;
         public static final double kV = 0;
         public static final double kP = 0;
@@ -31,8 +33,11 @@ public final class Constants {
         public static final double kD = 0;
     }
 
-    public static final class Claw {
-        public static final int solonoidID = 1;
+    public static final class Pneumatics {
+        public static final int kClawForward = 1;
+        public static final int kClawReverse = 2;
+        public static final int kClawTiltForward = 1;
+        public static final int kClawTiltReverse = 2;
     }
 
     public static final class Swerve {
