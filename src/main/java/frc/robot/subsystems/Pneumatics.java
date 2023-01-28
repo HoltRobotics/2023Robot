@@ -24,59 +24,38 @@ public class Pneumatics extends SubsystemBase {
   private final DoubleSolenoid m_clawTiltSol = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Pneumatics.kClawTiltForward, Constants.Pneumatics.kClawTiltReverse);
   private final DoubleSolenoid m_buddySol = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Pneumatics.kBuddyForward, Constants.Pneumatics.kBuddyReverse);
 
-  private boolean m_clawState;
-  private boolean m_tiltState;
-  private boolean m_buddyState;
+  private Value m_clawState;
+  private Value m_tiltState;
+  private Value m_buddyState;
 
   /** Creates a new Claw. */
   public Pneumatics() {
     m_compressor.enableDigital();
     m_isCompressorOn = m_tab.add("Compressor", false).getEntry();
-    m_clawState = false;
-    m_tiltState = false;
-    m_buddyState = false;
   }
 
-  public void openClaw() {
-    m_clawSol.set(Value.kForward);
-    m_clawState = true;
-  }
-
-  public void closeClaw() {
-    m_clawSol.set(Value.kReverse);
-    m_clawState = false;
-  }
-
-  public void clawDown() {
-    m_clawTiltSol.set(Value.kForward);
-    m_tiltState = true;
-  }
-
-  public void clawUp() {
-    m_clawTiltSol.set(Value.kReverse);
-    m_tiltState = false;
-  }
-
-  public void buddyDown() {
-    m_buddySol.set(Value.kForward);
-    m_buddyState = true;
-  }
-
-  public void buddyUp() {
-    m_buddySol.set(Value.kReverse);
-    m_buddyState = false;
-  }
-
-  public boolean getClawState() {
+  public Value getClawState() {
     return m_clawState;
   }
 
-  public boolean getTiltState() {
+  public Value getTiltState() {
     return m_tiltState;
   }
 
-  public boolean getBuddyState() {
+  public Value getBuddyState() {
     return m_buddyState;
+  }
+
+  public void setClawState(Value value) {
+    m_clawSol.set(value);
+  }
+
+  public void setTiltState(Value value) {
+    m_clawTiltSol.set(value);
+  }
+
+  public void setBuddyState(Value value) {
+    m_buddySol.set(value);
   }
 
   @Override

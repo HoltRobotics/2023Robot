@@ -33,6 +33,10 @@ public class Elevator extends PIDSubsystem {
     m_liftmotor.setVoltage(output + m_feedforward.calculate(setpoint));
   }
 
+  public void setHeight(double height) {
+    setSetpoint(height);
+  }
+
   public double getElevatorHeight() {
     return m_encoder.getDistance();
   }

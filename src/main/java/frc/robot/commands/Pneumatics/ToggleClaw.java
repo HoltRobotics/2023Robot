@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Pneumatics;
 
-public class CloseClaw extends InstantCommand {
+public class ToggleClaw extends InstantCommand {
   private final Pneumatics m_air;
 
-  public CloseClaw(Pneumatics air) {
+  public ToggleClaw(Pneumatics air) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_air = air;
   }
@@ -19,6 +19,10 @@ public class CloseClaw extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_air.setBuddyState(Value.kReverse);
+    if (m_air.getClawState() == Value.kForward) {
+      m_air.setClawState(Value.kReverse);
+    } else {
+      m_air.setClawState(Value.kForward);
+    }
   }
 }

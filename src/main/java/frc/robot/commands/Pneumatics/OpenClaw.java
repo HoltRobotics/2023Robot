@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Pneumatics;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Pneumatics;
 
@@ -18,6 +19,6 @@ public class OpenClaw extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_air.openClaw();
+    m_air.setBuddyState(Value.kForward);
   }
 }

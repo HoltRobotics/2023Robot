@@ -18,6 +18,8 @@ import frc.robot.commands.Pneumatics.ClawDown;
 import frc.robot.commands.Pneumatics.ClawUp;
 import frc.robot.commands.Pneumatics.CloseClaw;
 import frc.robot.commands.Pneumatics.OpenClaw;
+import frc.robot.commands.Pneumatics.ToggleClaw;
+import frc.robot.commands.Pneumatics.ToggleTilt;
 import frc.robot.commands.Swerve.LockWheels;
 import frc.robot.commands.Swerve.OrbitPiece;
 import frc.robot.commands.Swerve.ResetEncoders;
@@ -35,8 +37,8 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Subsystems */
     private final Swerve m_swerve = new Swerve();
-    // private final Arm m_arm = new Arm();
-    // private final Elevator m_lift = new Elevator();
+    private final Arm m_arm = new Arm();
+    private final Elevator m_lift = new Elevator();
     private final Pneumatics m_air = new Pneumatics();
 
     /* Controllers */
@@ -89,11 +91,11 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new SlowDrive(m_swerve));
-        // new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_lift, m_arm));
-        new JoystickButton(m_driver, XboxController.Button.kY.value).onTrue(new ZeroGyro(m_swerve));
-        // new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ResetEncoders(m_swerve));
-        new JoystickButton(m_driver, XboxController.Button.kB.value).toggleOnTrue(new OpenClaw(m_air)).toggleOnFalse(new CloseClaw(m_air));
-        new JoystickButton(m_driver, XboxController.Button.kX.value).toggleOnTrue(new ClawUp(m_air)).toggleOnFalse(new ClawDown(m_air));
+        new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_lift, m_arm));
+        new JoystickButton(m_driver, XboxController.Button.kY.value).onTrue(new ToggleClaw(m_air));
+        new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ToggleTilt(m_air));
+        new JoystickButton(m_driver, XboxController.Button.kStart.value).onTrue(new ZeroGyro(m_swerve));
+        new JoystickButton(m_driver, XboxController.Button.kBack.value).onTrue(new ResetEncoders(m_swerve));
         // new JoystickButton(m_driver, XboxController.Button.kStart.value).whileTrue(new LockWheels(m_swerve));
     }
 

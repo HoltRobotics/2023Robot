@@ -31,8 +31,8 @@ public class Arm extends PIDSubsystem {
     m_armMotor.setVoltage(output + m_feedforward.calculate(setpoint));
   }
 
-  public void setHeight(double height) {
-    setSetpoint(height);
+  public void setAngle(double angle) {
+    setSetpoint(angle);
   }
 
   @Override
