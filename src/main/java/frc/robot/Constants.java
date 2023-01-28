@@ -12,9 +12,13 @@ import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
+    public static final int kDriverPort = 0;
+    public static final int kOperatorPort = 1;
 
     public static final class Elevator {
         public static final int elevatorMotorID = 9;
+        public static final int encoderPort = 0;
+        public static final double encoderDistancePerRev = 1; //TODO: get the right value
         //TODO: tune theses
         public static final double kS = 0;
         public static final double kV = 0;
@@ -34,10 +38,10 @@ public final class Constants {
     }
 
     public static final class Pneumatics {
-        public static final int kClawForward = 1;
-        public static final int kClawReverse = 2;
-        public static final int kClawTiltForward = 3;
-        public static final int kClawTiltReverse = 4;
+        public static final int kClawForward = 0;
+        public static final int kClawReverse = 1;
+        public static final int kClawTiltForward = 2;
+        public static final int kClawTiltReverse = 3;
         public static final int kBuddyForward = 5;
         public static final int kBuddyReverse = 6;
     }
