@@ -1,50 +1,40 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.commands.Swerve;
 
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Swerve;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
+public class SlowDrive extends CommandBase {
+  private final Swerve m_swerve;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+  /** Creates a new SlowDrive2. */
+  public SlowDrive(Swerve swerve) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    m_swerve = swerve;
+  }
 
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    m_swerve.setSpeedReducer(0.5);
+  }
 
-public class SlowDrive extends CommandBase {    
-    private DoubleSupplier m_translation;
-    private DoubleSupplier m_strafe;
-    private DoubleSupplier m_rotation;
-    private BooleanSupplier m_robotCentric;
-    private Swerve m_swerve;
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {}
 
-    public SlowDrive(DoubleSupplier translation, DoubleSupplier strafe, DoubleSupplier rotation, BooleanSupplier robotCentric, Swerve swerve) {
-        m_translation = translation;
-        m_strafe = strafe;
-        m_rotation = rotation;
-        m_robotCentric = robotCentric;
-        m_swerve = swerve;
-        addRequirements(swerve);
-    }
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    m_swerve.setSpeedReducer(1);
+  }
 
-    @Override
-    public void execute() {
-        /* Get Values, Deadband*/
-        double translationVal = MathUtil.applyDeadband(0.5 * m_translation.getAsDouble(), Constants.stickDeadband);
-        double strafeVal = MathUtil.applyDeadband(0.5 * m_strafe.getAsDouble(), Constants.stickDeadband);
-        double rotationVal = MathUtil.applyDeadband(0.5 * m_rotation.getAsDouble(), Constants.stickDeadband);
-
-        /* Drive */
-        m_swerve.drive(
-            new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
-            rotationVal * Constants.Swerve.maxAngularVelocity, 
-            !m_robotCentric.getAsBoolean(), 
-            true
-        );
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        m_swerve.stopDrive();
-    }
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
 }

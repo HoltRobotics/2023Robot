@@ -18,7 +18,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -29,6 +28,7 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveKinematics m_kinematics;
     public SwerveModule[] m_swerveMods;
     public Pigeon2 m_gyro;
+    public double m_slowDrive;
 
     public Swerve() {
         m_gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -53,14 +53,14 @@ public class Swerve extends SubsystemBase {
         SwerveModuleState[] swerveModuleStates =
         m_kinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
-                                    rotation, 
+                                    translation.getX() * m_slowDrive, 
+                                    translation.getY() * m_slowDrive, 
+                                    rotation * m_slowDrive, 
                                     getYaw()
                                 )
                                 : new ChassisSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
+                                    translation.getX() * m_slowDrive, 
+                                    translation.getY() * m_slowDrive, 
                                     rotation)
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
@@ -150,15 +150,18 @@ public class Swerve extends SubsystemBase {
         drive(new Translation2d(), 0, false, false);
     }
 
+    public void setSpeedReducer(double reduce) {
+        m_slowDrive = reduce;
+    }
+
     @Override
     public void periodic(){
         m_swerveOdometry.update(getYaw(), getModulePositions());  
 
-        for(SwerveModule mod : m_swerveMods){
-            // TODO: changes this to Shuffleboard
-            SmartDashboard.putNumber("Mod " + mod.m_moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.m_moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.m_moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
-        }
+        // for(SwerveModule mod : m_swerveMods){
+        //     SmartDashboard.putNumber("Mod " + mod.m_moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+        //     SmartDashboard.putNumber("Mod " + mod.m_moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
+        //     SmartDashboard.putNumber("Mod " + mod.m_moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+        // }
     }
 }

@@ -36,8 +36,10 @@ public final class Constants {
     public static final class Pneumatics {
         public static final int kClawForward = 1;
         public static final int kClawReverse = 2;
-        public static final int kClawTiltForward = 1;
-        public static final int kClawTiltReverse = 2;
+        public static final int kClawTiltForward = 3;
+        public static final int kClawTiltReverse = 4;
+        public static final int kBuddyForward = 5;
+        public static final int kBuddyReverse = 6;
     }
 
     public static final class Swerve {

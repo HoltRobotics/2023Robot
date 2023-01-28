@@ -28,6 +28,11 @@ public class Arm extends PIDSubsystem {
   @Override
   public void useOutput(double output, double setpoint) {
     // Use the output here
+    m_armMotor.setVoltage(output + m_feedforward.calculate(setpoint));
+  }
+
+  public void setHeight(double height) {
+    setSetpoint(height);
   }
 
   @Override
