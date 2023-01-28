@@ -39,7 +39,10 @@ public class OrbitPiece extends CommandBase {
       new Translation2d(-Units.inchesToMeters(24.5 / 2), 0),
       new Translation2d(Units.inchesToMeters(24.5 / 2), 0),
       new Translation2d(-Units.inchesToMeters(24.5 / 2), -Units.inchesToMeters(24.5)),
-      new Translation2d(Units.inchesToMeters(24.5 / 2), -Units.inchesToMeters(24.5)));
+      new Translation2d(Units.inchesToMeters(24.5 / 2), -Units.inchesToMeters(24.5))
+    );
+    m_lift.getElevatorHeight();
+    m_arm.getAngle();
     m_swerve.setKinematic(m_kinematics);
   }
 

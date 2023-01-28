@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -16,6 +17,8 @@ import frc.robot.Constants;
 public class Arm extends PIDSubsystem {
   private final CANSparkMax m_armMotor = new CANSparkMax(Constants.Arm.armMotorID, MotorType.kBrushless);
 
+  private final RelativeEncoder m_encoder;
+
   private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(Constants.Arm.kS, Constants.Arm.kV);
 
   /** Creates a new Arm. */
@@ -23,6 +26,8 @@ public class Arm extends PIDSubsystem {
     super(
         // The PIDController used by the subsystem
         new PIDController(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD));
+    m_encoder = m_armMotor.getAlternateEncoder(2048);
+    m_encoder.setPositionConversionFactor(360);
   }
 
   @Override
@@ -33,6 +38,10 @@ public class Arm extends PIDSubsystem {
 
   public void setAngle(double angle) {
     setSetpoint(angle);
+  }
+
+  public double getAngle() {
+    return m_encoder.getPosition();
   }
 
   @Override
