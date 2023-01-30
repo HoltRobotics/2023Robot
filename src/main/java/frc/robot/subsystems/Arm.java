@@ -28,6 +28,9 @@ public class Arm extends PIDSubsystem {
         new PIDController(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD));
     m_encoder = m_armMotor.getAlternateEncoder(2048);
     m_encoder.setPositionConversionFactor(360);
+    m_encoder.setPosition(0);
+    this.setAngle(0);
+    this.enable();
   }
 
   @Override
@@ -47,6 +50,6 @@ public class Arm extends PIDSubsystem {
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
-    return 0;
+    return getAngle();
   }
 }

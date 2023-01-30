@@ -17,8 +17,10 @@ public final class Constants {
 
     public static final class Elevator {
         public static final int elevatorMotorID = 9;
-        public static final int encoderPort = 0;
-        public static final double encoderDistancePerRev = 1; //TODO: get the right value
+        public static final int encoderPortA = 0;
+        public static final int encoderPortB = 0;
+
+        public static final double encoderDistancePerPulse = 1; //TODO: get the right value
         //TODO: tune theses
         public static final double kS = 0;
         public static final double kV = 0;

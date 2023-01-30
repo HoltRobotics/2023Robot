@@ -58,10 +58,14 @@ public class Pneumatics extends SubsystemBase {
     m_buddySol.set(value);
   }
 
+  public boolean isCompressorOn() {
+    return m_compressor.isEnabled();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     // m_tab.addBoolean("Is compressor on", () -> m_compressor.isEnabled());
-    m_isCompressorOn.setBoolean(m_compressor.isEnabled());
+    m_isCompressorOn.setBoolean(isCompressorOn());
   }
 }

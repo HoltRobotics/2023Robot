@@ -9,14 +9,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
 public class Elevator extends PIDSubsystem {
   private final CANSparkMax m_liftmotor = new CANSparkMax(Constants.Elevator.elevatorMotorID, MotorType.kBrushless);
 
-  private final DutyCycleEncoder m_encoder = new DutyCycleEncoder(Constants.Elevator.encoderPort);
+  private final Encoder m_encoder = new Encoder(Constants.Elevator.encoderPortA, Constants.Elevator.encoderPortB);
 
   private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(Constants.Elevator.kS, Constants.Elevator.kV);
   /** Creates a new Elevator. */
@@ -24,7 +24,9 @@ public class Elevator extends PIDSubsystem {
     super(
         // The PIDController used by the subsystem
         new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD));
-    m_encoder.setDistancePerRotation(Constants.Elevator.encoderDistancePerRev);
+    m_encoder.setDistancePerPulse(Constants.Elevator.encoderDistancePerPulse);
+    this.setHeight(0);
+    this.enable();
   }
 
   @Override
@@ -44,6 +46,6 @@ public class Elevator extends PIDSubsystem {
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
-    return 0;
+    return getElevatorHeight();
   }
 }
