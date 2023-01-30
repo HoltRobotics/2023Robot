@@ -124,7 +124,6 @@ public final class Constants {
         /*
          * When calibrating CANCoders have the bevel gear point left
          */
-        
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
         public static final class Mod0 {
@@ -165,9 +164,30 @@ public final class Constants {
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
+
+        //TODO: when the other modules are built lets set the CAN IDs ahead of time so when we swap them out its easier in code.
+        /* Extra Module - Module 4 */
+        public static final class Mod4 {
+            public static final int driveMotorID = 20;
+            public static final int angleMotorID = 21;
+            public static final int canCoderID = 5;
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+            public static final SwerveModuleConstants constants = 
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+        }
+
+        /* Extra Extra Module - Module 5 */
+        public static final class Mod5 {
+            public static final int driveMotorID = 22;
+            public static final int angleMotorID = 23;
+            public static final int canCoderID = 6;
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+            public static final SwerveModuleConstants constants = 
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+        }
     }
 
-    public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
+    public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot  TBH not sure we need theses now
         public static final double kMaxSpeedMetersPerSecond = 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
