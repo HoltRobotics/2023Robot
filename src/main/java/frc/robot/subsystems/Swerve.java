@@ -18,6 +18,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -29,11 +32,15 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] m_swerveMods;
     public Pigeon2 m_gyro;
     public double m_slowDrive;
+    
+    private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
 
     public Swerve() {
         m_gyro = new Pigeon2(Constants.Swerve.pigeonID);
         m_gyro.configFactoryDefault();
         zeroGyro();
+
+        m_tab.add("Gyro", m_gyro).withWidget(BuiltInWidgets.kGyro).withPosition(5, 1).withSize(2, 2).getEntry();
 
         m_swerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),

@@ -10,6 +10,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
 import frc.robot.Constants;
@@ -18,6 +22,9 @@ public class Arm extends PIDSubsystem {
   private final CANSparkMax m_armMotor = new CANSparkMax(Constants.Arm.armMotorID, MotorType.kBrushless);
 
   private final RelativeEncoder m_encoder;
+
+  private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
+  private final GenericEntry m_angle;
 
   private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(Constants.Arm.kS, Constants.Arm.kV);
 
@@ -29,6 +36,7 @@ public class Arm extends PIDSubsystem {
     m_encoder = m_armMotor.getAlternateEncoder(2048);
     m_encoder.setPositionConversionFactor(360);
     m_encoder.setPosition(0);
+    m_angle = m_tab.add("Arm Angle", getAngle()).withWidget(BuiltInWidgets.kDial).withPosition(3, 1).withSize(1, 1).getEntry();
     this.setAngle(0);
     this.enable();
   }
@@ -51,5 +59,11 @@ public class Arm extends PIDSubsystem {
   public double getMeasurement() {
     // Return the process variable measurement here
     return getAngle();
+  }
+
+  @Override
+  public void periodic() {
+    super.periodic();
+    m_angle.setDouble(getAngle());
   }
 }
