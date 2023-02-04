@@ -21,6 +21,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Swerve.*;
+import frc.robot.commands.Combo.Stage1;
+import frc.robot.commands.Combo.Stage2;
+import frc.robot.commands.Combo.Stage3;
+import frc.robot.commands.Combo.StowArm;
 import frc.robot.commands.Pneumatics.*;
 import frc.robot.subsystems.*;
 
@@ -104,12 +108,17 @@ public class RobotContainer {
         /* Driver Buttons */
         new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new SlowDrive(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_lift, m_arm));
-        new JoystickButton(m_driver, XboxController.Button.kY.value).onTrue(new ToggleClaw(m_air));
         new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ToggleTilt(m_air));
         new JoystickButton(m_driver, XboxController.Button.kStart.value).onTrue(new ZeroGyro(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kBack.value).onTrue(new ResetEncoders(m_swerve));
+        new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new OpenClaw(m_air)).onFalse(new CloseClaw(m_air));
 
-        new JoystickButton(m_operator, 1).whileTrue(new LockWheels(m_swerve));
+        new JoystickButton(m_operator, 1).onTrue(new StowArm(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 5).onTrue(new ClawUp(m_air));
+        new JoystickButton(m_operator, 6).onTrue(new Stage1(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 7).onTrue(new Stage2(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 8).onTrue(new Stage3(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 10).onTrue(new ClawDown(m_air));
     }
 
     /**

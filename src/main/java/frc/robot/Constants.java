@@ -19,8 +19,12 @@ public final class Constants {
         public static final int elevatorMotorID = 9;
         public static final int encoderPortA = 0;
         public static final int encoderPortB = 1;
+        public static final double encoderDistancePerPulse = 1; //TODO: get the right values
+        public static final double kStowHeight = 0;
+        public static final double kStage1Height = 0; 
+        public static final double kStage2Height = 0;
+        public static final double kStage3Height = 0;
 
-        public static final double encoderDistancePerPulse = 1; //TODO: get the right value
         //TODO: tune theses
         public static final double kS = 0;
         public static final double kV = 0;
@@ -31,6 +35,11 @@ public final class Constants {
 
     public static final class Arm {
         public static final int armMotorID = 10;
+        public static final double kStowAngle = 0; //TODO: get the right angles
+        public static final double kStage1Angle = 0;
+        public static final double kStage2Angle = 0;
+        public static final double kStage3Angle = 0;
+
         //TODO: tune theses
         public static final double kS = 0;
         public static final double kV = 0;

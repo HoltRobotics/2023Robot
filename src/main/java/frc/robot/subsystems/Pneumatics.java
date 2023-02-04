@@ -39,6 +39,9 @@ public class Pneumatics extends SubsystemBase {
     m_isClawOpen = m_tab.add("Claw Open",valueToBool(getClawState())).withWidget(BuiltInWidgets.kBooleanBox).withPosition(4, 0).getEntry();
     m_isClawTilted = m_tab.add("Is Claw Tilted", valueToBool(getTiltState())).withWidget(BuiltInWidgets.kBooleanBox).withPosition(5, 0).getEntry();
     m_isBuddyDown = m_tab.add("Are Buddy forks Down", valueToBool(getBuddyState())).withWidget(BuiltInWidgets.kBooleanBox).withPosition(6, 0).getEntry();
+    setClawState(Value.kForward);
+    setTiltState(Value.kForward);
+    setBuddyState(Value.kOff);
   }
 
   public Value getClawState() {
@@ -69,7 +72,7 @@ public class Pneumatics extends SubsystemBase {
     if(value == Value.kReverse || value == Value.kOff) {
       return false;
     } else {
-      return false;
+      return true;
     }
   }
 
