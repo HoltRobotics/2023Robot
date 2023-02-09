@@ -8,8 +8,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -51,7 +49,7 @@ public class RobotContainer {
     private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
     private final SendableChooser<PathPlannerTrajectory> m_autoChooser = new SendableChooser<>();
 
-    private final UsbCamera m_camera;
+    // private final UsbCamera m_camera;
 
     private final PathPlannerTrajectory m_testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
     private final PathPlannerTrajectory m_transPath = PathPlanner.loadPath("Translation Path", new PathConstraints(4, 3));
@@ -74,9 +72,9 @@ public class RobotContainer {
         m_autoChooser.addOption("Translation Path", m_transPath);
         m_autoChooser.addOption("Rotation Path", m_rotPath);
 
-        m_camera = CameraServer.startAutomaticCapture();
+        // m_camera = CameraServer.startAutomaticCapture();
 
-        m_tab.add("Camera", m_camera).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 7).withSize(3, 3);
+        // m_tab.add("Camera", m_camera).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 7).withSize(3, 3);
 
         m_eventMap.put("test1", new PrintCommand("Test 1"));
         m_eventMap.put("test2", new PrintCommand("Test 2"));
