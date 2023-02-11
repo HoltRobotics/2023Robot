@@ -38,7 +38,7 @@ public class Pneumatics extends SubsystemBase {
     m_isCompressorOn = m_tab.add("Compressor", isCompressorOn()).withWidget(BuiltInWidgets.kBooleanBox).withPosition(3, 0).getEntry();
     m_isClawOpen = m_tab.add("Claw Open",valueToBool(getClawState())).withWidget(BuiltInWidgets.kBooleanBox).withPosition(4, 0).getEntry();
     m_isClawTilted = m_tab.add("Is Claw Tilted", valueToBool(getTiltState())).withWidget(BuiltInWidgets.kBooleanBox).withPosition(5, 0).getEntry();
-    m_isBuddyDown = m_tab.add("Are Buddy forks Down", valueToBool(getBuddyState())).withWidget(BuiltInWidgets.kBooleanBox).withPosition(6, 0).getEntry();
+    m_isBuddyDown = m_tab.add("Forks Down", valueToBool(getBuddyState())).withWidget(BuiltInWidgets.kBooleanBox).withPosition(6, 0).getEntry();
     setClawState(Value.kForward);
     setTiltState(Value.kForward);
     setBuddyState(Value.kOff);

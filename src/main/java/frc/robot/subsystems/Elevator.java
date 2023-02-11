@@ -5,12 +5,13 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -20,7 +21,7 @@ import frc.robot.Constants;
 public class Elevator extends PIDSubsystem {
   private final CANSparkMax m_liftmotor = new CANSparkMax(Constants.Elevator.elevatorMotorID, MotorType.kBrushless);
 
-  private final Encoder m_encoder = new Encoder(Constants.Elevator.encoderPortA, Constants.Elevator.encoderPortB);
+  private final RelativeEncoder m_encoder;
 
   private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
   private final GenericEntry m_height;
@@ -31,10 +32,12 @@ public class Elevator extends PIDSubsystem {
     super(
         // The PIDController used by the subsystem
         new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD));
-    m_encoder.setDistancePerPulse(Constants.Elevator.encoderDistancePerPulse);
-    m_height = m_tab.add("Elevator Height", getElevatorHeight()).withWidget(BuiltInWidgets.kDial).withPosition(4, 1).withSize(1, 1).getEntry();
+    m_encoder = m_liftmotor.getAlternateEncoder(8192);
+    // m_encoder.setPositionConversionFactor(10000);
+    m_height = m_tab.add("Elevator Height", getElevatorHeight()).withWidget(BuiltInWidgets.kTextView).withPosition(4, 1).withSize(1, 1).getEntry();
     this.setHeight(0);
-    this.enable();
+    // this.enable();
+    m_liftmotor.setIdleMode(IdleMode.kBrake);
   }
 
   @Override
@@ -48,7 +51,19 @@ public class Elevator extends PIDSubsystem {
   }
 
   public double getElevatorHeight() {
-    return m_encoder.getDistance();
+    return m_encoder.getPosition();
+  }
+
+  public void up() {
+    m_liftmotor.set(.5);
+  }
+
+  public void down() {
+    m_liftmotor.set(-0.5);
+  }
+
+  public void stop() {
+    m_liftmotor.stopMotor();
   }
 
   @Override

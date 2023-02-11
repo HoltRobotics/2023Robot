@@ -33,7 +33,7 @@ public class Arm extends PIDSubsystem {
     super(
         // The PIDController used by the subsystem
         new PIDController(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD));
-    m_encoder = m_armMotor.getAlternateEncoder(2048);
+    m_encoder = m_armMotor.getAlternateEncoder(8192);
     m_encoder.setPositionConversionFactor(360);
     m_encoder.setPosition(0);
     m_angle = m_tab.add("Arm Angle", getAngle()).withWidget(BuiltInWidgets.kDial).withPosition(3, 1).withSize(1, 1).getEntry();
@@ -59,6 +59,18 @@ public class Arm extends PIDSubsystem {
   public double getMeasurement() {
     // Return the process variable measurement here
     return getAngle();
+  }
+
+  public void up() {
+    m_armMotor.set(.75);
+  }
+
+  public void down() {
+    m_armMotor.set(-0.75);
+  }
+
+  public void stop() {
+    m_armMotor.stopMotor();
   }
 
   @Override
