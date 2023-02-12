@@ -20,8 +20,8 @@ public class Stage2 extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetHeight(Constants.Elevator.kStage1Height, lift),
-      new SetAngle(Constants.Arm.kStage1Angle, arm),
+      new SetHeight(Constants.Elevator.kStage2Height, lift),
+      new SetAngle(Constants.Arm.kStage2Angle, arm),
       new CloseClaw(air),
       new ClawUp(air)
     );

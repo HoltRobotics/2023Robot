@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.Swerve.*;
 import frc.robot.commands.Combo.Stage1;
 import frc.robot.commands.Combo.Stage2;
@@ -26,7 +26,7 @@ import frc.robot.commands.Combo.Stage3;
 import frc.robot.commands.Combo.StowArm;
 import frc.robot.commands.Elevator.Down;
 import frc.robot.commands.Elevator.Up;
-import frc.robot.commands.Arm.DownArmk;
+import frc.robot.commands.Arm.DownArm;
 import frc.robot.commands.Arm.UpArm;
 import frc.robot.commands.Pneumatics.*;
 import frc.robot.subsystems.*;
@@ -110,17 +110,19 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new Up(m_lift));
-        new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new Down(m_lift));
-        new JoystickButton(m_driver, XboxController.Button.kY.value).whileTrue(new UpArm(m_arm));
-        new JoystickButton(m_driver, XboxController.Button.kX.value).whileTrue(new DownArmk(m_arm));
+        new POVButton(m_driver, 180).whileTrue(new Up(m_lift));
+        new POVButton(m_driver, 0).whileTrue(new Down(m_lift));
+        new POVButton(m_driver, 90).whileTrue(new UpArm(m_arm));
+        new POVButton(m_driver, 270).whileTrue(new DownArm(m_arm));
 
-        // new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new SlowDrive(m_swerve));
-        // new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_lift, m_arm));
-        // new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ToggleTilt(m_air));
+        new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new SlowDrive(m_swerve));
+        new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_lift, m_arm));
+        new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ToggleTilt(m_air));
         new JoystickButton(m_driver, XboxController.Button.kStart.value).onTrue(new ZeroGyro(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kBack.value).onTrue(new ResetEncoders(m_swerve));
-        // new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new OpenClaw(m_air)).onFalse(new CloseClaw(m_air));
+        new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new OpenClaw(m_air)).onFalse(new CloseClaw(m_air));
+
+        new JoystickButton(m_operator, 2).whileTrue(new TagDistanceTest(m_swerve, m_light));
 
         new JoystickButton(m_operator, 1).onTrue(new StowArm(m_arm, m_lift, m_air));
         new JoystickButton(m_operator, 5).onTrue(new ClawUp(m_air));

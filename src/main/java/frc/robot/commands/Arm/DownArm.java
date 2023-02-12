@@ -7,10 +7,10 @@ package frc.robot.commands.Arm;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
-public class DownArmk extends CommandBase {
+public class DownArm extends CommandBase {
   private final Arm m_arm;
   /** Creates a new Up. */
-  public DownArmk(Arm arm) {
+  public DownArm(Arm arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_arm = arm;
     addRequirements(m_arm);
