@@ -36,10 +36,10 @@ public class OrbitPiece extends CommandBase {
     // TODO: enter the right formulas
     // For now it just changes the "center" of the robot to the middle front of the robot
     m_kinematics = new SwerveDriveKinematics(
-      new Translation2d(-Units.inchesToMeters(24.5 / 2), 0),
-      new Translation2d(Units.inchesToMeters(24.5 / 2), 0),
-      new Translation2d(-Units.inchesToMeters(24.5 / 2), -Units.inchesToMeters(24.5)),
-      new Translation2d(Units.inchesToMeters(24.5 / 2), -Units.inchesToMeters(24.5))
+      new Translation2d(-Units.inchesToMeters(24.5 / 2), -1),
+      new Translation2d(Units.inchesToMeters(24.5 / 2), -1),
+      new Translation2d(-Units.inchesToMeters(24.5 / 2), -Units.inchesToMeters(24.5) + 1),
+      new Translation2d(Units.inchesToMeters(24.5 / 2), -Units.inchesToMeters(24.5) + 1)
     );
     m_lift.getElevatorHeight();
     m_arm.getAngle();

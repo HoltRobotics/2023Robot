@@ -7,6 +7,7 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -47,7 +48,7 @@ public class RobotContainer {
 
     /* Controllers */
     private final XboxController m_driver = new XboxController(Constants.kDriverPort);
-    private final Joystick m_operator = new Joystick(Constants.kOperatorPort);
+    // private final Joystick m_operator = new Joystick(Constants.kOperatorPort);
 
     private final SwerveAutoBuilder m_autoBuilder;
     private final HashMap<String, Command> m_eventMap = new HashMap<>();
@@ -58,8 +59,8 @@ public class RobotContainer {
     // private final UsbCamera m_camera;
 
     private final PathPlannerTrajectory m_testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
-    private final PathPlannerTrajectory m_transPath = PathPlanner.loadPath("Translation Path", new PathConstraints(4, 3));
-    private final PathPlannerTrajectory m_rotPath = PathPlanner.loadPath("Rotation Path", new PathConstraints(4, 3));
+    private final PathPlannerTrajectory m_transPath = PathPlanner.loadPath("Translation Path", new PathConstraints(3, 3));
+    private final PathPlannerTrajectory m_rotPath = PathPlanner.loadPath("Rotation Path", new PathConstraints(1, 1));
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -78,6 +79,8 @@ public class RobotContainer {
         m_autoChooser.addOption("Translation Path", m_transPath);
         m_autoChooser.addOption("Rotation Path", m_rotPath);
 
+        PathPlannerServer.startServer(5811);
+
         // m_camera = CameraServer.startAutomaticCapture();
 
         // m_tab.add("Camera", m_camera).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 7).withSize(3, 3);
@@ -90,8 +93,8 @@ public class RobotContainer {
             m_swerve::getPose,
             m_swerve::resetOdometry,
             Constants.Swerve.swerveKinematics,
-            new PIDConstants(0, 0, 0), //TODO: tune theses
-            new PIDConstants(0, 0, 0),
+            new PIDConstants(10, 0, 0), //TODO: tune theses
+            new PIDConstants(15, 0, 0),
             m_swerve::setModuleStates,
             m_eventMap,
             true,
@@ -122,14 +125,14 @@ public class RobotContainer {
         new JoystickButton(m_driver, XboxController.Button.kBack.value).onTrue(new ResetEncoders(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new OpenClaw(m_air)).onFalse(new CloseClaw(m_air));
 
-        new JoystickButton(m_operator, 2).whileTrue(new TagDistanceTest(m_swerve, m_light));
+        // new JoystickButton(m_operator, 2).whileTrue(new TagDistanceTest(m_swerve, m_light));
 
-        new JoystickButton(m_operator, 1).onTrue(new StowArm(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 5).onTrue(new ClawUp(m_air));
-        new JoystickButton(m_operator, 6).onTrue(new Stage1(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 7).onTrue(new Stage2(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 8).onTrue(new Stage3(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 10).onTrue(new ClawDown(m_air));
+        // new JoystickButton(m_operator, 1).onTrue(new StowArm(m_arm, m_lift, m_air));
+        // new JoystickButton(m_operator, 5).onTrue(new ClawUp(m_air));
+        // new JoystickButton(m_operator, 6).onTrue(new Stage1(m_arm, m_lift, m_air));
+        // new JoystickButton(m_operator, 7).onTrue(new Stage2(m_arm, m_lift, m_air));
+        // new JoystickButton(m_operator, 8).onTrue(new Stage3(m_arm, m_lift, m_air));
+        // new JoystickButton(m_operator, 10).onTrue(new ClawDown(m_air));
     }
 
     /**

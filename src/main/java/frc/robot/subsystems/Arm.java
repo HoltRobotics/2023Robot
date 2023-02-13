@@ -36,7 +36,7 @@ public class Arm extends PIDSubsystem {
     m_encoder = m_armMotor.getAlternateEncoder(8192);
     m_encoder.setPositionConversionFactor(360);
     m_encoder.setPosition(0);
-    m_angle = m_tab.add("Arm Angle", getAngle()).withWidget(BuiltInWidgets.kDial).withPosition(3, 1).withSize(1, 1).getEntry();
+    m_angle = m_tab.add("Arm Angle", getAngle()).withWidget(BuiltInWidgets.kTextView).withPosition(3, 1).withSize(1, 1).getEntry();
     this.setAngle(0);
     this.enable();
   }
