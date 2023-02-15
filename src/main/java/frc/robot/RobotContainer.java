@@ -21,14 +21,9 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.Swerve.*;
-import frc.robot.commands.Combo.Stage1;
-import frc.robot.commands.Combo.Stage2;
-import frc.robot.commands.Combo.Stage3;
-import frc.robot.commands.Combo.StowArm;
-import frc.robot.commands.Elevator.Down;
-import frc.robot.commands.Elevator.Up;
-import frc.robot.commands.Arm.DownArm;
-import frc.robot.commands.Arm.UpArm;
+import frc.robot.commands.Combo.*;
+import frc.robot.commands.Elevator.*;
+import frc.robot.commands.Arm.*;
 import frc.robot.commands.Pneumatics.*;
 import frc.robot.subsystems.*;
 
@@ -48,7 +43,7 @@ public class RobotContainer {
 
     /* Controllers */
     private final XboxController m_driver = new XboxController(Constants.kDriverPort);
-    // private final Joystick m_operator = new Joystick(Constants.kOperatorPort);
+    private final Joystick m_operator = new Joystick(Constants.kOperatorPort);
 
     private final SwerveAutoBuilder m_autoBuilder;
     private final HashMap<String, Command> m_eventMap = new HashMap<>();
@@ -125,14 +120,14 @@ public class RobotContainer {
         new JoystickButton(m_driver, XboxController.Button.kBack.value).onTrue(new ResetEncoders(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new OpenClaw(m_air)).onFalse(new CloseClaw(m_air));
 
-        // new JoystickButton(m_operator, 2).whileTrue(new TagDistanceTest(m_swerve, m_light));
+        new JoystickButton(m_operator, 2).whileTrue(new TagDistanceTest(m_swerve, m_light));
 
-        // new JoystickButton(m_operator, 1).onTrue(new StowArm(m_arm, m_lift, m_air));
-        // new JoystickButton(m_operator, 5).onTrue(new ClawUp(m_air));
-        // new JoystickButton(m_operator, 6).onTrue(new Stage1(m_arm, m_lift, m_air));
-        // new JoystickButton(m_operator, 7).onTrue(new Stage2(m_arm, m_lift, m_air));
-        // new JoystickButton(m_operator, 8).onTrue(new Stage3(m_arm, m_lift, m_air));
-        // new JoystickButton(m_operator, 10).onTrue(new ClawDown(m_air));
+        new JoystickButton(m_operator, 1).onTrue(new StowArm(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 5).onTrue(new ClawUp(m_air));
+        new JoystickButton(m_operator, 6).onTrue(new Stage1(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 7).onTrue(new Stage2(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 8).onTrue(new Stage3(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 10).onTrue(new ClawDown(m_air));
     }
 
     /**
