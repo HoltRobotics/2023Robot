@@ -1,6 +1,9 @@
 package frc.robot;
 
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
@@ -18,6 +21,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.Swerve.*;
@@ -49,13 +53,14 @@ public class RobotContainer {
     private final HashMap<String, Command> m_eventMap = new HashMap<>();
 
     private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
-    private final SendableChooser<PathPlannerTrajectory> m_autoChooser = new SendableChooser<>();
+    private final SendableChooser<List<PathPlannerTrajectory>> m_autoChooser = new SendableChooser<>();
 
     // private final UsbCamera m_camera;
 
-    private final PathPlannerTrajectory m_testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
-    private final PathPlannerTrajectory m_transPath = PathPlanner.loadPath("Translation Path", new PathConstraints(3, 3));
-    private final PathPlannerTrajectory m_rotPath = PathPlanner.loadPath("Rotation Path", new PathConstraints(1, 1));
+    private final List<PathPlannerTrajectory> m_testPath = PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3));
+    private final List<PathPlannerTrajectory> m_transPath = PathPlanner.loadPathGroup("Translation Path", new PathConstraints(3, 3));
+    private final List<PathPlannerTrajectory> m_rotPath = PathPlanner.loadPathGroup("Rotation Path", new PathConstraints(1, 1));
+    private final List<PathPlannerTrajectory> m_dancePaths = PathPlanner.loadPathGroup("Dance Path", new PathConstraints(3, 3));
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -73,6 +78,7 @@ public class RobotContainer {
         m_autoChooser.setDefaultOption("Test Path", m_testPath);
         m_autoChooser.addOption("Translation Path", m_transPath);
         m_autoChooser.addOption("Rotation Path", m_rotPath);
+        m_autoChooser.addOption("Dance Path", m_dancePaths);
 
         PathPlannerServer.startServer(5811);
 
@@ -83,13 +89,14 @@ public class RobotContainer {
         m_eventMap.put("test1", new PrintCommand("Test 1"));
         m_eventMap.put("test2", new PrintCommand("Test 2"));
         m_eventMap.put("test3", new PrintCommand("Test 3"));
+        m_eventMap.put("timeout", new WaitCommand(3));
 
         m_autoBuilder = new SwerveAutoBuilder(
             m_swerve::getPose,
             m_swerve::resetOdometry,
             Constants.Swerve.swerveKinematics,
-            new PIDConstants(10, 0, 0), //TODO: tune theses
-            new PIDConstants(15, 0, 0),
+            new PIDConstants(9, 0, 0), //TODO: tune theses
+            new PIDConstants(12, 0, 0),
             m_swerve::setModuleStates,
             m_eventMap,
             true,
