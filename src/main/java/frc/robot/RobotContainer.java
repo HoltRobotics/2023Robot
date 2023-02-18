@@ -1,7 +1,5 @@
 package frc.robot;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,7 +37,7 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Subsystems */
-    private final Swerve m_swerve = new Swerve();
+    // private final Swerve m_swerve = new Swerve();
     private final Arm m_arm = new Arm();
     private final Elevator m_lift = new Elevator();
     private final Pneumatics m_air = new Pneumatics();
@@ -49,7 +47,7 @@ public class RobotContainer {
     private final XboxController m_driver = new XboxController(Constants.kDriverPort);
     private final Joystick m_operator = new Joystick(Constants.kOperatorPort);
 
-    private final SwerveAutoBuilder m_autoBuilder;
+    // private final SwerveAutoBuilder m_autoBuilder;
     private final HashMap<String, Command> m_eventMap = new HashMap<>();
 
     private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
@@ -64,15 +62,15 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        m_swerve.setDefaultCommand(
-            new TeleopSwerve(
-                () -> -m_driver.getLeftY(),     // Translation
-                () -> -m_driver.getLeftX(),     // Strafe
-                () -> -m_driver.getRightX(),    // Rotation
-                () -> m_driver.getLeftBumper(), // Field Centric
-                m_swerve
-            )
-        );
+        // m_swerve.setDefaultCommand(
+        //     new TeleopSwerve(
+        //         () -> -m_driver.getLeftY(),     // Translation
+        //         () -> -m_driver.getLeftX(),     // Strafe
+        //         () -> -m_driver.getRightX(),    // Rotation
+        //         () -> m_driver.getLeftBumper(), // Field Centric
+        //         m_swerve
+        //     )
+        // );
 
         m_tab.add("Auton List", m_autoChooser).withPosition(3, 2).withSize(2, 1).withWidget(BuiltInWidgets.kComboBoxChooser);
         m_autoChooser.setDefaultOption("Test Path", m_testPath);
@@ -91,17 +89,17 @@ public class RobotContainer {
         m_eventMap.put("test3", new PrintCommand("Test 3"));
         m_eventMap.put("timeout", new WaitCommand(3));
 
-        m_autoBuilder = new SwerveAutoBuilder(
-            m_swerve::getPose,
-            m_swerve::resetOdometry,
-            Constants.Swerve.swerveKinematics,
-            new PIDConstants(9, 0, 0), //TODO: tune theses
-            new PIDConstants(12, 0, 0),
-            m_swerve::setModuleStates,
-            m_eventMap,
-            true,
-            m_swerve
-        );
+        // m_autoBuilder = new SwerveAutoBuilder(
+        //     m_swerve::getPose,
+        //     m_swerve::resetOdometry,
+        //     Constants.Swerve.swerveKinematics,
+        //     new PIDConstants(9, 0, 0), //TODO: tune theses
+        //     new PIDConstants(12, 0, 0),
+        //     m_swerve::setModuleStates,
+        //     m_eventMap,
+        //     true,
+        //     m_swerve
+        // );
 
         // Configure the button bindings
         configureButtonBindings();
@@ -120,14 +118,16 @@ public class RobotContainer {
         new POVButton(m_driver, 90).whileTrue(new UpArm(m_arm));
         new POVButton(m_driver, 270).whileTrue(new DownArm(m_arm));
 
-        new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new SlowDrive(m_swerve));
-        new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_lift, m_arm));
+        new JoystickButton(m_driver, XboxController.Button.kA.value).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
+
+        // new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new SlowDrive(m_swerve));
+        // new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_arm));
         new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ToggleTilt(m_air));
-        new JoystickButton(m_driver, XboxController.Button.kStart.value).onTrue(new ZeroGyro(m_swerve));
-        new JoystickButton(m_driver, XboxController.Button.kBack.value).onTrue(new ResetEncoders(m_swerve));
+        // new JoystickButton(m_driver, XboxController.Button.kStart.value).onTrue(new ZeroGyro(m_swerve));
+        // new JoystickButton(m_driver, XboxController.Button.kBack.value).onTrue(new ResetEncoders(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new OpenClaw(m_air)).onFalse(new CloseClaw(m_air));
 
-        new JoystickButton(m_operator, 2).whileTrue(new TagDistanceTest(m_swerve, m_light));
+        // new JoystickButton(m_operator, 2).whileTrue(new TagDistanceTest(m_swerve, m_light));
 
         new JoystickButton(m_operator, 1).onTrue(new StowArm(m_arm, m_lift, m_air));
         new JoystickButton(m_operator, 5).onTrue(new ClawUp(m_air));
@@ -144,8 +144,9 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        Command fullAuto = m_autoBuilder.fullAuto(m_autoChooser.getSelected());
-        return fullAuto;
+        // Command fullAuto = m_autoBuilder.fullAuto(m_autoChooser.getSelected());
+        // return fullAuto;
         // return new exampleAuto(m_swerve);
+        return new WaitCommand(15);
     }
 }

@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -24,11 +25,11 @@ public class Pneumatics extends SubsystemBase {
   private final GenericEntry m_isClawTilted;
   private final GenericEntry m_isBuddyDown;
 
-  private final DoubleSolenoid m_clawSol = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Pneumatics.kClawForward, Constants.Pneumatics.kClawReverse);
+  private final Solenoid m_clawSol = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Pneumatics.kClaw);
   private final DoubleSolenoid m_clawTiltSol = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Pneumatics.kClawTiltForward, Constants.Pneumatics.kClawTiltReverse);
   private final DoubleSolenoid m_buddySol = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Pneumatics.kBuddyForward, Constants.Pneumatics.kBuddyReverse);
 
-  private Value m_clawState;
+  private boolean m_clawState;
   private Value m_tiltState;
   private Value m_buddyState;
 
@@ -36,15 +37,15 @@ public class Pneumatics extends SubsystemBase {
   public Pneumatics() {
     m_compressor.enableDigital();
     m_isCompressorOn = m_tab.add("Compressor", isCompressorOn()).withWidget(BuiltInWidgets.kBooleanBox).withPosition(3, 0).getEntry();
-    m_isClawOpen = m_tab.add("Claw Open",valueToBool(getClawState())).withWidget(BuiltInWidgets.kBooleanBox).withPosition(4, 0).getEntry();
+    m_isClawOpen = m_tab.add("Claw Open",getClawState()).withWidget(BuiltInWidgets.kBooleanBox).withPosition(4, 0).getEntry();
     m_isClawTilted = m_tab.add("Is Claw Tilted", valueToBool(getTiltState())).withWidget(BuiltInWidgets.kBooleanBox).withPosition(5, 0).getEntry();
     m_isBuddyDown = m_tab.add("Forks Down", valueToBool(getBuddyState())).withWidget(BuiltInWidgets.kBooleanBox).withPosition(6, 0).getEntry();
-    setClawState(Value.kForward);
+    setClawState(true);
     setTiltState(Value.kForward);
     setBuddyState(Value.kOff);
   }
 
-  public Value getClawState() {
+  public boolean getClawState() {
     return m_clawState;
   }
 
@@ -56,16 +57,19 @@ public class Pneumatics extends SubsystemBase {
     return m_buddyState;
   }
 
-  public void setClawState(Value value) {
+  public void setClawState(Boolean value) {
     m_clawSol.set(value);
+    m_clawState = value;
   }
 
   public void setTiltState(Value value) {
     m_clawTiltSol.set(value);
+    m_tiltState = value;
   }
 
   public void setBuddyState(Value value) {
     m_buddySol.set(value);
+    m_buddyState = value;
   }
 
   private boolean valueToBool(Value value) {
@@ -84,7 +88,7 @@ public class Pneumatics extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     m_isCompressorOn.setBoolean(isCompressorOn());
-    m_isClawOpen.setBoolean(valueToBool(getClawState()));
+    m_isClawOpen.setBoolean(getClawState());
     m_isClawTilted.setBoolean(valueToBool(getTiltState()));
     m_isBuddyDown.setBoolean(valueToBool(getBuddyState()));
   }

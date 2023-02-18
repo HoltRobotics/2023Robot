@@ -25,6 +25,9 @@ public final class Constants {
         public static final double kStage2Height = 0;
         public static final double kStage3Height = 0;
 
+        public static final double kBackWheelsOffset = 0.25; //TODO: get right distances
+        public static final double kFrontWheelsOffset = 0.25;
+
         //TODO: tune theses
         public static final double kS = 0;
         public static final double kV = 0;
@@ -40,6 +43,9 @@ public final class Constants {
         public static final double kStage2Angle = 0;
         public static final double kStage3Angle = 0;
 
+        public static final double kClawLenghtOffset = 0.25; //TODO: get right distances
+        public static final double kArmLenght = 1;
+
         //TODO: tune theses
         public static final double kS = 0;
         public static final double kV = 0;
@@ -49,12 +55,11 @@ public final class Constants {
     }
 
     public static final class Pneumatics {
-        public static final int kClawForward = 0;
-        public static final int kClawReverse = 1;
-        public static final int kClawTiltForward = 2;
-        public static final int kClawTiltReverse = 3;
-        public static final int kBuddyForward = 5;
-        public static final int kBuddyReverse = 6;
+        public static final int kClawTiltForward = 0;
+        public static final int kClawTiltReverse = 1;
+        public static final int kClaw = 2;
+        public static final int kBuddyForward = 3;
+        public static final int kBuddyReverse = 4;
     }
 
     public static final class Swerve {
