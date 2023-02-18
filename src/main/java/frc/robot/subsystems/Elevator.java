@@ -33,7 +33,7 @@ public class Elevator extends PIDSubsystem {
         // The PIDController used by the subsystem
         new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD));
     m_encoder = m_liftmotor.getAlternateEncoder(8192);
-    // m_encoder.setPositionConversionFactor(10000);
+    m_encoder.setPositionConversionFactor(0.01); //TODO: put in right factor
     m_height = m_tab.add("Elevator Height", getElevatorHeight()).withWidget(BuiltInWidgets.kTextView).withPosition(4, 1).withSize(1, 1).getEntry();
     this.setHeight(0);
     // this.enable();

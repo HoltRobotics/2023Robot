@@ -19,6 +19,6 @@ public class ClawUp extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_air.setTiltState(Value.kReverse);
+    m_air.setTiltState(Value.kForward);
   }
 }
