@@ -14,7 +14,9 @@ public final class Constants {
     public static final int kDriverPort = 0;
     public static final int kOperatorPort = 1;
 
-    public static final class Elevator {
+    public static final double kMaxRobotHeight = 2; //TODO: get right height
+
+    public static final class ElevatorConstants {
         public static final int elevatorMotorID = 9;
         
         public static final double kStowHeight = 0;
@@ -32,7 +34,7 @@ public final class Constants {
         public static final double kD = 0;
     }
 
-    public static final class Arm {
+    public static final class ArmConstants {
         public static final int armMotorID = 10;
 
         public static final double kStowAngle = 0; //TODO: get the right angles
@@ -49,7 +51,7 @@ public final class Constants {
         public static final double kD = 0;
     }
 
-    public static final class Pneumatics {
+    public static final class PneumaticsConstants {
         public static final int kClawTiltForward = 0;
         public static final int kClawTiltReverse = 1;
         public static final int kClaw = 2;
@@ -57,7 +59,7 @@ public final class Constants {
         public static final int kBuddyReverse = 4;
     }
 
-    public static final class Swerve {
+    public static final class SwerveConstants {
         public static final int pigeonID = 1;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 

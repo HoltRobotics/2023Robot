@@ -5,7 +5,8 @@
 package frc.robot.commands.Combo;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.commands.Arm.SetAngle;
 import frc.robot.commands.Elevator.SetHeight;
 import frc.robot.commands.Pneumatics.ClawDown;
@@ -20,8 +21,8 @@ public class StowArm extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetHeight(Constants.Elevator.kStowHeight, lift),
-      new SetAngle(Constants.Arm.kStowAngle, arm),
+      new SetHeight(ElevatorConstants.kStowHeight, lift),
+      new SetAngle(ArmConstants.kStowAngle, arm),
       new CloseClaw(air),
       new ClawDown(air)
     );

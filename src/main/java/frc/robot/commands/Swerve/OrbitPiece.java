@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Swerve;
 
@@ -31,10 +32,10 @@ public class OrbitPiece extends CommandBase {
   @Override
   public void execute() {
     m_kinematics = new SwerveDriveKinematics(
-      new Translation2d(-((Constants.Arm.kArmLenght * Math.sin(m_arm.getAngle()) + Constants.Arm.kClawLenghtOffset) - Constants.Elevator.kFrontWheelsOffset), Constants.Swerve.trackWidth / 2.0), // Front Left
-      new Translation2d(-((Constants.Arm.kArmLenght * Math.sin(m_arm.getAngle()) + Constants.Arm.kClawLenghtOffset) - Constants.Elevator.kFrontWheelsOffset), -Constants.Swerve.trackWidth / 2.0), // Front Right
-      new Translation2d(-((Constants.Arm.kArmLenght * Math.sin(m_arm.getAngle()) + Constants.Arm.kClawLenghtOffset) + Constants.Elevator.kBackWheelsOffset), Constants.Swerve.trackWidth / 2.0), // Back Left
-      new Translation2d(-((Constants.Arm.kArmLenght * Math.sin(m_arm.getAngle()) + Constants.Arm.kClawLenghtOffset) + Constants.Elevator.kBackWheelsOffset), -Constants.Swerve.trackWidth / 2.0) // Back Right
+      new Translation2d(-((ArmConstants.kArmLenght * Math.sin(m_arm.getAngle()) + ArmConstants.kClawLenghtOffset) - Constants.ElevatorConstants.kFrontWheelsOffset), Constants.SwerveConstants.trackWidth / 2.0), // Front Left
+      new Translation2d(-((ArmConstants.kArmLenght * Math.sin(m_arm.getAngle()) + ArmConstants.kClawLenghtOffset) - Constants.ElevatorConstants.kFrontWheelsOffset), -Constants.SwerveConstants.trackWidth / 2.0), // Front Right
+      new Translation2d(-((ArmConstants.kArmLenght * Math.sin(m_arm.getAngle()) + ArmConstants.kClawLenghtOffset) + Constants.ElevatorConstants.kBackWheelsOffset), Constants.SwerveConstants.trackWidth / 2.0), // Back Left
+      new Translation2d(-((ArmConstants.kArmLenght * Math.sin(m_arm.getAngle()) + ArmConstants.kClawLenghtOffset) + Constants.ElevatorConstants.kBackWheelsOffset), -Constants.SwerveConstants.trackWidth / 2.0) // Back Right
     );
     m_swerve.setKinematic(m_kinematics);
   }

@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.PneumaticsConstants;
 
 public class Pneumatics extends SubsystemBase {
   private Compressor m_compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
@@ -25,9 +25,9 @@ public class Pneumatics extends SubsystemBase {
   private final GenericEntry m_isClawTilted;
   private final GenericEntry m_isBuddyDown;
 
-  private final Solenoid m_clawSol = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Pneumatics.kClaw);
-  private final DoubleSolenoid m_clawTiltSol = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Pneumatics.kClawTiltForward, Constants.Pneumatics.kClawTiltReverse);
-  private final DoubleSolenoid m_buddySol = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Pneumatics.kBuddyForward, Constants.Pneumatics.kBuddyReverse);
+  private final Solenoid m_clawSol = new Solenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.kClaw);
+  private final DoubleSolenoid m_clawTiltSol = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.kClawTiltForward, PneumaticsConstants.kClawTiltReverse);
+  private final DoubleSolenoid m_buddySol = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.kBuddyForward, PneumaticsConstants.kBuddyReverse);
 
   private boolean m_clawState;
   private Value m_tiltState;

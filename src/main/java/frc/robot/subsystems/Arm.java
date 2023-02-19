@@ -16,10 +16,10 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
-import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 
 public class Arm extends PIDSubsystem {
-  private final CANSparkMax m_armMotor = new CANSparkMax(Constants.Arm.armMotorID, MotorType.kBrushless);
+  private final CANSparkMax m_armMotor = new CANSparkMax(ArmConstants.armMotorID, MotorType.kBrushless);
 
   private final RelativeEncoder m_encoder;
 
@@ -30,7 +30,7 @@ public class Arm extends PIDSubsystem {
   public Arm() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD));
+        new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
     m_encoder = m_armMotor.getAlternateEncoder(8192);
     m_encoder.setPositionConversionFactor(360);
     m_encoder.setPosition(0);

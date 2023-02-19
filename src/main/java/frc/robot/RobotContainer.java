@@ -25,6 +25,8 @@ import frc.robot.commands.Elevator.*;
 import frc.robot.commands.Arm.*;
 import frc.robot.commands.Pneumatics.*;
 import frc.robot.subsystems.*;
+import frc.robot.Constants.*;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -99,7 +101,7 @@ public class RobotContainer {
         m_autoBuilder = new SwerveAutoBuilder(
             m_swerve::getPose,
             m_swerve::resetOdometry,
-            Constants.Swerve.swerveKinematics,
+            SwerveConstants.swerveKinematics,
             new PIDConstants(9, 0, 0), //TODO: tune theses
             new PIDConstants(12, 0, 0),
             m_swerve::setModuleStates,

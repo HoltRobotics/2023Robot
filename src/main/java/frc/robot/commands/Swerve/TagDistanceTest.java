@@ -7,7 +7,7 @@ package frc.robot.commands.Swerve;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.Constants;
+import frc.robot.Constants.SwerveConstants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
 
@@ -22,7 +22,7 @@ public class TagDistanceTest extends PIDCommand {
         // This should return the measurement
         () -> light.getDistance(),
         // This should return the setpoint (can also be a constant)
-        () -> Constants.Swerve.kDistanceFromTagMeters,
+        () -> SwerveConstants.kDistanceFromTagMeters,
         // This uses the output
         output -> {
           // Use the output here

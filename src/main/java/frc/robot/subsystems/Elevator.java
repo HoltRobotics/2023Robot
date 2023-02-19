@@ -16,10 +16,10 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
-import frc.robot.Constants;
+import frc.robot.Constants.ElevatorConstants;
 
 public class Elevator extends PIDSubsystem {
-  private final CANSparkMax m_liftmotor = new CANSparkMax(Constants.Elevator.elevatorMotorID, MotorType.kBrushless);
+  private final CANSparkMax m_liftmotor = new CANSparkMax(ElevatorConstants.elevatorMotorID, MotorType.kBrushless);
 
   private final RelativeEncoder m_encoder;
 
@@ -30,7 +30,7 @@ public class Elevator extends PIDSubsystem {
   public Elevator() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD));
+        new PIDController(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD));
     m_encoder = m_liftmotor.getAlternateEncoder(8192);
     m_encoder.setPositionConversionFactor(0.01); //TODO: put in right factor
     m_encoder.setPosition(0);
