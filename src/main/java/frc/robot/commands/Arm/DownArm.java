@@ -5,6 +5,7 @@
 package frc.robot.commands.Arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.*;
 import frc.robot.subsystems.Arm;
 
 public class DownArm extends CommandBase {
@@ -34,7 +35,7 @@ public class DownArm extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     if(m_pastLimit) {
-      m_arm.setAngle(90);
+      m_arm.setAngle(ArmConstants.kMaxAngle);
     } else{
       m_arm.setAngle(m_arm.getAngle());
     }
@@ -44,7 +45,7 @@ public class DownArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_arm.getAngle() > 90) {
+    if(m_arm.getAngle() > ArmConstants.kMaxAngle) {
       m_pastLimit = true;
       return true;
     } else{

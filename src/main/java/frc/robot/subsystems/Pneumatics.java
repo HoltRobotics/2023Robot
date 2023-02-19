@@ -72,7 +72,7 @@ public class Pneumatics extends SubsystemBase {
     m_buddyState = value;
   }
 
-  private boolean valueToBool(Value value) {
+  public boolean valueToBool(Value value) {
     if(value == Value.kReverse || value == Value.kOff) {
       return false;
     } else {

@@ -15,16 +15,21 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-
-import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants;
+import frc.robot.Constants.*;
 
 public class Elevator extends PIDSubsystem {
+  private final Arm m_arm = new Arm();
+  private final Pneumatics m_air = new Pneumatics();
+  
   private final CANSparkMax m_liftmotor = new CANSparkMax(ElevatorConstants.elevatorMotorID, MotorType.kBrushless);
 
   private final RelativeEncoder m_encoder;
 
   private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
-  private final GenericEntry m_height;
+  private final GenericEntry m_heightDisplay;
+
+  private boolean m_inControl = false;
 
   /** Creates a new Elevator. */
   public Elevator() {
@@ -34,7 +39,7 @@ public class Elevator extends PIDSubsystem {
     m_encoder = m_liftmotor.getAlternateEncoder(8192);
     m_encoder.setPositionConversionFactor(0.01); //TODO: put in right factor
     m_encoder.setPosition(0);
-    m_height = m_tab.add("Elevator Height", getHeight()).withWidget(BuiltInWidgets.kTextView).withPosition(4, 1).withSize(1, 1).getEntry();
+    m_heightDisplay = m_tab.add("Elevator Height", getHeight()).withWidget(BuiltInWidgets.kTextView).withPosition(4, 1).withSize(1, 1).getEntry();
     this.setHeight(0);
     this.enable();
     m_liftmotor.setIdleMode(IdleMode.kBrake);
@@ -62,22 +67,32 @@ public class Elevator extends PIDSubsystem {
 
   public void up() {
     m_liftmotor.set(.5);
+    m_inControl = true;
   }
 
   public void down() {
     m_liftmotor.set(-0.5);
+    m_inControl = true;
   }
 
   public void stop() {
     m_liftmotor.stopMotor();
+    m_inControl = false;
   }
 
   @Override
   public void periodic() {
     super.periodic();
-    m_height.setDouble(getHeight());
+    m_heightDisplay.setDouble(getHeight());
+    double angleOffset = m_arm.getAngle();
+    if(m_air.valueToBool(m_air.getTiltState())) {
+      angleOffset += PneumaticsConstants.kClawTiltAngleOffset;
+    }
+    if(ArmConstants.kArmLenght * Math.cos(angleOffset) + getHeight() > Constants.kMaxRobotHeight && !m_inControl) {
+      setHeight(Constants.kMaxRobotHeight - (ArmConstants.kArmLenght * Math.cos(angleOffset)));
+    }
     if(getHeight() > 1) {
-      setHeight(0);
+      setHeight(1);
     }
     if(getHeight() < 0) {
       setHeight(0);

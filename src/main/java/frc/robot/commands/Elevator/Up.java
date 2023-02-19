@@ -5,6 +5,7 @@
 package frc.robot.commands.Elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.*;
 import frc.robot.subsystems.Elevator;
 
 public class Up extends CommandBase {
@@ -34,7 +35,7 @@ public class Up extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     if(m_pastLimit) {
-      m_lift.setHeight(1);
+      m_lift.setHeight(ElevatorConstants.kMaxHeight);
     } else{
       m_lift.setHeight(m_lift.getHeight());
     }
@@ -44,7 +45,7 @@ public class Up extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_lift.getHeight() > 1) {
+    if(m_lift.getHeight() > ElevatorConstants.kMaxHeight) {
       m_pastLimit = true;
       return true;
     } else{
