@@ -6,10 +6,10 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -36,8 +36,8 @@ public class Arm extends PIDSubsystem {
     m_encoder.setPosition(0);
     m_angle = m_tab.add("Arm Angle", getAngle()).withWidget(BuiltInWidgets.kTextView).withPosition(3, 1).withSize(1, 1).getEntry();
     this.setAngle(0);
-    // this.enable();
-    this.disable();
+    this.enable();
+    m_armMotor.setIdleMode(IdleMode.kBrake);
   }
 
   @Override
@@ -76,6 +76,11 @@ public class Arm extends PIDSubsystem {
   public void periodic() {
     super.periodic();
     m_angle.setDouble(getAngle());
-    // System.out.println(getAngle());
+    if(getAngle() > 90) {
+      setAngle(90);
+    }
+    if(getAngle() < 0) {
+      setAngle(0);
+    }
   }
 }

@@ -9,6 +9,8 @@ import frc.robot.subsystems.Elevator;
 
 public class Down extends CommandBase {
   private final Elevator m_lift;
+  private boolean m_pastLimit = false;
+
   /** Creates a new Up. */
   public Down(Elevator lift) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -18,7 +20,9 @@ public class Down extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_lift.disable();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -29,12 +33,22 @@ public class Down extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_lift.stop();
+    if(m_pastLimit) {
+      m_lift.setHeight(0);
+    } else{
+      m_lift.setHeight(m_lift.getHeight());
+    }
+    m_lift.enable();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(m_lift.getHeight() < 0) {
+      m_pastLimit = true;
+      return true;
+    } else{
+      return false;
+    }
   }
 }

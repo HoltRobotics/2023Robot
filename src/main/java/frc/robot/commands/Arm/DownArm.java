@@ -9,6 +9,8 @@ import frc.robot.subsystems.Arm;
 
 public class DownArm extends CommandBase {
   private final Arm m_arm;
+  private boolean m_pastLimit = false;
+
   /** Creates a new Up. */
   public DownArm(Arm arm) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -18,7 +20,9 @@ public class DownArm extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_arm.disable();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -29,12 +33,22 @@ public class DownArm extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_arm.stop();
+    if(m_pastLimit) {
+      m_arm.setAngle(90);
+    } else{
+      m_arm.setAngle(m_arm.getAngle());
+    }
+    m_arm.enable();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(m_arm.getAngle() > 90) {
+      m_pastLimit = true;
+      return true;
+    } else{
+      return false;
+    }
   }
 }

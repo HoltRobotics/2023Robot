@@ -10,12 +10,12 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+
 import frc.robot.Constants;
 
 public class Elevator extends PIDSubsystem {
@@ -26,7 +26,6 @@ public class Elevator extends PIDSubsystem {
   private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
   private final GenericEntry m_height;
 
-  private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(Constants.Elevator.kS, Constants.Elevator.kV);
   /** Creates a new Elevator. */
   public Elevator() {
     super(
@@ -34,24 +33,31 @@ public class Elevator extends PIDSubsystem {
         new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD));
     m_encoder = m_liftmotor.getAlternateEncoder(8192);
     m_encoder.setPositionConversionFactor(0.01); //TODO: put in right factor
-    m_height = m_tab.add("Elevator Height", getElevatorHeight()).withWidget(BuiltInWidgets.kTextView).withPosition(4, 1).withSize(1, 1).getEntry();
+    m_encoder.setPosition(0);
+    m_height = m_tab.add("Elevator Height", getHeight()).withWidget(BuiltInWidgets.kTextView).withPosition(4, 1).withSize(1, 1).getEntry();
     this.setHeight(0);
-    // this.enable();
+    this.enable();
     m_liftmotor.setIdleMode(IdleMode.kBrake);
   }
 
   @Override
   public void useOutput(double output, double setpoint) {
     // Use the output here
-    m_liftmotor.setVoltage(output + m_feedforward.calculate(setpoint));
+    m_liftmotor.setVoltage(output);
   }
 
   public void setHeight(double height) {
     setSetpoint(height);
   }
 
-  public double getElevatorHeight() {
+  public double getHeight() {
     return m_encoder.getPosition();
+  }
+
+  @Override
+  public double getMeasurement() {
+    // Return the process variable measurement here
+    return getHeight();
   }
 
   public void up() {
@@ -67,14 +73,14 @@ public class Elevator extends PIDSubsystem {
   }
 
   @Override
-  public double getMeasurement() {
-    // Return the process variable measurement here
-    return getElevatorHeight();
-  }
-
-  @Override
   public void periodic() {
     super.periodic();
-    m_height.setDouble(getElevatorHeight());
+    m_height.setDouble(getHeight());
+    if(getHeight() > 1) {
+      setHeight(0);
+    }
+    if(getHeight() < 0) {
+      setHeight(0);
+    }
   }
 }
