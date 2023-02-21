@@ -15,6 +15,7 @@ public final class Constants {
     public static final int kOperatorPort = 1;
 
     public static final double kMaxRobotHeight = 2; //TODO: get right height
+    public static final double kMinRobotHeight = 0.1;
 
     public static final class ElevatorConstants {
         public static final int elevatorMotorID = 9;
@@ -42,6 +43,7 @@ public final class Constants {
         public static final double kStage2Angle = 0;
         public static final double kStage3Angle = 0;
         public static final double kMaxAngle = 180;
+        public static final double kClawHeightOffset = 0.3; //TODO: get the right height
 
         public static final double kClawLenghtOffset = 0.25; //TODO: get right distances
         public static final double kArmLenght = 1;
@@ -58,7 +60,6 @@ public final class Constants {
         public static final int kBuddyForward = 3;
         public static final int kBuddyReverse = 4;
 
-        public static final double kClawTiltAngleOffset = 10; //TODO: get the right angle
     }
 
     public static final class SwerveConstants {

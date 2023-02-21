@@ -84,18 +84,21 @@ public class Arm extends PIDSubsystem {
   public void periodic() {
     super.periodic();
     m_angleDisplay.setDouble(getAngle());
-    double angleOffset = getAngle();
-    if(m_air.valueToBool(m_air.getTiltState())) {
-      angleOffset += PneumaticsConstants.kClawTiltAngleOffset;
-    }
-    if(ArmConstants.kArmLenght * Math.cos(angleOffset) + m_lift.getHeight() > Constants.kMaxRobotHeight && !m_inControl) {
+    if(ArmConstants.kArmLenght * Math.cos(getAngle()) + m_lift.getHeight() > Constants.kMaxRobotHeight && !m_inControl) {
       setAngle(Math.acos((Constants.kMaxRobotHeight - m_lift.getHeight()) / ArmConstants.kArmLenght));
     }
-    if(angleOffset < 0) {
-      setAngle(angleOffset);
+    if(ArmConstants.kArmLenght * Math.cos(getAngle()) + m_lift.getHeight() < Constants.kMinRobotHeight && !m_inControl) {
+      if(m_air.valueToBool(m_air.getTiltState())) {
+        setAngle(Math.acos(((Constants.kMaxRobotHeight + ArmConstants.kClawHeightOffset) - m_lift.getHeight()) / ArmConstants.kArmLenght));
+      } else {
+        setAngle(Math.acos((Constants.kMinRobotHeight - m_lift.getHeight()) / ArmConstants.kArmLenght));
+      }
     }
-    if(getAngle() > 180) {
-      setAngle(180);
+    if(getAngle() < 0) {
+      setAngle(0);
+    }
+    if(getAngle() > ArmConstants.kMaxAngle) {
+      setAngle(ArmConstants.kMaxAngle);
     }
   }
 }

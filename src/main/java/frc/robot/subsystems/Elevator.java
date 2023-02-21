@@ -84,12 +84,15 @@ public class Elevator extends PIDSubsystem {
   public void periodic() {
     super.periodic();
     m_heightDisplay.setDouble(getHeight());
-    double angleOffset = m_arm.getAngle();
-    if(m_air.valueToBool(m_air.getTiltState())) {
-      angleOffset += PneumaticsConstants.kClawTiltAngleOffset;
+    if(ArmConstants.kArmLenght * Math.cos(m_arm.getAngle()) + getHeight() > Constants.kMaxRobotHeight && !m_inControl) {
+      setHeight(Constants.kMaxRobotHeight - (ArmConstants.kArmLenght * Math.cos(m_arm.getAngle())));
     }
-    if(ArmConstants.kArmLenght * Math.cos(angleOffset) + getHeight() > Constants.kMaxRobotHeight && !m_inControl) {
-      setHeight(Constants.kMaxRobotHeight - (ArmConstants.kArmLenght * Math.cos(angleOffset)));
+    if(ArmConstants.kArmLenght * Math.cos(m_arm.getAngle()) + getHeight() < Constants.kMinRobotHeight && !m_inControl) {
+      if(m_air.valueToBool(m_air.getTiltState())) {
+        setHeight((Constants.kMinRobotHeight + ArmConstants.kClawHeightOffset) - (ArmConstants.kArmLenght * Math.cos(m_arm.getAngle())));
+      } else {
+        setHeight(Constants.kMinRobotHeight - (ArmConstants.kArmLenght * Math.cos(m_arm.getAngle())));
+      }
     }
     if(getHeight() > 1) {
       setHeight(1);
