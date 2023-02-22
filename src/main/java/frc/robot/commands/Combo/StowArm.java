@@ -16,15 +16,20 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Pneumatics;
 
 public class StowArm extends ParallelCommandGroup {
-  /** Creates a new StowArm. */
+  /**
+   * Combo command that ses the arm, elevator, and claw to the default position. Protects the game peice when we are driving.
+   * @param arm The Arm Subsystem
+   * @param lift The Elevator Subsystem
+   * @param air The Pneumatics Subsystem
+   */
   public StowArm(Arm arm, Elevator lift, Pneumatics air) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetHeight(ElevatorConstants.kStowHeight, lift),
-      new SetAngle(ArmConstants.kStowAngle, arm),
-      new CloseClaw(air),
-      new ClawDown(air)
+      new SetHeight(ElevatorConstants.kStowHeight, lift), // Sets the elevator to the default height.
+      new SetAngle(ArmConstants.kStowAngle, arm), // Sets the arm to the default angle.
+      new CloseClaw(air), // Makes sure the claw is closed.
+      new ClawDown(air) // Sets the claw pointing down.
     );
   }
 }

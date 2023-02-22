@@ -48,7 +48,7 @@
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "before",
-        "waitTime": 0.5
+        "waitTime": 1.0
       }
     },
     {
@@ -76,7 +76,7 @@
   ],
   "markers": [
     {
-      "position": 1.1199999999999373,
+      "position": 1.4254545454545313,
       "names": [
         "stowArm"
       ]

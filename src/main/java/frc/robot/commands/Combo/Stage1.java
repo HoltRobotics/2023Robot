@@ -16,15 +16,20 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Pneumatics;
 
 public class Stage1 extends ParallelCommandGroup {
-  /** Creates a new Stage1. */
+  /**
+   * Combo command that sets the arm, elevator, and claw to the right states to score on the low goal/pick up peices. Runs all the commands at once.
+   * @param arm The Arm Subsystem
+   * @param lift The Elevator Subsystem
+   * @param air The Pneumatics Subsystem
+   */
   public Stage1(Arm arm, Elevator lift, Pneumatics air) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetHeight(ElevatorConstants.kStage1Height, lift),
-      new SetAngle(ArmConstants.kStage1Angle, arm),
-      new CloseClaw(air),
-      new ClawUp(air)
+      new SetHeight(ElevatorConstants.kStage1Height, lift), // Sets the Elevator to the right height.
+      new SetAngle(ArmConstants.kStage1Angle, arm), // Sets the arm to the right angle.
+      new CloseClaw(air), // Makes sure the claw is closed.
+      new ClawUp(air) // Sets the claw level.
     );
   }
 }

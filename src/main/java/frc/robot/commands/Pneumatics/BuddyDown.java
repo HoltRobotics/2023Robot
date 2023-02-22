@@ -9,17 +9,21 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Pneumatics;
 
 public class BuddyDown extends InstantCommand {
-  private final Pneumatics m_air;
+  private final Pneumatics m_air; // Subsystem needed to control the pneumatics.
 
+  /**
+   * Command that puts the forks down for the buddy climb.
+   * @param air The Pneumatics Subsystem.
+   */
   public BuddyDown(Pneumatics air) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_air = air;
-    addRequirements(m_air);
+    m_air = air; // Passes the given subsystem to the rest of the command.
+    addRequirements(m_air); // Stops all other commands using the Pneumatics subsystem.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_air.setBuddyState(Value.kForward);
+    m_air.setBuddyState(Value.kForward); // Puts the forks down.
   }
 }

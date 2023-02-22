@@ -9,8 +9,8 @@ import frc.robot.Constants.*;
 import frc.robot.subsystems.Arm;
 
 public class DownArm extends CommandBase {
-  private final Arm m_arm;
-  private boolean m_pastLimit = false;
+  private final Arm m_arm; // Subsystem needed to control the arm.
+  private boolean m_pastLimit = false; // Used to track if the arm goes past its limit.
 
   /**
    * Command that forces the arm to rotate down.
@@ -38,7 +38,7 @@ public class DownArm extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(m_pastLimit) { // Checks to see if the arm when past its max.
+    if(m_pastLimit) { // Checks to see if the arm went past its max.
       m_arm.setAngle(ArmConstants.kMaxAngle); // If it did, set it back to the max.
     } else{
       m_arm.setAngle(m_arm.getAngle()); // If it didn't set the PID setpoint to the new angle.
@@ -53,7 +53,7 @@ public class DownArm extends CommandBase {
       m_pastLimit = true; // If it is, tells the command that it went past the limit.
       return true; // Ends the command.
     } else{
-      return false; // Let the command keep running.
+      return false;// If its not, let the command keep running.
     }
   }
 }

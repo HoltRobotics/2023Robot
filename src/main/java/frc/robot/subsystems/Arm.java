@@ -69,12 +69,12 @@ public class Arm extends PIDSubsystem {
   }
 
   public void up() {
-    m_armMotor.set(.75);
+    m_armMotor.set(-0.75);
     m_inControl = true;
   }
 
   public void down() {
-    m_armMotor.set(-0.75);
+    m_armMotor.set(0.75);
     m_inControl = true;
   }
 

@@ -133,23 +133,25 @@ public class RobotContainer {
         new POVButton(m_driver, 90).whileTrue(new UpArm(m_arm));
         new POVButton(m_driver, 270).whileTrue(new DownArm(m_arm));
 
-        new JoystickButton(m_driver, XboxController.Button.kA.value).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
+        // new JoystickButton(m_driver, XboxController.Button.kA.value).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
 
         new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new SlowDrive(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_arm));
         new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ToggleTilt(m_air));
         new JoystickButton(m_driver, XboxController.Button.kStart.value).onTrue(new ZeroGyro(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kBack.value).onTrue(new ResetEncoders(m_swerve));
-        // new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new OpenClaw(m_air)).onFalse(new CloseClaw(m_air));
+        new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new OpenClaw(m_air)).onFalse(new CloseClaw(m_air));
 
-        new JoystickButton(m_operator, 2).whileTrue(new TagDistanceTest(m_swerve, m_light));
 
         new JoystickButton(m_operator, 1).onTrue(new StowArm(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 2).onTrue(new SlideStage(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 3).onTrue(new DropStage(m_arm, m_lift, m_air));
         new JoystickButton(m_operator, 5).onTrue(new ClawUp(m_air));
         new JoystickButton(m_operator, 6).onTrue(new Stage1(m_arm, m_lift, m_air));
         new JoystickButton(m_operator, 7).onTrue(new Stage2(m_arm, m_lift, m_air));
         new JoystickButton(m_operator, 8).onTrue(new Stage3(m_arm, m_lift, m_air));
         new JoystickButton(m_operator, 10).onTrue(new ClawDown(m_air));
+        new JoystickButton(m_operator, 21).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
     }
 
     /**

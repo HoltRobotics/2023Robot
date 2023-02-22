@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Arm;
 
 public class SetAngle extends InstantCommand {
-  private double m_angle;
-  private Arm m_arm;
+  private double m_angle; // Used to store the given angle.
+  private Arm m_arm; // Subsystem needed to control the arm.
 
   /**
    * Command to set the PID angle of the Arm.
    * @param angle Angle to set the arm too.
-   * @param arm The Arm Subsystem.
+   * @param arm The Arm Subsystem
    */
   public SetAngle(double angle, Arm arm) {
     // Use addRequirements() here to declare subsystem dependencies.

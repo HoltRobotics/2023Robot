@@ -8,47 +8,51 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Elevator;
 
 public class Down extends CommandBase {
-  private final Elevator m_lift;
-  private boolean m_pastLimit = false;
+  private final Elevator m_lift; // Subsystem needed to control the elevator.
+  private boolean m_pastLimit = false; // Used to track if the elevator goes past its limit.
 
-  /** Creates a new Up. */
+  /**
+   * Command that forces the elevator down.
+   * When the command ends, the new location will become the new setpoint.
+   * @param lift The Elevator Subsystem
+   */
   public Down(Elevator lift) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_lift = lift;
-    addRequirements(m_lift);
+    m_lift = lift; // Passes the given subsystem to the rest of the command.
+    addRequirements(m_lift); // Stops all other commands using the Elevator subsystem.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_lift.disable();
+    m_lift.disable(); // Disables the PID controller so it won't fight back.
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_lift.down();
+    m_lift.down(); // Calls for the elevator to run down.
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(m_pastLimit) {
-      m_lift.setHeight(0);
+    if(m_pastLimit) { // Checks to see if the elevator went past its min.
+      m_lift.setHeight(0); // If it did, set it back to the min.
     } else{
-      m_lift.setHeight(m_lift.getHeight());
+      m_lift.setHeight(m_lift.getHeight()); // If it didn't, set the PID setpoint to the new height.
     }
-    m_lift.enable();
+    m_lift.enable(); // Re-Enables the PID controller.
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_lift.getHeight() < 0) {
-      m_pastLimit = true;
-      return true;
+    if(m_lift.getHeight() < 0) { // Checks to see if the elevator is past the min height.
+      m_pastLimit = true; // If it is, tells the command that it went past the limit.
+      return true; // Ends the command.
     } else{
-      return false;
+      return false; // If its not, let the command keep running.
     }
   }
 }

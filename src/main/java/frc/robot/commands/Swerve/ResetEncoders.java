@@ -8,17 +8,21 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Swerve;
 
 public class ResetEncoders extends InstantCommand {
-  private Swerve m_swerve;
+  private Swerve m_swerve; // The subsystem needed to control the Swerve.
 
+  /**
+   * A command that resets the steering encoder back to the absolute encoder value.
+   * @param swerve // The Swerve Subsystem
+   */
   public ResetEncoders(Swerve swerve) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_swerve = swerve;
-    addRequirements(m_swerve);
+    m_swerve = swerve; // Passes the subsystem to the rest of the command.
+    addRequirements(m_swerve); // Stops all other commands using the Swerve subsystem.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_swerve.resetEncoders();
+    m_swerve.resetEncoders(); // Resets the encoders.
   }
 }
