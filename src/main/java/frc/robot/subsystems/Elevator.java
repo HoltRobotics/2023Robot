@@ -10,7 +10,9 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -19,8 +21,8 @@ import frc.robot.Constants;
 import frc.robot.Constants.*;
 
 public class Elevator extends PIDSubsystem {
-  private final Arm m_arm = new Arm();
-  private final Pneumatics m_air = new Pneumatics();
+  // private final Arm m_arm = new Arm();
+  // private final Pneumatics m_air = new Pneumatics();
   
   private final CANSparkMax m_liftmotor = new CANSparkMax(ElevatorConstants.elevatorMotorID, MotorType.kBrushless);
 
@@ -36,13 +38,18 @@ public class Elevator extends PIDSubsystem {
     super(
         // The PIDController used by the subsystem
         new PIDController(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD));
-    m_encoder = m_liftmotor.getAlternateEncoder(8192);
-    m_encoder.setPositionConversionFactor(0.01); //TODO: put in right factor
+    // m_encoder = m_liftmotor.getAlternateEncoder(8192);
+    m_encoder = m_liftmotor.getEncoder();
+    m_encoder.setPositionConversionFactor(Units.inchesToMeters(Math.PI * 1.44) / 16);
+    // m_encoder.setInverted(true);
     m_encoder.setPosition(0);
+    m_tab.add("Elevator", m_controller);
+    m_liftmotor.setInverted(true);
     m_heightDisplay = m_tab.add("Elevator Height", getHeight()).withWidget(BuiltInWidgets.kTextView).withPosition(4, 1).withSize(1, 1).getEntry();
     this.setHeight(0);
     this.enable();
     m_liftmotor.setIdleMode(IdleMode.kBrake);
+    // m_liftmotor.setIdleMode(IdleMode.kCoast);
   }
 
   @Override
@@ -84,20 +91,20 @@ public class Elevator extends PIDSubsystem {
   public void periodic() {
     super.periodic();
     m_heightDisplay.setDouble(getHeight());
-    if(ArmConstants.kArmLenght * Math.cos(m_arm.getAngle()) + getHeight() > Constants.kMaxRobotHeight && !m_inControl) {
-      setHeight(Constants.kMaxRobotHeight - (ArmConstants.kArmLenght * Math.cos(m_arm.getAngle())));
+    // if(ArmConstants.kArmLenght * Math.cos(m_arm.getAngle()) + getHeight() > Constants.kMaxRobotHeight && !m_inControl) {
+    //   setHeight(Constants.kMaxRobotHeight - (ArmConstants.kArmLenght * Math.cos(m_arm.getAngle())));
+    // }
+    // if(ArmConstants.kArmLenght * Math.cos(m_arm.getAngle()) + getHeight() < Constants.kMinRobotHeight && !m_inControl) {
+    //   if(m_air.valueToBool(m_air.getTiltState())) {
+    //     setHeight((Constants.kMinRobotHeight + ArmConstants.kClawHeightOffset) - (ArmConstants.kArmLenght * Math.cos(m_arm.getAngle())));
+    //   } else {
+    //     setHeight(Constants.kMinRobotHeight - (ArmConstants.kArmLenght * Math.cos(m_arm.getAngle())));
+    //   }
+    // }
+    if(getHeight() > ElevatorConstants.kMaxHeight) {
+      setHeight(ElevatorConstants.kMaxHeight);
     }
-    if(ArmConstants.kArmLenght * Math.cos(m_arm.getAngle()) + getHeight() < Constants.kMinRobotHeight && !m_inControl) {
-      if(m_air.valueToBool(m_air.getTiltState())) {
-        setHeight((Constants.kMinRobotHeight + ArmConstants.kClawHeightOffset) - (ArmConstants.kArmLenght * Math.cos(m_arm.getAngle())));
-      } else {
-        setHeight(Constants.kMinRobotHeight - (ArmConstants.kArmLenght * Math.cos(m_arm.getAngle())));
-      }
-    }
-    if(getHeight() > 1) {
-      setHeight(1);
-    }
-    if(getHeight() < 0) {
+    if(getHeight() < -0.005) {
       setHeight(0);
     }
   }

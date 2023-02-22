@@ -21,16 +21,16 @@ public final class Constants {
         public static final int elevatorMotorID = 9;
         
         public static final double kStowHeight = 0; //TODO: get right heights
-        public static final double kStage1Height = 0; 
-        public static final double kStage2Height = 0;
+        public static final double kStage1Height = 0.74; 
+        public static final double kStage2Height = 0.1458;
         public static final double kStage3Height = 0;
-        public static final double kMaxHeight = 1;
+        public static final double kMaxHeight = 0.91;
 
         public static final double kBackWheelsOffset = 0.25; //TODO: get right distances
         public static final double kFrontWheelsOffset = 0.25;
 
         //TODO: tune theses
-        public static final double kP = 0;
+        public static final double kP = 200;
         public static final double kI = 0;
         public static final double kD = 0;
     }
@@ -39,8 +39,8 @@ public final class Constants {
         public static final int armMotorID = 10;
 
         public static final double kStowAngle = 0; //TODO: get the right angles
-        public static final double kStage1Angle = 0;
-        public static final double kStage2Angle = 0;
+        public static final double kStage1Angle = 134;
+        public static final double kStage2Angle = 32.43;
         public static final double kStage3Angle = 0;
         public static final double kMaxAngle = 180;
         public static final double kClawHeightOffset = 0.3; //TODO: get the right height
@@ -48,7 +48,7 @@ public final class Constants {
         public static final double kClawLenghtOffset = 0.25; //TODO: get right distances
         public static final double kArmLenght = 1;
 
-        public static final double kP = 0.4;
+        public static final double kP = 0.25;
         public static final double kI = 0;
         public static final double kD = 0;
     }

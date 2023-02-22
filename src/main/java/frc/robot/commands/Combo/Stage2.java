@@ -5,6 +5,8 @@
 package frc.robot.commands.Combo;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.commands.Arm.SetAngle;
@@ -21,7 +23,11 @@ public class Stage2 extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetHeight(ElevatorConstants.kStage2Height, lift),
+      new SequentialCommandGroup(
+        new SetHeight(ElevatorConstants.kStage2Height + 0.1, lift),
+        new WaitCommand(0.1),
+        new SetHeight(ElevatorConstants.kStage2Height, lift)
+        ),
       new SetAngle(ArmConstants.kStage2Angle, arm),
       new CloseClaw(air),
       new ClawUp(air)

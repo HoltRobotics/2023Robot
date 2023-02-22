@@ -59,6 +59,9 @@ public class RobotContainer {
     private final List<PathPlannerTrajectory> m_rotPath = PathPlanner.loadPathGroup("Rotation Path", new PathConstraints(1, 1));
     private final List<PathPlannerTrajectory> m_dancePaths = PathPlanner.loadPathGroup("Dance Path", new PathConstraints(3, 3));
     private final List<PathPlannerTrajectory> m_LPath = PathPlanner.loadPathGroup("L Path", new PathConstraints(3, 3));
+    private final List<PathPlannerTrajectory> m_oneLong = PathPlanner.loadPathGroup("One Peice Long Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
+    private final List<PathPlannerTrajectory> m_oneShort = PathPlanner.loadPathGroup("One Peice Short Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
+    private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(1, 1), new PathConstraints(3, 2), new PathConstraints(3, 2));
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -78,6 +81,9 @@ public class RobotContainer {
         m_autoChooser.addOption("Rotation Path", m_rotPath);
         m_autoChooser.addOption("Dance Path", m_dancePaths);
         m_autoChooser.addOption("L", m_LPath);
+        m_autoChooser.addOption("One Peice Long", m_oneLong);
+        m_autoChooser.addOption("One Peice Short", m_oneShort);
+        m_autoChooser.addOption("Two Short", m_twoShort);
 
         PathPlannerServer.startServer(5811);
 
@@ -88,7 +94,7 @@ public class RobotContainer {
         m_eventMap.put("test1", new PrintCommand("Test 1"));
         m_eventMap.put("test2", new PrintCommand("Test 2"));
         m_eventMap.put("test3", new PrintCommand("Test 3"));
-        m_eventMap.put("timeout", new WaitCommand(3));
+        m_eventMap.put("timeout", new WaitCommand(1));
         m_eventMap.put("openClaw", new OpenClaw(m_air));
         m_eventMap.put("closeClaw", new CloseClaw(m_air));
         m_eventMap.put("clawDown", new ClawDown(m_air));
@@ -122,19 +128,19 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        new POVButton(m_driver, 180).whileTrue(new Up(m_lift));
-        new POVButton(m_driver, 0).whileTrue(new Down(m_lift));
+        new POVButton(m_driver, 180).whileTrue(new Down(m_lift));
+        new POVButton(m_driver, 0).whileTrue(new Up(m_lift));
         new POVButton(m_driver, 90).whileTrue(new UpArm(m_arm));
         new POVButton(m_driver, 270).whileTrue(new DownArm(m_arm));
 
-        // new JoystickButton(m_driver, XboxController.Button.kA.value).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
+        new JoystickButton(m_driver, XboxController.Button.kA.value).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
 
-        new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new SlowDrive(m_swerve));
+        new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new SlowDrive(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_arm));
         new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ToggleTilt(m_air));
         new JoystickButton(m_driver, XboxController.Button.kStart.value).onTrue(new ZeroGyro(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kBack.value).onTrue(new ResetEncoders(m_swerve));
-        new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new OpenClaw(m_air)).onFalse(new CloseClaw(m_air));
+        // new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new OpenClaw(m_air)).onFalse(new CloseClaw(m_air));
 
         new JoystickButton(m_operator, 2).whileTrue(new TagDistanceTest(m_swerve, m_light));
 
