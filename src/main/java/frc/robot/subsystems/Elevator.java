@@ -12,12 +12,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.wpilibj.DutyCycle;
+// import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import frc.robot.Constants;
+// import frc.robot.Constants;
 import frc.robot.Constants.*;
 
 public class Elevator extends PIDSubsystem {
@@ -31,7 +31,7 @@ public class Elevator extends PIDSubsystem {
   private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
   private final GenericEntry m_heightDisplay;
 
-  private boolean m_inControl = false;
+  // private boolean m_inControl = false;
 
   /** Creates a new Elevator. */
   public Elevator() {
@@ -74,17 +74,17 @@ public class Elevator extends PIDSubsystem {
 
   public void up() {
     m_liftmotor.set(.5);
-    m_inControl = true;
+    // m_inControl = true;
   }
 
   public void down() {
     m_liftmotor.set(-0.5);
-    m_inControl = true;
+    // m_inControl = true;
   }
 
   public void stop() {
     m_liftmotor.stopMotor();
-    m_inControl = false;
+    // m_inControl = false;
   }
 
   @Override
