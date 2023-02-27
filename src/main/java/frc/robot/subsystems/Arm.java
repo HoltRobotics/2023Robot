@@ -54,7 +54,7 @@ public class Arm extends PIDSubsystem {
   @Override
   public void useOutput(double output, double setpoint) {
     // Use the output here
-    m_armMotor.setVoltage(output);
+    m_armMotor.setVoltage(output); // Sets the motor to the given voltage. Will adjust for voltage sag.
   }
 
   /**
@@ -62,7 +62,7 @@ public class Arm extends PIDSubsystem {
    * @param angle The desired angle of the arm.
    */
   public void setAngle(double angle) {
-    setSetpoint(angle);
+    setSetpoint(angle); // Sets the PID setpoint to the given input.
   }
 
   /**
@@ -70,7 +70,7 @@ public class Arm extends PIDSubsystem {
    * @return Angle of the arm.
    */
   public double getAngle() {
-    return m_encoder.getPosition();
+    return m_encoder.getPosition(); // Returns the angle of the arm.
   }
 
   /**
@@ -79,14 +79,14 @@ public class Arm extends PIDSubsystem {
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
-    return getAngle();
+    return getAngle(); // Returns the angle of the arm.
   }
 
   /**
    * Method for forcing the arm to move up.
    */
   public void up() {
-    m_armMotor.set(-0.75);
+    m_armMotor.set(-0.75); // Sets the speed of the motor to -3/4.
     // m_inControl = true;
   }
 
@@ -94,7 +94,7 @@ public class Arm extends PIDSubsystem {
    * Method for forcing the arm to move down.
    */
   public void down() {
-    m_armMotor.set(0.75);
+    m_armMotor.set(0.75); // Sets the speed of the motor to 3/4.
     // m_inControl = true;
   }
 
@@ -102,7 +102,7 @@ public class Arm extends PIDSubsystem {
    * Method for stopping the motor.
    */
   public void stop() {
-    m_armMotor.stopMotor();
+    m_armMotor.stopMotor(); // Stops the motor.
     // m_inControl = false;
   }
 
@@ -110,7 +110,7 @@ public class Arm extends PIDSubsystem {
    * Resets the arm encoder back to 0.
    */
   public void resetEncoder() {
-    m_encoder.setPosition(0);
+    m_encoder.setPosition(0); // Sets the encoder to 0 degrees.
   }
 
   /**
