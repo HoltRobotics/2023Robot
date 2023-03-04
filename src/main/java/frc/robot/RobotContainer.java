@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.commands.Swerve.*;
 import frc.robot.commands.Combo.*;
 import frc.robot.commands.Elevator.*;
+import frc.robot.commands.LEDs.Lights;
 import frc.robot.commands.Arm.*;
 import frc.robot.commands.Pneumatics.*;
 import frc.robot.subsystems.*;
@@ -41,6 +42,7 @@ public class RobotContainer {
     private final Elevator m_lift = new Elevator();
     private final Pneumatics m_air = new Pneumatics();
     private final Limelight m_light = new Limelight();
+    private final LEDs m_led = new LEDs();
 
     /* Controllers */
     private final XboxController m_driver = new XboxController(Constants.kDriverPort);
@@ -74,6 +76,8 @@ public class RobotContainer {
                 m_swerve
             )
         );
+
+        m_led.setDefaultCommand(new Lights(m_led));
 
         m_tab.add("Auton List", m_autoChooser).withPosition(3, 2).withSize(2, 1).withWidget(BuiltInWidgets.kComboBoxChooser);
         m_autoChooser.setDefaultOption("Test Path", m_testPath);
