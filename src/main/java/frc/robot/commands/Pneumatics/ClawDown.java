@@ -23,6 +23,6 @@ public class ClawDown extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_air.setTiltState(Value.kReverse); // Tilts the claw down.
+    m_air.setTiltState(Value.kForward); // Tilts the claw down.
   }
 }

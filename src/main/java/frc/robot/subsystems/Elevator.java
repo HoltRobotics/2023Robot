@@ -42,7 +42,8 @@ public class Elevator extends PIDSubsystem {
     m_encoder.setPositionConversionFactor(Units.inchesToMeters(Math.PI * 1.44) / 16); // Sets the encoder units to meters traveled by the elevator.
     m_encoder.setPosition(0); // Sets the encoder to 0 meters.
     // m_tab.add("Elevator", m_controller); // Adds the PID controller to the suffleboard for tuning.
-    m_liftmotor.setInverted(true); // Inverts the motor.
+    m_liftmotor.setInverted(false); // Inverts the motor.
+    m_liftmotor.setSmartCurrentLimit(30);
     m_heightDisplay = m_tab.add("Elevator Height", getHeight()).withWidget(BuiltInWidgets.kTextView).withPosition(4, 1).withSize(1, 1).getEntry(); // Adds the elevator height to the shuffleboard tab.
     this.setHeight(0); // Sets the PID controller to 0 meters.
     this.enable(); // Turns on the PID contorller.
@@ -121,6 +122,7 @@ public class Elevator extends PIDSubsystem {
   public void periodic() {
     super.periodic(); // Runs the PID contorller.
     m_heightDisplay.setDouble(getHeight()); // Updates the height on shuffleboard.
+    // System.out.println(getSetpoint());
     // This block of code needs to be worked on. Might not work. Might need to combine Arm, Elevator, and Pneumatics together to make work.
     // if(ArmConstants.kArmLenght * Math.cos(m_arm.getAngle()) + getHeight() > Constants.kMaxRobotHeight && !m_inControl) {
     //   setHeight(Constants.kMaxRobotHeight - (ArmConstants.kArmLenght * Math.cos(m_arm.getAngle())));
@@ -135,7 +137,7 @@ public class Elevator extends PIDSubsystem {
     if(getHeight() > ElevatorConstants.kMaxHeight) { // Checks to see if the elevator is past the max limit.
       setHeight(ElevatorConstants.kMaxHeight); // If it is, set the PID to the max height.
     }
-    if(getHeight() < 0) { // Checks to see if the arm is past the min limit.
+    if(getHeight() < -0.05) { // Checks to see if the arm is past the min limit.
       setHeight(0); // If is is, set the PID to the min height.
     }
   }

@@ -22,7 +22,7 @@ public class SlowDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_swerve.setSpeedReducer(0.5); // Sets the speed cap to half speed.
+    m_swerve.setSpeedReducer(0.25); // Sets the speed cap to half speed.
   }
 
   // Called every time the scheduler runs while the command is scheduled.

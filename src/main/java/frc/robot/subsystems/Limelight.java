@@ -35,7 +35,7 @@ public class Limelight extends SubsystemBase {
   /** Creates a new Limelight. */
   public Limelight() {
     m_tv = m_tab.add("Has Target", false).withPosition(5, 1).withSize(1, 1).getEntry(); // Adds a box to the shuffleboard to say if the limelight has a target.
-    m_camera = new HttpCamera("LimeLight", "http://10.60.78.11:5800/stream.mjpg"); // Sets the camera object to the limelight camera.
+    m_camera = new HttpCamera("LimeLight", "http://10.60.78.107:5800/stream.mjpg"); // Sets the camera object to the limelight camera.
     CameraServer.startAutomaticCapture(m_camera); // Starts the camera.
     m_tab.add("Camera", m_camera).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 7).withSize(3, 3); // Adds the camera to the shuffleboard.
   }

@@ -24,7 +24,7 @@ public final class Constants {
         public static final double kStage1Height = 0.74; 
         public static final double kStage2Height = 0.1458;
         public static final double kStage3Height = 0.97;
-        public static final double kSlideStageHeight = 0;
+        public static final double kSlideStageHeight = 0.1;
         public static final double kDropStageHeight = 0;
         public static final double kMaxHeight = 0.98;
 
@@ -42,7 +42,7 @@ public final class Constants {
         public static final double kStowAngle = 0;
         public static final double kStage1Angle = 134;
         public static final double kStage2Angle = 32.43;
-        public static final double kStage3Angle = 75;
+        public static final double kStage3Angle = 67;
         public static final double kHumanStageAngle = 22;
         public static final double kDropStageAngle = 38.7;
         public static final double kMaxAngle = 180;
@@ -51,7 +51,7 @@ public final class Constants {
         public static final double kClawLenghtOffset = 0.25; //TODO: get right distances
         public static final double kArmLenght = 1;
 
-        public static final double kP = 0.25;
+        public static final double kP = 0.15;
         public static final double kI = 0;
         public static final double kD = 0;
     }
@@ -140,7 +140,7 @@ public final class Constants {
         /** Meters per Second */
         public static final double maxSpeed = Units.feetToMeters(16.3);
         /** Radians per Second */
-        public static final double maxAngularVelocity = 10.0; //TODO: This must be tuned to specific robot
+        public static final double maxAngularVelocity = 4.5;
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;

@@ -60,10 +60,10 @@ public class RobotContainer {
     private final List<PathPlannerTrajectory> m_transPath = PathPlanner.loadPathGroup("Translation Path", new PathConstraints(3, 3));
     private final List<PathPlannerTrajectory> m_rotPath = PathPlanner.loadPathGroup("Rotation Path", new PathConstraints(1, 1));
     private final List<PathPlannerTrajectory> m_dancePaths = PathPlanner.loadPathGroup("Dance Path", new PathConstraints(3, 3));
-    private final List<PathPlannerTrajectory> m_LPath = PathPlanner.loadPathGroup("L Path", new PathConstraints(3, 3));
     private final List<PathPlannerTrajectory> m_oneLong = PathPlanner.loadPathGroup("One Peice Long Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
     private final List<PathPlannerTrajectory> m_oneShort = PathPlanner.loadPathGroup("One Peice Short Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
-    private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(1, 1), new PathConstraints(3, 2), new PathConstraints(3, 2));
+    private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(2, 1), new PathConstraints(2, 2), new PathConstraints(2, 2));
+    private final List<PathPlannerTrajectory> m_twoLong = PathPlanner.loadPathGroup("Two Peice Long Path", new PathConstraints(1, 1), new PathConstraints(1, 1), new PathConstraints(3, 4), new PathConstraints(0.75, 1),new PathConstraints(1, 1),new PathConstraints(1, 1));
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -84,10 +84,10 @@ public class RobotContainer {
         m_autoChooser.addOption("Translation Path", m_transPath);
         m_autoChooser.addOption("Rotation Path", m_rotPath);
         m_autoChooser.addOption("Dance Path", m_dancePaths);
-        m_autoChooser.addOption("L", m_LPath);
         m_autoChooser.addOption("One Peice Long", m_oneLong);
         m_autoChooser.addOption("One Peice Short", m_oneShort);
         m_autoChooser.addOption("Two Short", m_twoShort);
+        m_autoChooser.addOption("Two Long", m_twoLong);
 
         PathPlannerServer.startServer(5811);
 
@@ -107,6 +107,7 @@ public class RobotContainer {
         m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air));
         m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air));
         m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air));
+        m_eventMap.put("groundPick", new GroundConePick(m_arm, m_lift, m_air));
 
         m_autoBuilder = new SwerveAutoBuilder(
             m_swerve::getPose,
@@ -165,5 +166,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         return m_autoBuilder.fullAuto(m_autoChooser.getSelected());
+        // return new WaitCommand(15);
     }
 }
