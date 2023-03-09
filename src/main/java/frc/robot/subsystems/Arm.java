@@ -41,7 +41,7 @@ public class Arm extends PIDSubsystem {
     m_encoder.setPositionConversionFactor(360); // Turns the units to degrees.
     m_encoder.setPosition(0); // Sets the encoder to 0 degrees.
     m_armMotor.setInverted(false); // Motor is not inverted.
-    m_tab.add("Arm", m_controller); // Adds the PID controller to the shuffleboard for tuning.
+    // m_tab.add("Arm", m_controller); // Adds the PID controller to the shuffleboard for tuning.
     m_angleDisplay = m_tab.add("Arm Angle", getAngle()).withWidget(BuiltInWidgets.kTextView).withPosition(3, 1).withSize(1, 1).getEntry(); // Adds the arm angle to the shuffleboard tab.
     this.setAngle(0); // Sets the PID controller to 0 degrees.
     this.enable(); // Turns on the PID controller.
@@ -131,7 +131,7 @@ public class Arm extends PIDSubsystem {
     //     setAngle(Math.acos((Constants.kMinRobotHeight - m_lift.getHeight()) / ArmConstants.kArmLenght));
     //   }
     // }
-    if(getAngle() < -1) { // Checks to see if the arm is past the min limit.
+    if(getAngle() < -5) { // Checks to see if the arm is past the min limit.
       setAngle(0); // If it is set the PID to 0.
     }
     if(getAngle() > ArmConstants.kMaxAngle) { // Checks to see if the arm is past the max limit.

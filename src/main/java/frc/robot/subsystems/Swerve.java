@@ -139,6 +139,10 @@ public class Swerve extends SubsystemBase {
         m_gyro.setYaw(0);
     }
 
+    public void zeroGyro(double angle) {
+        m_gyro.setYaw(angle);
+    }
+
     public void resetEncoders() {
         for(SwerveModule mod : m_swerveMods) {
             mod.resetToAbsolute();
@@ -150,7 +154,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public double getPitch() {
-        return m_gyro.getPitch();
+        return m_gyro.getRoll();
     }
 
     public void stopDrive() {
