@@ -36,15 +36,22 @@ public class Balance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!m_isPID) {
-      if(m_swerve.getPitch() > 5) {
-        m_isPID = !m_isPID;
-      }
-      m_swerve.drive(new Translation2d(-1.5, 0), 0, true, true);
-      System.out.println("NO PID");
+    // System.out.print("Pitch: " + m_swerve.getPitch() + " ");
+    // if(!m_isPID) {
+    //   if(m_swerve.getPitch() > 14) {
+    //     m_isPID = !m_isPID;
+    //   }
+    //   m_swerve.drive(new Translation2d(1.5, 0), 0, true, true);
+    //   System.out.println("NO PID");
+    // } else {
+    //   m_swerve.drive(new Translation2d(-m_controller.calculate(m_swerve.getPitch()) * 0.5, 0), 0, true, true);
+    //   System.out.println("YES PID");
+    // }
+    m_swerve.drive(new Translation2d(-m_controller.calculate(m_swerve.getPitch()) * 0.5, 0), 0, true, true);
+    if(m_swerve.getPitch() < 5) {
+      m_swerve.drive(new Translation2d(), Math.toRadians(90), true, true);
     } else {
-      m_swerve.drive(new Translation2d(-m_controller.calculate(m_swerve.getPitch()) * 0.5, 0), 0, true, true);
-      System.out.println("YES PID");
+    m_swerve.drive(new Translation2d(0.5, 0), 0, true, true);
     }
   }
 

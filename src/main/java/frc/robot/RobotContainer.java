@@ -55,7 +55,8 @@ public class RobotContainer {
     private final HashMap<String, Command> m_eventMap = new HashMap<>();
 
     private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
-    private final SendableChooser<List<PathPlannerTrajectory>> m_autoChooser = new SendableChooser<>();
+    private final SendableChooser<CommandBase> m_autoChooser2 = new SendableChooser<>();
+    // private final SendableChooser<List<PathPlannerTrajectory>> m_autoChooser = new SendableChooser<>();
 
     // private final UsbCamera m_camera;
 
@@ -67,7 +68,7 @@ public class RobotContainer {
     private final List<PathPlannerTrajectory> m_oneShort = PathPlanner.loadPathGroup("One Peice Short Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
     private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(2, 1), new PathConstraints(2, 2), new PathConstraints(2, 2));
     private final List<PathPlannerTrajectory> m_twoLong = PathPlanner.loadPathGroup("Two Peice Long Path", new PathConstraints(1, 1), new PathConstraints(1, 1), new PathConstraints(3, 4), new PathConstraints(0.75, 1),new PathConstraints(1, 1),new PathConstraints(1, 1));
-    private final List<PathPlannerTrajectory> m_oneBal = PathPlanner.loadPathGroup("One Cone Balance", new PathConstraints(2, 2), new PathConstraints(1, 2));
+    private final List<PathPlannerTrajectory> m_oneBal = PathPlanner.loadPathGroup("One Cone Balance", new PathConstraints(2, 2), new PathConstraints(0.75, 2));
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -80,27 +81,6 @@ public class RobotContainer {
                 m_swerve
             )
         );
-
-        m_led.setDefaultCommand(new Lights(m_led));
-
-        m_tab.add("Camrea", new HttpCamera("LimeLight", "http://10.60.78.11:5800/", HttpCameraKind.kMJPGStreamer)).withSize(3, 3);
-
-        m_tab.add("Auton List", m_autoChooser).withPosition(3, 2).withSize(2, 1).withWidget(BuiltInWidgets.kComboBoxChooser);
-        // m_autoChooser.setDefaultOption("Test Path", m_testPath);
-        // m_autoChooser.addOption("Translation Path", m_transPath);
-        // m_autoChooser.addOption("Rotation Path", m_rotPath);
-        // m_autoChooser.addOption("Dance Path", m_dancePaths);
-        // m_autoChooser.addOption("One Peice Long", m_oneLong);
-        // m_autoChooser.addOption("One Peice Short", m_oneShort);
-        m_autoChooser.addOption("Two Short", m_twoShort);
-        // m_autoChooser.addOption("Two Long", m_twoLong);
-        m_autoChooser.setDefaultOption("One & Balance", m_oneBal);
-
-        PathPlannerServer.startServer(5811);
-
-        // m_camera = CameraServer.startAutomaticCapture();
-
-        // m_tab.add("Camera", m_camera).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 7).withSize(3, 3);
 
         m_eventMap.put("test1", new PrintCommand("Test 1"));
         m_eventMap.put("test2", new PrintCommand("Test 2"));
@@ -129,6 +109,48 @@ public class RobotContainer {
             true,
             m_swerve
         );
+
+        m_led.setDefaultCommand(new Lights(m_led));
+
+        m_tab.add("Camrea", new HttpCamera("LimeLight", "http://10.60.78.11:5800/", HttpCameraKind.kMJPGStreamer)).withSize(3, 3);
+
+        m_tab.add("Auton List", m_autoChooser2).withPosition(3, 2).withSize(2, 1).withWidget(BuiltInWidgets.kComboBoxChooser);
+        // m_autoChooser.setDefaultOption("Test Path", m_testPath);
+        // m_autoChooser.addOption("Translation Path", m_transPath);
+        // m_autoChooser.addOption("Rotation Path", m_rotPath);
+        // m_autoChooser.addOption("Dance Path", m_dancePaths);
+        // m_autoChooser.addOption("One Peice Long", m_oneLong);
+        // m_autoChooser.addOption("One Peice Short", m_oneShort);
+        m_autoChooser2.addOption("Two Short", m_autoBuilder.fullAuto(m_twoShort).andThen(new Balance(m_swerve)));
+        // m_autoChooser.addOption("Two Short", m_twoShort);
+        // m_autoChooser.addOption("Two Long", m_twoLong);
+        // m_autoChooser.setDefaultOption("One & Balance", m_oneBal);
+        m_autoChooser2.setDefaultOption("One & Balance", m_autoBuilder.fullAuto(m_oneBal).andThen(new Balance(m_swerve)));
+        m_autoChooser2.addOption("Do Nothing", new WaitCommand(15));
+
+        PathPlannerServer.startServer(5811);
+
+        // m_camera = CameraServer.startAutomaticCapture();
+
+        // m_tab.add("Camera", m_camera).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 7).withSize(3, 3);
+
+        m_eventMap.put("test1", new PrintCommand("Test 1"));
+        m_eventMap.put("test2", new PrintCommand("Test 2"));
+        m_eventMap.put("test3", new PrintCommand("Test 3"));
+        m_eventMap.put("timeout", new WaitCommand(1));
+        m_eventMap.put("openClaw", new OpenClaw(m_air));
+        m_eventMap.put("closeClaw", new CloseClaw(m_air));
+        m_eventMap.put("clawDown", new ClawDown(m_air));
+        m_eventMap.put("clawUp", new ClawUp(m_air));
+        m_eventMap.put("stowArm", new StowArm(m_arm, m_lift, m_air));
+        m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air));
+        m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air));
+        m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air));
+        m_eventMap.put("groundPick", new GroundConePick(m_arm, m_lift, m_air));
+        m_eventMap.put("flipGyro", new InstantCommand(() -> m_swerve.zeroGyro(180)));
+        m_eventMap.put("balance", new Balance(m_swerve));
+
+        
 
         // Configure the button bindings
         configureButtonBindings();
@@ -176,7 +198,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        System.out.println(DriverStation.getAlliance());
-        return m_autoBuilder.fullAuto(m_autoChooser.getSelected()).andThen(new Balance(m_swerve));
+        // System.out.println(DriverStation.getAlliance());
+        // return m_autoBuilder.fullAuto(m_autoChooser.getSelected()).andThen(new Balance(m_swerve));
+        return m_autoChooser2.getSelected();
     }
 }
