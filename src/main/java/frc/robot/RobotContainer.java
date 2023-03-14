@@ -41,7 +41,8 @@ import frc.robot.Constants.*;
 public class RobotContainer {
     /* Subsystems */
     private final Swerve m_swerve = new Swerve();
-    private final Arm m_arm = new Arm();
+    // private final Arm m_arm = new Arm();
+    private final ArmProfiled m_armP = new ArmProfiled();
     private final Elevator m_lift = new Elevator();
     private final Pneumatics m_air = new Pneumatics();
     private final Limelight m_light = new Limelight();
@@ -90,11 +91,11 @@ public class RobotContainer {
         m_eventMap.put("closeClaw", new CloseClaw(m_air));
         m_eventMap.put("clawDown", new ClawDown(m_air));
         m_eventMap.put("clawUp", new ClawUp(m_air));
-        m_eventMap.put("stowArm", new StowArm(m_arm, m_lift, m_air));
-        m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air));
-        m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air));
-        m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air));
-        m_eventMap.put("groundPick", new GroundConePick(m_arm, m_lift, m_air));
+        // m_eventMap.put("stowArm", new StowArm(m_arm, m_lift, m_air));
+        // m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air));
+        // m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air));
+        // m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air));
+        // m_eventMap.put("groundPick", new GroundConePick(m_arm, m_lift, m_air));
         m_eventMap.put("flipGyro", new InstantCommand(() -> m_swerve.zeroGyro(180)));
         m_eventMap.put("balance", new Balance(m_swerve));
 
@@ -142,11 +143,11 @@ public class RobotContainer {
         m_eventMap.put("closeClaw", new CloseClaw(m_air));
         m_eventMap.put("clawDown", new ClawDown(m_air));
         m_eventMap.put("clawUp", new ClawUp(m_air));
-        m_eventMap.put("stowArm", new StowArm(m_arm, m_lift, m_air));
-        m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air));
-        m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air));
-        m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air));
-        m_eventMap.put("groundPick", new GroundConePick(m_arm, m_lift, m_air));
+        // m_eventMap.put("stowArm", new StowArm(m_arm, m_lift, m_air));
+        // m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air));
+        // m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air));
+        // m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air));
+        // m_eventMap.put("groundPick", new GroundConePick(m_arm, m_lift, m_air));
         m_eventMap.put("flipGyro", new InstantCommand(() -> m_swerve.zeroGyro(180)));
         m_eventMap.put("balance", new Balance(m_swerve));
 
@@ -166,13 +167,13 @@ public class RobotContainer {
         /* Driver Buttons */
         new POVButton(m_driver, 180).whileTrue(new Down(m_lift));
         new POVButton(m_driver, 0).whileTrue(new Up(m_lift));
-        new POVButton(m_driver, 90).whileTrue(new UpArm(m_arm));
-        new POVButton(m_driver, 270).whileTrue(new DownArm(m_arm));
+        // new POVButton(m_driver, 90).whileTrue(new UpArm(m_arm));
+        // new POVButton(m_driver, 270).whileTrue(new DownArm(m_arm));
 
         // new JoystickButton(m_driver, XboxController.Button.kA.value).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
 
         new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new SlowDrive(m_swerve));
-        new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_arm));
+        // new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_arm));
         new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ToggleTilt(m_air));
         new JoystickButton(m_driver, XboxController.Button.kStart.value).onTrue(new ZeroGyro(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kBack.value).onTrue(new ResetEncoders(m_swerve));
@@ -180,14 +181,14 @@ public class RobotContainer {
 
         new JoystickButton(m_operator, 4).whileTrue(new Balance(m_swerve));
 
-        new JoystickButton(m_operator, 2).onTrue(new StowArm(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 1).onTrue(new SlideStage(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 3).onTrue(new DropStage(m_arm, m_lift, m_air));
+        // new JoystickButton(m_operator, 2).onTrue(new StowArm(m_arm, m_lift, m_air));
+        // new JoystickButton(m_operator, 1).onTrue(new SlideStage(m_arm, m_lift, m_air));
+        // new JoystickButton(m_operator, 3).onTrue(new DropStage(m_arm, m_lift, m_air));
         new JoystickButton(m_operator, 5).onTrue(new ClawUp(m_air));
-        new JoystickButton(m_operator, 22).onTrue(new Stage1(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 23).onTrue(new Stage2(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 24).onTrue(new Stage3(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 7).onTrue(new TippedCone(m_arm, m_lift, m_air));
+        // new JoystickButton(m_operator, 22).onTrue(new Stage1(m_arm, m_lift, m_air));
+        // new JoystickButton(m_operator, 23).onTrue(new Stage2(m_arm, m_lift, m_air));
+        // new JoystickButton(m_operator, 24).onTrue(new Stage3(m_arm, m_lift, m_air));
+        // new JoystickButton(m_operator, 7).onTrue(new TippedCone(m_arm, m_lift, m_air));
         new JoystickButton(m_operator, 10).onTrue(new ClawDown(m_air));
         new JoystickButton(m_operator, 21).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
     }

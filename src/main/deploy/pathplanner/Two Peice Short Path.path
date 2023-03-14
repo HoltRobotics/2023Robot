@@ -103,7 +103,7 @@
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "before",
-        "waitTime": 1.0
+        "waitTime": 2.0
       }
     },
     {
