@@ -6,14 +6,14 @@ package frc.robot.commands.Swerve;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+// import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+// import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.Swerve;
 
 public class GyroBalance extends PIDCommand {
-  private final Swerve m_swerve;
-  private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
+  // private final Swerve m_swerve;
+  // private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
   /**
    * Command that auto balances the robot on the docking station.
    * @param swerve The Swerve Subsystem
@@ -36,7 +36,7 @@ public class GyroBalance extends PIDCommand {
     // Configure additional PID options by calling `getController` here.
     addRequirements(swerve); // Stops all other commands using the Swerve subsystem.
     // m_tab.add("Balance", getController());
-    m_swerve = swerve;
+    // m_swerve = swerve;
     m_controller.setTolerance(5);
     // m_tab.add("Pitch", m_swerve.getPitch());
   }

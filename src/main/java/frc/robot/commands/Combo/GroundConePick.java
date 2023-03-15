@@ -11,7 +11,7 @@ import frc.robot.commands.Arm.SetAngle;
 import frc.robot.commands.Elevator.SetHeight;
 import frc.robot.commands.Pneumatics.ClawUp;
 import frc.robot.commands.Pneumatics.OpenClaw;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ArmProfiled;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Pneumatics;
 
@@ -22,7 +22,7 @@ public class GroundConePick extends ParallelCommandGroup {
    * @param lift The Elevator Subsystem
    * @param air The Pneumatics Subsystem
    */
-  public GroundConePick(Arm arm, Elevator lift, Pneumatics air) {
+  public GroundConePick(ArmProfiled arm, Elevator lift, Pneumatics air) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(

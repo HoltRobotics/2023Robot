@@ -8,7 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
+// import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.networktables.GenericEntry;
@@ -21,7 +21,7 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
   private final CANSparkMax m_armMotor = new CANSparkMax(ArmConstants.armMotorID, MotorType.kBrushless);
   private final RelativeEncoder m_encoder;
 
-  private final ArmFeedforward m_feedforward = new ArmFeedforward(0, 0, 0, 0);
+  // private final ArmFeedforward m_feedforward = new ArmFeedforward(0, 0, 0, 0);
 
   private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
   private final GenericEntry m_angleDisplay;
@@ -43,7 +43,7 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
     m_encoder.setPositionConversionFactor((44/12 * 125)/360);
     m_encoder.setPosition(0);
     m_angleDisplay = m_tab.add("Arm Angle", getAngle()).getEntry();
-    m_tab.add("Arm", m_controller);
+    // m_tab.add("Arm", m_controller);
     this.setGoal(0);
     this.enable();
   }
@@ -63,10 +63,34 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
     return m_encoder.getPosition(); // Returns the angle of the arm.
   }
 
+  /**
+   * Sets the PID setpoint.
+   * @param angle The desired angle of the arm.
+   */
+  public void setAngle(double angle) {
+    setGoal(angle); // Sets the PID setpoint to the given input.
+  }
+
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
     return getAngle();
+  }
+
+  /**
+   * Method for forcing the arm to move up.
+   */
+  public void up() {
+    m_armMotor.set(-0.75); // Sets the speed of the motor to -3/4.
+    // m_inControl = true;
+  }
+
+  /**
+   * Method for forcing the arm to move down.
+   */
+  public void down() {
+    m_armMotor.set(0.75); // Sets the speed of the motor to 3/4.
+    // m_inControl = true;
   }
 
   @Override

@@ -6,16 +6,16 @@ package frc.robot.commands.Swerve;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+// import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+// import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Swerve;
 
 public class Balance extends CommandBase {
   private final PIDController m_controller;
   private final Swerve m_swerve;
-  private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
-  private boolean m_isPID = false;
+  // private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
+  // private boolean m_isPID = false;
 
   /** Creates a new Balance. */
   public Balance(Swerve swerve) {
@@ -47,7 +47,7 @@ public class Balance extends CommandBase {
     //   m_swerve.drive(new Translation2d(-m_controller.calculate(m_swerve.getPitch()) * 0.5, 0), 0, true, true);
     //   System.out.println("YES PID");
     // }
-    m_swerve.drive(new Translation2d(-m_controller.calculate(m_swerve.getPitch()) * 0.5, 0), 0, true, true);
+    // m_swerve.drive(new Translation2d(-m_controller.calculate(m_swerve.getPitch()) * 0.5, 0), 0, true, true);
     if(m_swerve.getPitch() < 5) {
       m_swerve.drive(new Translation2d(), Math.toRadians(90), true, true);
     } else {
@@ -60,7 +60,7 @@ public class Balance extends CommandBase {
   public void end(boolean interrupted) {
     System.out.println("STOPPED");
     m_swerve.stopDrive();
-    m_isPID = false;
+    // m_isPID = false;
   }
 
   // Returns true when the command should end.

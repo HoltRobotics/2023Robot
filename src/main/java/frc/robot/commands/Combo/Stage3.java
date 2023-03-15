@@ -11,7 +11,7 @@ import frc.robot.commands.Arm.SetAngle;
 import frc.robot.commands.Elevator.SetHeight;
 import frc.robot.commands.Pneumatics.ClawUp;
 import frc.robot.commands.Pneumatics.CloseClaw;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ArmProfiled;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Pneumatics;
 
@@ -22,7 +22,7 @@ public class Stage3 extends ParallelCommandGroup {
    * @param lift The Elevator Subsystem
    * @param air The Pneumatics Subsystem
    */
-  public Stage3(Arm arm, Elevator lift, Pneumatics air) {
+  public Stage3(ArmProfiled arm, Elevator lift, Pneumatics air) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(

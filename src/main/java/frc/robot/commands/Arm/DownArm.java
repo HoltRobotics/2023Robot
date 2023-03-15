@@ -6,10 +6,10 @@ package frc.robot.commands.Arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.*;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ArmProfiled;
 
 public class DownArm extends CommandBase {
-  private final Arm m_arm; // Subsystem needed to control the arm.
+  private final ArmProfiled m_arm; // Subsystem needed to control the arm.
   private boolean m_pastLimit = false; // Used to track if the arm goes past its limit.
 
   /**
@@ -17,7 +17,7 @@ public class DownArm extends CommandBase {
    * When the command ends, the new location will become the new setpoint.
    * @param arm The Arm Subsystem
    */
-  public DownArm(Arm arm) {
+  public DownArm(ArmProfiled arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_arm = arm; // Passes the given subsystem to the rest of the command.
     addRequirements(m_arm); // Stops all other commands using the Arm subsystem.
