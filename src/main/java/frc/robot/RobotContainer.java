@@ -42,10 +42,11 @@ public class RobotContainer {
     private final Swerve m_swerve = new Swerve();
     // private final Arm m_arm = new Arm();
     private final ArmProfiled m_arm = new ArmProfiled();
-    private final Elevator m_lift = new Elevator();
+    // private final Elevator m_lift = new Elevator();
+    private final ElevatorProfiled m_lift = new ElevatorProfiled();
     private final Pneumatics m_air = new Pneumatics();
-    private final Limelight m_light = new Limelight();
-    private final LEDs m_led = new LEDs();
+    // private final Limelight m_light = new Limelight();
+    // private final LEDs m_led = new LEDs();
 
     /* Controllers */
     private final XboxController m_driver = new XboxController(Constants.kDriverPort);
@@ -82,6 +83,8 @@ public class RobotContainer {
             )
         );
 
+        // m_arm.setDefaultCommand(new AnalongArmMove(() -> m_driver.getLeftTriggerAxis(), () -> m_driver.getRightTriggerAxis(), m_arm));
+
         m_eventMap.put("test1", new PrintCommand("Test 1"));
         m_eventMap.put("test2", new PrintCommand("Test 2"));
         m_eventMap.put("test3", new PrintCommand("Test 3"));
@@ -110,9 +113,9 @@ public class RobotContainer {
             m_swerve
         );
 
-        m_led.setDefaultCommand(new Lights(m_led));
+        // m_led.setDefaultCommand(new Lights(m_led));
 
-        m_tab.add("Camrea", new HttpCamera("LimeLight", "http://10.60.78.11:5800/", HttpCameraKind.kMJPGStreamer)).withSize(3, 3);
+        // m_tab.add("Camrea", new HttpCamera("LimeLight", "http://10.60.78.11:5800/", HttpCameraKind.kMJPGStreamer)).withSize(3, 3);
 
         m_tab.add("Auton List", m_autoChooser2).withPosition(3, 2).withSize(2, 1).withWidget(BuiltInWidgets.kComboBoxChooser);
         // m_autoChooser.setDefaultOption("Test Path", m_testPath);
@@ -164,8 +167,8 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        new POVButton(m_driver, 180).whileTrue(new Down(m_lift));
-        new POVButton(m_driver, 0).whileTrue(new Up(m_lift));
+        // new POVButton(m_driver, 180).whileTrue(new Down(m_lift));
+        // new POVButton(m_driver, 0).whileTrue(new Up(m_lift));
         new POVButton(m_driver, 90).whileTrue(new UpArm(m_arm));
         new POVButton(m_driver, 270).whileTrue(new DownArm(m_arm));
 

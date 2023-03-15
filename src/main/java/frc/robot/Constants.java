@@ -26,7 +26,7 @@ public final class Constants {
         public static final double kStage3Height = 0.97;
         public static final double kSlideStageHeight = 0.1;
         public static final double kDropStageHeight = 0;
-        public static final double kTippedConeHeight = 0.84;
+        public static final double kTippedConeHeight = 0.97;
         public static final double kMaxHeight = 0.98;
 
         public static final double kBackWheelsOffset = 0.25; //TODO: get right distances
@@ -41,12 +41,12 @@ public final class Constants {
         public static final int armMotorID = 10;
 
         public static final double kStowAngle = 0;
-        public static final double kStage1Angle = 134;
+        public static final double kStage1Angle = 170;
         public static final double kStage2Angle = 32.43;
         public static final double kStage3Angle = 67;
         public static final double kHumanStageAngle = 22;
         public static final double kDropStageAngle = 38.7;
-        public static final double kTippedConeAngle = 117.34;
+        public static final double kTippedConeAngle = 159.52;
         public static final double kMaxAngle = 180;
         public static final double kClawHeightOffset = 0.3; //TODO: get the right height
 

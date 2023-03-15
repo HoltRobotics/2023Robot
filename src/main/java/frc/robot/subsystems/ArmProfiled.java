@@ -12,6 +12,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
@@ -25,17 +27,18 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
 
   private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
   private final GenericEntry m_angleDisplay;
+  private final GenericEntry m_voltageDisplay;
 
   /** Creates a new ArmProfiled. */
   public ArmProfiled() {
     super(
         // The ProfiledPIDController used by the subsystem
         new ProfiledPIDController(
-          4.85,
+          2.5,
           0,
-          0.05,
+          0,
           // The motion profile constraints
-          new TrapezoidProfile.Constraints(60, 90)
+          new TrapezoidProfile.Constraints(90, 90)
         )
     );
     // m_encoder = m_armMotor.getAlternateEncoder(8192);
@@ -43,7 +46,8 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
     m_encoder.setPositionConversionFactor((44/12 * 125)/360);
     m_encoder.setPosition(0);
     m_angleDisplay = m_tab.add("Arm Angle", getAngle()).getEntry();
-    // m_tab.add("Arm", m_controller);
+    m_voltageDisplay = m_tab.add("Arm Volts", 0).withWidget(BuiltInWidgets.kGraph).getEntry();
+    m_tab.add("Arm", m_controller);
     this.setGoal(0);
     this.enable();
   }
@@ -93,9 +97,20 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
     // m_inControl = true;
   }
 
+  public void setSpeed(double speed) {
+    m_armMotor.set(speed);
+  }
+
   @Override
   public void periodic() {
     super.periodic();
     m_angleDisplay.setDouble(getAngle());
+    m_voltageDisplay.setDouble(m_armMotor.get() * m_armMotor.getBusVoltage());
+    if(getAngle() < -5) { // Checks to see if the arm is past the min limit.
+      setAngle(0); // If it is set the PID to 0.
+    }
+    if(getAngle() > ArmConstants.kMaxAngle) { // Checks to see if the arm is past the max limit.
+      setAngle(ArmConstants.kMaxAngle); // If is is set the PID to 180.
+    }
   }
 }

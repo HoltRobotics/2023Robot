@@ -5,10 +5,10 @@
 package frc.robot.commands.Elevator;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.ElevatorProfiled;
 
 public class SetHeight extends InstantCommand {
-  private Elevator m_lift; // Subsystem needed to control the elevator.
+  private ElevatorProfiled m_lift; // Subsystem needed to control the elevator.
   private double m_height; // Used to store the given height.
 
   /**
@@ -16,7 +16,7 @@ public class SetHeight extends InstantCommand {
    * @param height Height to set the elevator too.
    * @param lift The Elevator Subsystem
    */
-  public SetHeight(double height, Elevator lift) {
+  public SetHeight(double height, ElevatorProfiled lift) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_height = height; // Passes the given height to the rest of the command.
     m_lift = lift; // Passes the given subsystem to the rest of the command.

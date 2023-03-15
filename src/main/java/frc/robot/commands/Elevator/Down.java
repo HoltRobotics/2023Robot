@@ -5,10 +5,10 @@
 package frc.robot.commands.Elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.ElevatorProfiled;
 
 public class Down extends CommandBase {
-  private final Elevator m_lift; // Subsystem needed to control the elevator.
+  private final ElevatorProfiled m_lift; // Subsystem needed to control the elevator.
   private boolean m_pastLimit = false; // Used to track if the elevator goes past its limit.
 
   /**
@@ -16,7 +16,7 @@ public class Down extends CommandBase {
    * When the command ends, the new location will become the new setpoint.
    * @param lift The Elevator Subsystem
    */
-  public Down(Elevator lift) {
+  public Down(ElevatorProfiled lift) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_lift = lift; // Passes the given subsystem to the rest of the command.
     addRequirements(m_lift); // Stops all other commands using the Elevator subsystem.

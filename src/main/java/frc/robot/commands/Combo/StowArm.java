@@ -12,7 +12,7 @@ import frc.robot.commands.Elevator.SetHeight;
 import frc.robot.commands.Pneumatics.ClawDown;
 import frc.robot.commands.Pneumatics.CloseClaw;
 import frc.robot.subsystems.ArmProfiled;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.ElevatorProfiled;
 import frc.robot.subsystems.Pneumatics;
 
 public class StowArm extends ParallelCommandGroup {
@@ -22,7 +22,7 @@ public class StowArm extends ParallelCommandGroup {
    * @param lift The Elevator Subsystem
    * @param air The Pneumatics Subsystem
    */
-  public StowArm(ArmProfiled arm, Elevator lift, Pneumatics air) {
+  public StowArm(ArmProfiled arm, ElevatorProfiled lift, Pneumatics air) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
