@@ -42,7 +42,7 @@ public class RobotContainer {
     private final Swerve m_swerve = new Swerve();
     // private final Arm m_arm = new Arm();
     private final ArmProfiled m_arm = new ArmProfiled();
-    // private final Elevator m_lift = new Elevator();
+    // private final Elevator m_liftold = new Elevator();
     private final ElevatorProfiled m_lift = new ElevatorProfiled();
     private final Pneumatics m_air = new Pneumatics();
     // private final Limelight m_light = new Limelight();
@@ -167,10 +167,10 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        // new POVButton(m_driver, 180).whileTrue(new Down(m_lift));
-        // new POVButton(m_driver, 0).whileTrue(new Up(m_lift));
-        new POVButton(m_driver, 90).whileTrue(new UpArm(m_arm));
-        new POVButton(m_driver, 270).whileTrue(new DownArm(m_arm));
+        new POVButton(m_driver, 180).whileTrue(new Down(m_lift));
+        new POVButton(m_driver, 0).whileTrue(new Up(m_lift));
+        new POVButton(m_driver, 90).whileTrue(new DownArm(m_arm));
+        new POVButton(m_driver, 270).whileTrue(new UpArm(m_arm));
 
         // new JoystickButton(m_driver, XboxController.Button.kA.value).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
 

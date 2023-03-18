@@ -27,12 +27,15 @@ public class ElevatorProfiled extends ProfiledPIDSubsystem {
   private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main"); // Gets the Shuffleboard tab.
   private final GenericEntry m_heightDisplay; // Makes the encoder display.
 
+  public boolean m_inMotion = false;
+  private double m_setPoint = 0;
+
   /** Creates a new ElevatorProfiled. */
   public ElevatorProfiled() {
     super(
       // The ProfiledPIDController used by the subsystem
       new ProfiledPIDController(
-        200,
+        200, //200
         0,
         0,
         // The motion profile constraints
@@ -42,8 +45,10 @@ public class ElevatorProfiled extends ProfiledPIDSubsystem {
     m_encoder = m_liftmotor.getEncoder(); // Gets the encoder built into the motor.
     m_encoder.setPositionConversionFactor(Units.inchesToMeters(Math.PI * 1.44) / 16); // Sets the encoder units to meters traveled by the elevator.
     m_encoder.setPosition(0); // Sets the encoder to 0 meters.
-    m_heightDisplay = m_tab.add("Elevator Height", getHeight()).withWidget(BuiltInWidgets.kTextView).withPosition(4, 1).withSize(1, 1).getEntry(); // Adds the elevator height to the shuffleboard tab.
     m_tab.add("Elevator", m_controller); // Adds the PID controller to the suffleboard for tuning.
+    m_liftmotor.setInverted(false);
+    m_liftmotor.setSmartCurrentLimit(30);
+    m_heightDisplay = m_tab.add("Elevator Height", getHeight()).withWidget(BuiltInWidgets.kTextView).withPosition(4, 1).withSize(1, 1).getEntry(); // Adds the elevator height to the shuffleboard tab.
     this.setHeight(0); // Sets the PID controller to 0 meters.
     this.enable(); // Turns on the PID contorller.
     m_liftmotor.setIdleMode(IdleMode.kBrake); // Default motor behavior is break mode.
@@ -66,9 +71,10 @@ public class ElevatorProfiled extends ProfiledPIDSubsystem {
    * @param height The desired height of the elevator in meters.
    */
   public void setHeight(double height) {
-    // setGoal(height); // Sets the PID setpoint to the given input.
-    System.out.println(height);
-    setGoal(new TrapezoidProfile.State(height, 0));
+    m_setPoint = height;
+    setGoal(height); // Sets the PID setpoint to the given input.
+    // System.out.println(height);
+    // setGoal(new TrapezoidProfile.State(height, 0));
   }
 
   /**
@@ -76,6 +82,7 @@ public class ElevatorProfiled extends ProfiledPIDSubsystem {
    * @return Height of the elevator in meters.
    */
   public double getHeight() {
+    // System.out.println(m_encoder.getPosition());
     return m_encoder.getPosition(); // Gets the current encoder position.
   }
 
@@ -90,11 +97,13 @@ public class ElevatorProfiled extends ProfiledPIDSubsystem {
   /**
    * Method for forceing the elevator down.
    */
+
   public void down() {
     m_liftmotor.set(-0.5); // Sets the speed of the motor to negative half.
     // m_inControl = true;
   }
 
+  
   /**
    * Method for stopping the motor.
    */
@@ -120,6 +129,9 @@ public class ElevatorProfiled extends ProfiledPIDSubsystem {
     }
     if(getHeight() < -0.05) { // Checks to see if the arm is past the min limit.
       setHeight(0); // If is is, set the PID to the min height.
+    }
+    if(getHeight() > m_setPoint - 0.05 && getHeight() < m_setPoint + 0.05) {
+      m_inMotion = false;
     }
   }
 }

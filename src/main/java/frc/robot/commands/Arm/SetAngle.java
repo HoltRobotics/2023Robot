@@ -25,6 +25,7 @@ public class SetAngle extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_arm.setInMotion(true);
     m_arm.setAngle(m_angle); // Sets the PID angle to the given angle.
   }
 }

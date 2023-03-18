@@ -26,6 +26,7 @@ public class AnalongArmMove extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // m_arm.disable();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,7 +39,8 @@ public class AnalongArmMove extends CommandBase {
     } else {
       m_arm.enable();
     }
-    System.out.println(m_arm.isEnabled());
+    m_arm.periodic();
+    // System.out.println(m_arm.isEnabled());
   }
 
   // Called once the command ends or is interrupted.
@@ -50,6 +52,11 @@ public class AnalongArmMove extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    // if(m_upSpeed.getAsDouble() <= 0.1 || m_downSpeed.getAsDouble() <= 0.1) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    return m_arm.m_inMotion;
   }
 }

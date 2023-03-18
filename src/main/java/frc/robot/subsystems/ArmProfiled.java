@@ -29,6 +29,9 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
   private final GenericEntry m_angleDisplay;
   private final GenericEntry m_voltageDisplay;
 
+  public boolean m_inMotion = false;
+  private double m_setPoint = 0;
+
   /** Creates a new ArmProfiled. */
   public ArmProfiled() {
     super(
@@ -72,6 +75,7 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
    * @param angle The desired angle of the arm.
    */
   public void setAngle(double angle) {
+    m_setPoint = angle;
     setGoal(angle); // Sets the PID setpoint to the given input.
   }
 
@@ -85,7 +89,7 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
    * Method for forcing the arm to move up.
    */
   public void up() {
-    m_armMotor.set(-0.75); // Sets the speed of the motor to -3/4.
+    m_armMotor.set(-0.25); // Sets the speed of the motor to -3/4.
     // m_inControl = true;
   }
 
@@ -93,9 +97,18 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
    * Method for forcing the arm to move down.
    */
   public void down() {
-    m_armMotor.set(0.75); // Sets the speed of the motor to 3/4.
+    m_armMotor.set(0.25); // Sets the speed of the motor to 3/4.
     // m_inControl = true;
   }
+
+  public boolean getInMotion() {
+    return m_inMotion;
+  }
+
+  public void setInMotion(boolean inMotion) {
+    m_inMotion = inMotion;
+  }
+
 
   public void setSpeed(double speed) {
     m_armMotor.set(speed);
@@ -111,6 +124,9 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
     }
     if(getAngle() > ArmConstants.kMaxAngle) { // Checks to see if the arm is past the max limit.
       setAngle(ArmConstants.kMaxAngle); // If is is set the PID to 180.
+    }
+    if(getAngle() > m_setPoint - 0.1 && getAngle() < m_setPoint + 0.1) {
+      m_inMotion = false;
     }
   }
 }
