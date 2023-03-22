@@ -53,22 +53,22 @@
     },
     {
       "anchorPoint": {
-        "x": 4.530861786402602,
-        "y": 4.608489559347165
+        "x": 3.741815186911401,
+        "y": 4.791456886765414
       },
       "prevControl": {
-        "x": 3.5308617864026024,
-        "y": 4.608489559347165
+        "x": 2.741815186911401,
+        "y": 4.791456886765414
       },
       "nextControl": {
-        "x": 5.530861786402602,
-        "y": 4.608489559347165
+        "x": 4.741815186911401,
+        "y": 4.791456886765414
       },
       "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": false,
+      "isStopPoint": true,
       "stopEvent": {
         "names": [
           "groundPick"
@@ -80,15 +80,15 @@
     },
     {
       "anchorPoint": {
-        "x": 5.83,
+        "x": 5.93,
         "y": 4.85
       },
       "prevControl": {
-        "x": 5.655555381879994,
+        "x": 5.755555381879994,
         "y": 4.806642845977999
       },
       "nextControl": {
-        "x": 6.004444618120006,
+        "x": 6.104444618120006,
         "y": 4.893357154022
       },
       "holonomicAngle": 0,
@@ -103,7 +103,7 @@
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "before",
-        "waitTime": 2.0
+        "waitTime": 1.5
       }
     },
     {
@@ -189,12 +189,6 @@
       "position": 1.0690909090908665,
       "names": [
         "stowArm"
-      ]
-    },
-    {
-      "position": 2.0,
-      "names": [
-        "groundPick"
       ]
     }
   ]

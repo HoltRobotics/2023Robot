@@ -15,14 +15,14 @@ import frc.robot.subsystems.ArmProfiled;
 import frc.robot.subsystems.ElevatorProfiled;
 import frc.robot.subsystems.Pneumatics;
 
-public class TippedCone extends ParallelCommandGroup {
+public class FloorVertical extends ParallelCommandGroup {
   /**
    * Combo command that sets the arm, elevator, and claw to the right states to score on the low goal/pick up peices. Runs all the commands at once.
    * @param arm The Arm Subsystem
    * @param lift The Elevator Subsystem
    * @param air The Pneumatics Subsystem
    */
-  public TippedCone(ArmProfiled arm, ElevatorProfiled lift, Pneumatics air) {
+  public FloorVertical(ArmProfiled arm, ElevatorProfiled lift, Pneumatics air) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(

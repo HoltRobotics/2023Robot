@@ -157,6 +157,10 @@ public class Swerve extends SubsystemBase {
         return m_gyro.getRoll();
     }
 
+    public double getRoll() {
+        return m_gyro.getPitch();
+    }
+
     public void stopDrive() {
         drive(new Translation2d(), 0, false, false);
     }

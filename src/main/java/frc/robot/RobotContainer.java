@@ -45,7 +45,7 @@ public class RobotContainer {
     // private final Elevator m_liftold = new Elevator();
     private final ElevatorProfiled m_lift = new ElevatorProfiled();
     private final Pneumatics m_air = new Pneumatics();
-    // private final Limelight m_light = new Limelight();
+    private final Limelight m_light = new Limelight();
     // private final LEDs m_led = new LEDs();
 
     /* Controllers */
@@ -67,9 +67,9 @@ public class RobotContainer {
     private final List<PathPlannerTrajectory> m_dancePaths = PathPlanner.loadPathGroup("Dance Path", new PathConstraints(3, 3));
     private final List<PathPlannerTrajectory> m_oneLong = PathPlanner.loadPathGroup("One Peice Long Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
     private final List<PathPlannerTrajectory> m_oneShort = PathPlanner.loadPathGroup("One Peice Short Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
-    private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(2, 1), new PathConstraints(2, 2), new PathConstraints(2, 2));
+    private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(2, 1), new PathConstraints(2, 2), new PathConstraints(1.75, 2));
     private final List<PathPlannerTrajectory> m_twoLong = PathPlanner.loadPathGroup("Two Peice Long Path", new PathConstraints(1, 1), new PathConstraints(1, 1), new PathConstraints(3, 4), new PathConstraints(0.75, 1),new PathConstraints(1, 1),new PathConstraints(1, 1));
-    private final List<PathPlannerTrajectory> m_oneBal = PathPlanner.loadPathGroup("One Cone Balance", new PathConstraints(2, 2), new PathConstraints(0.75, 2));
+    private final List<PathPlannerTrajectory> m_oneBal = PathPlanner.loadPathGroup("One Cone Balance", new PathConstraints(2, 2), new PathConstraints(0.85, 2));
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -97,9 +97,9 @@ public class RobotContainer {
         m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air));
         m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air));
         m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air));
-        m_eventMap.put("groundPick", new GroundConePick(m_arm, m_lift, m_air));
+        m_eventMap.put("groundPick", new FloorHorizontal(m_arm, m_lift, m_air));
+        m_eventMap.put("lowerCone", new LowerCone(m_lift));
         m_eventMap.put("flipGyro", new InstantCommand(() -> m_swerve.zeroGyro(180)));
-        m_eventMap.put("balance", new Balance(m_swerve));
 
         m_autoBuilder = new SwerveAutoBuilder(
             m_swerve::getPose,
@@ -115,7 +115,7 @@ public class RobotContainer {
 
         // m_led.setDefaultCommand(new Lights(m_led));
 
-        // m_tab.add("Camrea", new HttpCamera("LimeLight", "http://10.60.78.11:5800/", HttpCameraKind.kMJPGStreamer)).withSize(3, 3);
+        m_tab.add("Camrea", new HttpCamera("LimeLight", "http://10.60.78.107:5800/", HttpCameraKind.kMJPGStreamer)).withSize(3, 3);
 
         m_tab.add("Auton List", m_autoChooser2).withPosition(3, 2).withSize(2, 1).withWidget(BuiltInWidgets.kComboBoxChooser);
         // m_autoChooser.setDefaultOption("Test Path", m_testPath);
@@ -124,11 +124,11 @@ public class RobotContainer {
         // m_autoChooser.addOption("Dance Path", m_dancePaths);
         // m_autoChooser.addOption("One Peice Long", m_oneLong);
         // m_autoChooser.addOption("One Peice Short", m_oneShort);
-        m_autoChooser2.addOption("Two Short", m_autoBuilder.fullAuto(m_twoShort).andThen(new Balance(m_swerve)));
+        m_autoChooser2.addOption("Two Short", m_autoBuilder.fullAuto(m_twoShort));
         // m_autoChooser.addOption("Two Short", m_twoShort);
         // m_autoChooser.addOption("Two Long", m_twoLong);
         // m_autoChooser.setDefaultOption("One & Balance", m_oneBal);
-        m_autoChooser2.setDefaultOption("One & Balance", m_autoBuilder.fullAuto(m_oneBal).andThen(new Balance(m_swerve)));
+        m_autoChooser2.setDefaultOption("One & Balance", m_autoBuilder.fullAuto(m_oneBal).andThen(new BalanceProfiled(m_swerve)));
         m_autoChooser2.addOption("Do Nothing", new WaitCommand(15));
 
         PathPlannerServer.startServer(5811);
@@ -140,7 +140,7 @@ public class RobotContainer {
         m_eventMap.put("test1", new PrintCommand("Test 1"));
         m_eventMap.put("test2", new PrintCommand("Test 2"));
         m_eventMap.put("test3", new PrintCommand("Test 3"));
-        m_eventMap.put("timeout", new WaitCommand(1));
+        m_eventMap.put("timeout", new WaitCommand(0.15));
         m_eventMap.put("openClaw", new OpenClaw(m_air));
         m_eventMap.put("closeClaw", new CloseClaw(m_air));
         m_eventMap.put("clawDown", new ClawDown(m_air));
@@ -149,9 +149,11 @@ public class RobotContainer {
         m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air));
         m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air));
         m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air));
-        m_eventMap.put("groundPick", new GroundConePick(m_arm, m_lift, m_air));
+        m_eventMap.put("groundPick", new FloorHorizontal(m_arm, m_lift, m_air));
         m_eventMap.put("flipGyro", new InstantCommand(() -> m_swerve.zeroGyro(180)));
+        m_eventMap.put("lowerCone", new LowerCone(m_lift));
         m_eventMap.put("balance", new Balance(m_swerve));
+        m_eventMap.put("tippedCone", new FloorVertical(m_arm, m_lift, m_air));
 
         
 
@@ -174,23 +176,27 @@ public class RobotContainer {
 
         // new JoystickButton(m_driver, XboxController.Button.kA.value).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
 
-        new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).whileTrue(new SlowDrive(m_swerve));
+        new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).toggleOnFalse(new SlowDrive(m_swerve));
         // new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_arm));
         new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ToggleTilt(m_air));
         new JoystickButton(m_driver, XboxController.Button.kStart.value).onTrue(new ZeroGyro(m_swerve));
         new JoystickButton(m_driver, XboxController.Button.kBack.value).onTrue(new ResetEncoders(m_swerve));
-        new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new OpenClaw(m_air)).onFalse(new CloseClaw(m_air));
+        new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new OpenClaw(m_air)).whileFalse(new CloseClaw(m_air));
+        // new JoystickButton(m_driver, XboxController.Button.kB.value).onTrue(new ToggleClaw(m_air));
 
-        new JoystickButton(m_operator, 4).whileTrue(new Balance(m_swerve));
+        new JoystickButton(m_operator, 5).whileTrue(new BalanceProfiled(m_swerve));
 
         new JoystickButton(m_operator, 2).onTrue(new StowArm(m_arm, m_lift, m_air));
         new JoystickButton(m_operator, 1).onTrue(new SlideStage(m_arm, m_lift, m_air));
         new JoystickButton(m_operator, 3).onTrue(new DropStage(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 5).onTrue(new ClawUp(m_air));
-        new JoystickButton(m_operator, 22).onTrue(new Stage1(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 23).onTrue(new Stage2(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 24).onTrue(new Stage3(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 7).onTrue(new TippedCone(m_arm, m_lift, m_air));
+        // new JoystickButton(m_operator, 5).onTrue(new ClawUp(m_air));
+        new JoystickButton(m_operator, 11).onTrue(new Stage1(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 13).onTrue(new Stage2(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 15).onTrue(new Stage3(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 6).onTrue(new FloorHorizontal(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 7).onTrue(new FloorVertical(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 4).onTrue(new RaiseCone(m_lift));
+        new JoystickButton(m_operator, 9).onTrue(new LowerCone(m_lift));
         new JoystickButton(m_operator, 10).onTrue(new ClawDown(m_air));
         new JoystickButton(m_operator, 21).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
     }

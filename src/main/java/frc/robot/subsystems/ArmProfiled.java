@@ -27,7 +27,7 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
 
   private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
   private final GenericEntry m_angleDisplay;
-  private final GenericEntry m_voltageDisplay;
+  // private final GenericEntry m_voltageDisplay;
 
   public boolean m_inMotion = false;
   private double m_setPoint = 0;
@@ -41,7 +41,7 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
           0,
           0,
           // The motion profile constraints
-          new TrapezoidProfile.Constraints(90, 90)
+          new TrapezoidProfile.Constraints(120, 90) // 90 90
         )
     );
     // m_encoder = m_armMotor.getAlternateEncoder(8192);
@@ -49,7 +49,7 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
     m_encoder.setPositionConversionFactor((44/12 * 125)/360);
     m_encoder.setPosition(0);
     m_angleDisplay = m_tab.add("Arm Angle", getAngle()).getEntry();
-    m_voltageDisplay = m_tab.add("Arm Volts", 0).withWidget(BuiltInWidgets.kGraph).getEntry();
+    // m_voltageDisplay = m_tab.add("Arm Volts", 0).withWidget(BuiltInWidgets.kGraph).getEntry();
     m_tab.add("Arm", m_controller);
     this.setGoal(0);
     this.enable();
@@ -118,7 +118,7 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
   public void periodic() {
     super.periodic();
     m_angleDisplay.setDouble(getAngle());
-    m_voltageDisplay.setDouble(m_armMotor.get() * m_armMotor.getBusVoltage());
+    // m_voltageDisplay.setDouble(m_armMotor.get() * m_armMotor.getBusVoltage());
     if(getAngle() < -5) { // Checks to see if the arm is past the min limit.
       setAngle(0); // If it is set the PID to 0.
     }
