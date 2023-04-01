@@ -24,6 +24,6 @@ public class BuddyUp extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_air.setBuddyState(Value.kReverse); // Puts the forks up.
+    m_air.setBuddyState(Value.kForward); // Puts the forks up.
   }
 }

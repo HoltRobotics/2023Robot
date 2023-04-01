@@ -48,10 +48,10 @@ public class Balance extends CommandBase {
     //   System.out.println("YES PID");
     // }
     // m_swerve.drive(new Translation2d(-m_controller.calculate(m_swerve.getPitch()) * 0.5, 0), 0, true, true);
-    if(m_swerve.getPitch() < 5) {
+    if(Math.abs(m_swerve.getPitch()) < 8) {
       m_swerve.drive(new Translation2d(), Math.toRadians(90), true, true);
     } else {
-    m_swerve.drive(new Translation2d(0.5, 0), 0, true, true);
+      m_swerve.drive(new Translation2d(-0.50, 0), 0, true, true);
     }
   }
 

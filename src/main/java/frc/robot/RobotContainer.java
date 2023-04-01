@@ -46,7 +46,7 @@ public class RobotContainer {
     private final ElevatorProfiled m_lift = new ElevatorProfiled();
     private final Pneumatics m_air = new Pneumatics();
     private final Limelight m_light = new Limelight();
-    // private final LEDs m_led = new LEDs();
+    private final LEDs m_led = new LEDs();
 
     /* Controllers */
     private final XboxController m_driver = new XboxController(Constants.kDriverPort);
@@ -69,7 +69,7 @@ public class RobotContainer {
     private final List<PathPlannerTrajectory> m_oneShort = PathPlanner.loadPathGroup("One Peice Short Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
     private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(2, 1), new PathConstraints(2, 2), new PathConstraints(1.75, 2));
     private final List<PathPlannerTrajectory> m_twoLong = PathPlanner.loadPathGroup("Two Peice Long Path", new PathConstraints(1, 1), new PathConstraints(1, 1), new PathConstraints(3, 4), new PathConstraints(0.75, 1),new PathConstraints(1, 1),new PathConstraints(1, 1));
-    private final List<PathPlannerTrajectory> m_oneBal = PathPlanner.loadPathGroup("One Cone Balance", new PathConstraints(2, 2), new PathConstraints(0.85, 2));
+    private final List<PathPlannerTrajectory> m_oneBal = PathPlanner.loadPathGroup("One Cone Balance", new PathConstraints(2, 2), new PathConstraints(1.25, 2), new PathConstraints(0.65, 2));
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -84,6 +84,18 @@ public class RobotContainer {
         );
 
         // m_arm.setDefaultCommand(new AnalongArmMove(() -> m_driver.getLeftTriggerAxis(), () -> m_driver.getRightTriggerAxis(), m_arm));
+
+        m_autoBuilder = new SwerveAutoBuilder(
+            m_swerve::getPose,
+            m_swerve::resetOdometry,
+            SwerveConstants.swerveKinematics,
+            new PIDConstants(9, 0, 0), //TODO: tune theses
+            new PIDConstants(12, 0, 0),
+            m_swerve::setModuleStates,
+            m_eventMap,
+            true,
+            m_swerve
+        );
 
         m_eventMap.put("test1", new PrintCommand("Test 1"));
         m_eventMap.put("test2", new PrintCommand("Test 2"));
@@ -101,20 +113,20 @@ public class RobotContainer {
         m_eventMap.put("lowerCone", new LowerCone(m_lift));
         m_eventMap.put("flipGyro", new InstantCommand(() -> m_swerve.zeroGyro(180)));
 
-        m_autoBuilder = new SwerveAutoBuilder(
-            m_swerve::getPose,
-            m_swerve::resetOdometry,
-            SwerveConstants.swerveKinematics,
-            new PIDConstants(9, 0, 0), //TODO: tune theses
-            new PIDConstants(12, 0, 0),
-            m_swerve::setModuleStates,
-            m_eventMap,
-            true,
-            m_swerve
-        );
+        // m_autoBuilder = new SwerveAutoBuilder(
+        //     m_swerve::getPose,
+        //     m_swerve::resetOdometry,
+        //     SwerveConstants.swerveKinematics,
+        //     new PIDConstants(9, 0, 0), //TODO: tune theses
+        //     new PIDConstants(12, 0, 0),
+        //     m_swerve::setModuleStates,
+        //     m_eventMap,
+        //     true,
+        //     m_swerve
+        // );
 
-        // m_led.setDefaultCommand(new Lights(m_led));
-
+        m_led.setDefaultCommand(new Lights(m_led));
+        
         m_tab.add("Camrea", new HttpCamera("LimeLight", "http://10.60.78.107:5800/", HttpCameraKind.kMJPGStreamer)).withSize(3, 3);
 
         m_tab.add("Auton List", m_autoChooser2).withPosition(3, 2).withSize(2, 1).withWidget(BuiltInWidgets.kComboBoxChooser);
@@ -128,7 +140,7 @@ public class RobotContainer {
         // m_autoChooser.addOption("Two Short", m_twoShort);
         // m_autoChooser.addOption("Two Long", m_twoLong);
         // m_autoChooser.setDefaultOption("One & Balance", m_oneBal);
-        m_autoChooser2.setDefaultOption("One & Balance", m_autoBuilder.fullAuto(m_oneBal).andThen(new BalanceProfiled(m_swerve)));
+        m_autoChooser2.setDefaultOption("One & Balance", m_autoBuilder.fullAuto(m_oneBal).andThen(new Balance(m_swerve)));
         m_autoChooser2.addOption("Do Nothing", new WaitCommand(15));
 
         PathPlannerServer.startServer(5811);
@@ -137,23 +149,23 @@ public class RobotContainer {
 
         // m_tab.add("Camera", m_camera).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 7).withSize(3, 3);
 
-        m_eventMap.put("test1", new PrintCommand("Test 1"));
-        m_eventMap.put("test2", new PrintCommand("Test 2"));
-        m_eventMap.put("test3", new PrintCommand("Test 3"));
-        m_eventMap.put("timeout", new WaitCommand(0.15));
-        m_eventMap.put("openClaw", new OpenClaw(m_air));
-        m_eventMap.put("closeClaw", new CloseClaw(m_air));
-        m_eventMap.put("clawDown", new ClawDown(m_air));
-        m_eventMap.put("clawUp", new ClawUp(m_air));
-        m_eventMap.put("stowArm", new StowArm(m_arm, m_lift, m_air));
-        m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air));
-        m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air));
-        m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air));
-        m_eventMap.put("groundPick", new FloorHorizontal(m_arm, m_lift, m_air));
-        m_eventMap.put("flipGyro", new InstantCommand(() -> m_swerve.zeroGyro(180)));
-        m_eventMap.put("lowerCone", new LowerCone(m_lift));
-        m_eventMap.put("balance", new Balance(m_swerve));
-        m_eventMap.put("tippedCone", new FloorVertical(m_arm, m_lift, m_air));
+        // m_eventMap.put("test1", new PrintCommand("Test 1"));
+        // m_eventMap.put("test2", new PrintCommand("Test 2"));
+        // m_eventMap.put("test3", new PrintCommand("Test 3"));
+        // m_eventMap.put("timeout", new WaitCommand(0.15));
+        // m_eventMap.put("openClaw", new OpenClaw(m_air));
+        // m_eventMap.put("closeClaw", new CloseClaw(m_air));
+        // m_eventMap.put("clawDown", new ClawDown(m_air));
+        // m_eventMap.put("clawUp", new ClawUp(m_air));
+        // m_eventMap.put("stowArm", new StowArm(m_arm, m_lift, m_air));
+        // m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air));
+        // m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air));
+        // m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air));
+        // m_eventMap.put("groundPick", new FloorHorizontal(m_arm, m_lift, m_air));
+        // m_eventMap.put("flipGyro", new InstantCommand(() -> m_swerve.zeroGyro(180)));
+        // m_eventMap.put("lowerCone", new LowerCone(m_lift));
+        // m_eventMap.put("balance", new Balance(m_swerve));
+        // m_eventMap.put("tippedCone", new FloorVertical(m_arm, m_lift, m_air));
 
         
 
@@ -197,8 +209,8 @@ public class RobotContainer {
         new JoystickButton(m_operator, 7).onTrue(new FloorVertical(m_arm, m_lift, m_air));
         new JoystickButton(m_operator, 4).onTrue(new RaiseCone(m_lift));
         new JoystickButton(m_operator, 9).onTrue(new LowerCone(m_lift));
-        new JoystickButton(m_operator, 10).onTrue(new ClawDown(m_air));
-        new JoystickButton(m_operator, 21).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
+        // new JoystickButton(m_operator, 10).onTrue(new ClawDown(m_air));
+        new JoystickButton(m_operator, 10).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
     }
 
     /**

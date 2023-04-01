@@ -13,7 +13,8 @@ import frc.robot.Constants.LEDConstants;
 
 public class LEDs extends SubsystemBase {
   private final Spark m_blinkin = new Spark(LEDConstants.kBlinkinPort);
-  private double m_color = 0.67;
+  // private double m_color = 0.67;
+  private double m_color = -0.99;
   private final Random m_rand = new Random();
   double rand = m_rand.nextInt(2 - 1 + 1) + 1;
 
@@ -25,53 +26,53 @@ public class LEDs extends SubsystemBase {
   public void setColorTeleOP(Alliance color){
 
     // System.out.println(rand);
-
-    if(color == Alliance.Blue){
-      if(rand == 2) {
-        m_color = -0.99;
-        m_blinkin.set(-0.99);
-      } else {
-        m_color = 0.87;
-        m_blinkin.set(0.87);
-      }
-    }else if(color == Alliance.Red){
-      if(rand == 2) {
-        m_color = -0.99;
-        m_blinkin.set(-0.99);
-      } else {
-        m_blinkin.set(0.61);
-        m_color = 0.61;
-      }
-    }else{
-      m_blinkin.set(0.67);
-      m_color = 0.67;
-    }
+    m_blinkin.set(-0.99);
+    // if(color == Alliance.Blue){
+    //   if(rand == 2) {
+    //     m_color = -0.99;
+    //     m_blinkin.set(-0.99);
+    //   } else {
+    //     m_color = 0.87;
+    //     m_blinkin.set(0.87);
+    //   }
+    // }else if(color == Alliance.Red){
+    //   if(rand == 2) {
+    //     m_color = -0.99;
+    //     m_blinkin.set(-0.99);
+    //   } else {
+    //     m_blinkin.set(0.61);
+    //     m_color = 0.61;
+    //   }
+    // }else{
+    //   m_blinkin.set(0.67);
+    //   m_color = 0.67;
+    // }
   }
 
   // Sets the robot to the alliance color but blinking
   public void setColorAuton(Alliance color){
     // double rand = m_rand.nextInt(10 - 1 + 1) + 1;
-
-    if(color == Alliance.Blue){
-      if(rand == 2.0) {
-        m_color = -0.99;
-        m_blinkin.set(-0.99);
-      } else {
-        m_blinkin.set(-0.09);
-        m_color = -0.09;
-      }
-    }else if(color == Alliance.Red){
-      if(rand == 2) {
-        m_color = -0.99;
-        m_blinkin.set(-0.99);
-      } else {
-        m_blinkin.set(-0.11);
-        m_color = -0.11;
-      }
-    }else{
-      m_blinkin.set(-0.07);
-      m_color = -0.07;
-    }
+    m_blinkin.set(-0.99);
+    // if(color == Alliance.Blue){
+    //   if(rand == 2.0) {
+    //     m_color = -0.99;
+    //     m_blinkin.set(-0.99);
+    //   } else {
+    //     m_blinkin.set(-0.09);
+    //     m_color = -0.09;
+    //   }
+    // }else if(color == Alliance.Red){
+    //   if(rand == 2) {
+    //     m_color = -0.99;
+    //     m_blinkin.set(-0.99);
+    //   } else {
+    //     m_blinkin.set(-0.11);
+    //     m_color = -0.11;
+    //   }
+    // }else{
+    //   m_blinkin.set(-0.07);
+    //   m_color = -0.07;
+    // }
   }
   @Override
   public void periodic() {

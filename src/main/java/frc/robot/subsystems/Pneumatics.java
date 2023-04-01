@@ -42,7 +42,7 @@ public class Pneumatics extends SubsystemBase {
     m_isBuddyDown = m_tab.add("Forks Down", valueToBool(getBuddyState())).withWidget(BuiltInWidgets.kBooleanBox).withPosition(6, 0).getEntry();
     setClawState(false);
     setTiltState(Value.kForward);
-    setBuddyState(Value.kOff);
+    setBuddyState(Value.kForward);
   }
 
   public boolean getClawState() {

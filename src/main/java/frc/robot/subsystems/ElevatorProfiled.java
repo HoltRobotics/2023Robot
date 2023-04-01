@@ -45,7 +45,7 @@ public class ElevatorProfiled extends ProfiledPIDSubsystem {
     m_encoder = m_liftmotor.getEncoder(); // Gets the encoder built into the motor.
     m_encoder.setPositionConversionFactor(Units.inchesToMeters(Math.PI * 1.44) / 16); // Sets the encoder units to meters traveled by the elevator.
     m_encoder.setPosition(0); // Sets the encoder to 0 meters.
-    m_tab.add("Elevator", m_controller); // Adds the PID controller to the suffleboard for tuning.
+    // m_tab.add("Elevator", m_controller); // Adds the PID controller to the suffleboard for tuning.
     m_liftmotor.setInverted(false);
     m_liftmotor.setSmartCurrentLimit(30);
     m_heightDisplay = m_tab.add("Elevator Height", getHeight()).withWidget(BuiltInWidgets.kTextView).withPosition(4, 1).withSize(1, 1).getEntry(); // Adds the elevator height to the shuffleboard tab.

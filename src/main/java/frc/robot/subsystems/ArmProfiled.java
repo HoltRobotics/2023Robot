@@ -50,7 +50,7 @@ public class ArmProfiled extends ProfiledPIDSubsystem {
     m_encoder.setPosition(0);
     m_angleDisplay = m_tab.add("Arm Angle", getAngle()).getEntry();
     // m_voltageDisplay = m_tab.add("Arm Volts", 0).withWidget(BuiltInWidgets.kGraph).getEntry();
-    m_tab.add("Arm", m_controller);
+    // m_tab.add("Arm", m_controller);
     this.setGoal(0);
     this.enable();
   }

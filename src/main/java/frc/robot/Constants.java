@@ -24,7 +24,7 @@ public final class Constants {
         public static final double kStage1Height = 0.8; 
         public static final double kStage2Height = 0.156;
         public static final double kStage3Height = 0.98;
-        public static final double kSlideStageHeight = 0.1;
+        public static final double kSlideStageHeight = 0.1 - Units.inchesToMeters(2);
         public static final double kDropStageHeight = 0;
         public static final double kTippedConeHeight = 0.97;
         public static final double kMaxHeight = 0.98;
