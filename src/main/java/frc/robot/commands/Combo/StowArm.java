@@ -11,9 +11,11 @@ import frc.robot.commands.Arm.SetAngle;
 import frc.robot.commands.Elevator.SetHeight;
 import frc.robot.commands.Pneumatics.ClawDown;
 import frc.robot.commands.Pneumatics.CloseClaw;
+import frc.robot.commands.Swerve.SetSlowDrive;
 import frc.robot.subsystems.ArmProfiled;
 import frc.robot.subsystems.ElevatorProfiled;
 import frc.robot.subsystems.Pneumatics;
+import frc.robot.subsystems.Swerve;
 
 public class StowArm extends ParallelCommandGroup {
   /**
@@ -22,14 +24,15 @@ public class StowArm extends ParallelCommandGroup {
    * @param lift The Elevator Subsystem
    * @param air The Pneumatics Subsystem
    */
-  public StowArm(ArmProfiled arm, ElevatorProfiled lift, Pneumatics air) {
+  public StowArm(ArmProfiled arm, ElevatorProfiled lift, Pneumatics air, Swerve drive) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new SetHeight(ElevatorConstants.kStowHeight, lift), // Sets the elevator to the default height.
       new SetAngle(ArmConstants.kStowAngle, arm), // Sets the arm to the default angle.
       new CloseClaw(air), // Makes sure the claw is closed.
-      new ClawDown(air) // Sets the claw pointing down.
+      new ClawDown(air), // Sets the claw pointing down.
+      new SetSlowDrive(drive, false)
     );
   }
 }

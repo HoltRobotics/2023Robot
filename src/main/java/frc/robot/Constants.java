@@ -14,7 +14,7 @@ public final class Constants {
     public static final int kDriverPort = 0;
     public static final int kOperatorPort = 1;
 
-    public static final double kMaxRobotHeight = 2; //TODO: get right height
+    public static final double kMaxRobotHeight = 2;
     public static final double kMinRobotHeight = 0.1;
 
     public static final class ElevatorConstants {
@@ -24,13 +24,14 @@ public final class Constants {
         public static final double kStage1Height = 0.8; 
         public static final double kStage2Height = 0.156;
         public static final double kStage3Height = 0.98;
+        public static final double kCube3Height = 0.64;
         public static final double kSlideStageHeight = 0.1 - Units.inchesToMeters(2);
         public static final double kDropStageHeight = 0;
         public static final double kTippedConeHeight = 0.97;
         public static final double kMaxHeight = 0.98;
         public static final double kLowerConeHeight = 0.1;
 
-        public static final double kBackWheelsOffset = 0.25; //TODO: get right distances
+        public static final double kBackWheelsOffset = 0.25;
         public static final double kFrontWheelsOffset = 0.25;
 
         public static final double kP = 200;
@@ -49,9 +50,9 @@ public final class Constants {
         public static final double kDropStageAngle = 38.7;
         public static final double kTippedConeAngle = 159.52;
         public static final double kMaxAngle = 180;
-        public static final double kClawHeightOffset = 0.3; //TODO: get the right height
+        public static final double kClawHeightOffset = 0.3;
 
-        public static final double kClawLenghtOffset = 0.25; //TODO: get right distances
+        public static final double kClawLenghtOffset = 0.25;
         public static final double kArmLenght = 1;
 
         public static final double kP = 0.15;
@@ -151,6 +152,7 @@ public final class Constants {
         /* Swerve Profiling Values */
         /** Meters per Second */
         public static final double maxSpeed = Units.feetToMeters(16.3);
+
         /** Radians per Second */
         public static final double maxAngularVelocity = 4.5;
 
@@ -202,7 +204,6 @@ public final class Constants {
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
-        //TODO: when the other modules are built lets set the CAN IDs ahead of time so when we swap them out its easier in code.
         /* Extra Module - Module 4 */
         public static final class Mod4 {
             public static final int driveMotorID = 20;

@@ -45,11 +45,11 @@ public class RobotContainer {
     // private final Elevator m_liftold = new Elevator();
     private final ElevatorProfiled m_lift = new ElevatorProfiled();
     private final Pneumatics m_air = new Pneumatics();
-    private final Limelight m_light = new Limelight();
+    // private final Limelight m_light = new Limelight();
     private final LEDs m_led = new LEDs();
 
     /* Controllers */
-    private final XboxController m_driver = new XboxController(Constants.kDriverPort);
+    private final Joystick m_driver = new Joystick(Constants.kDriverPort);
     private final Joystick m_operator = new Joystick(Constants.kOperatorPort);
 
     private final SwerveAutoBuilder m_autoBuilder;
@@ -61,24 +61,24 @@ public class RobotContainer {
 
     // private final UsbCamera m_camera;
 
-    private final List<PathPlannerTrajectory> m_testPath = PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3));
-    private final List<PathPlannerTrajectory> m_transPath = PathPlanner.loadPathGroup("Translation Path", new PathConstraints(3, 3));
-    private final List<PathPlannerTrajectory> m_rotPath = PathPlanner.loadPathGroup("Rotation Path", new PathConstraints(1, 1));
-    private final List<PathPlannerTrajectory> m_dancePaths = PathPlanner.loadPathGroup("Dance Path", new PathConstraints(3, 3));
+    // private final List<PathPlannerTrajectory> m_testPath = PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3));
+    // private final List<PathPlannerTrajectory> m_transPath = PathPlanner.loadPathGroup("Translation Path", new PathConstraints(3, 3));
+    // private final List<PathPlannerTrajectory> m_rotPath = PathPlanner.loadPathGroup("Rotation Path", new PathConstraints(1, 1));
+    // private final List<PathPlannerTrajectory> m_dancePaths = PathPlanner.loadPathGroup("Dance Path", new PathConstraints(3, 3));
     private final List<PathPlannerTrajectory> m_oneLong = PathPlanner.loadPathGroup("One Peice Long Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
-    private final List<PathPlannerTrajectory> m_oneShort = PathPlanner.loadPathGroup("One Peice Short Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
-    private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(2, 1), new PathConstraints(2, 2), new PathConstraints(1.75, 2));
-    private final List<PathPlannerTrajectory> m_twoLong = PathPlanner.loadPathGroup("Two Peice Long Path", new PathConstraints(1, 1), new PathConstraints(1, 1), new PathConstraints(3, 4), new PathConstraints(0.75, 1),new PathConstraints(1, 1),new PathConstraints(1, 1));
+    // private final List<PathPlannerTrajectory> m_oneShort = PathPlanner.loadPathGroup("One Peice Short Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
+    // private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(2, 1), new PathConstraints(2, 2), new PathConstraints(1.75, 2));
     private final List<PathPlannerTrajectory> m_oneBal = PathPlanner.loadPathGroup("One Cone Balance", new PathConstraints(2, 2), new PathConstraints(1.25, 2), new PathConstraints(0.65, 2));
+    private final List<PathPlannerTrajectory> m_cubeTwoShort = PathPlanner.loadPathGroup("New Two Short", new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(1, 2),new PathConstraints(2, 2));
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         m_swerve.setDefaultCommand(
             new TeleopSwerve(
-                () -> -m_driver.getLeftY(),     // Translation
-                () -> -m_driver.getLeftX(),     // Strafe
-                () -> -m_driver.getRightX(),    // Rotation
-                () -> m_driver.getLeftBumper(), // Field Centric
+                () -> -m_driver.getRawAxis(1),     // Translation
+                () -> -m_driver.getRawAxis(0),     // Strafe
+                () -> -m_driver.getRawAxis(2),    // Rotation
+                () -> m_driver.getRawButton(5), // Field Centric
                 m_swerve
             )
         );
@@ -89,7 +89,7 @@ public class RobotContainer {
             m_swerve::getPose,
             m_swerve::resetOdometry,
             SwerveConstants.swerveKinematics,
-            new PIDConstants(9, 0, 0), //TODO: tune theses
+            new PIDConstants(9, 0, 0),
             new PIDConstants(12, 0, 0),
             m_swerve::setModuleStates,
             m_eventMap,
@@ -101,29 +101,19 @@ public class RobotContainer {
         m_eventMap.put("test2", new PrintCommand("Test 2"));
         m_eventMap.put("test3", new PrintCommand("Test 3"));
         m_eventMap.put("timeout", new WaitCommand(1));
+        m_eventMap.put("secHalf", new WaitCommand(2.25));
         m_eventMap.put("openClaw", new OpenClaw(m_air));
         m_eventMap.put("closeClaw", new CloseClaw(m_air));
         m_eventMap.put("clawDown", new ClawDown(m_air));
         m_eventMap.put("clawUp", new ClawUp(m_air));
-        m_eventMap.put("stowArm", new StowArm(m_arm, m_lift, m_air));
-        m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air));
-        m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air));
-        m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air));
-        m_eventMap.put("groundPick", new FloorHorizontal(m_arm, m_lift, m_air));
+        m_eventMap.put("stowArm", new StowArm(m_arm, m_lift, m_air, m_swerve));
+        m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air, m_swerve));
+        m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air, m_swerve));
+        m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air, m_swerve));
+        m_eventMap.put("cube3", new Cube3(m_arm, m_lift, m_air, m_swerve));
+        m_eventMap.put("groundPick", new FloorHorizontal(m_arm, m_lift, m_air, m_swerve));
         m_eventMap.put("lowerCone", new LowerCone(m_lift));
         m_eventMap.put("flipGyro", new InstantCommand(() -> m_swerve.zeroGyro(180)));
-
-        // m_autoBuilder = new SwerveAutoBuilder(
-        //     m_swerve::getPose,
-        //     m_swerve::resetOdometry,
-        //     SwerveConstants.swerveKinematics,
-        //     new PIDConstants(9, 0, 0), //TODO: tune theses
-        //     new PIDConstants(12, 0, 0),
-        //     m_swerve::setModuleStates,
-        //     m_eventMap,
-        //     true,
-        //     m_swerve
-        // );
 
         m_led.setDefaultCommand(new Lights(m_led));
         
@@ -134,13 +124,14 @@ public class RobotContainer {
         // m_autoChooser.addOption("Translation Path", m_transPath);
         // m_autoChooser.addOption("Rotation Path", m_rotPath);
         // m_autoChooser.addOption("Dance Path", m_dancePaths);
-        // m_autoChooser.addOption("One Peice Long", m_oneLong);
+        m_autoChooser2.addOption("One Peice Long", m_autoBuilder.fullAuto(m_oneLong));
         // m_autoChooser.addOption("One Peice Short", m_oneShort);
-        m_autoChooser2.addOption("Two Short", m_autoBuilder.fullAuto(m_twoShort));
+        // m_autoChooser2.addOption("Two Short", m_autoBuilder.fullAuto(m_twoShort));
         // m_autoChooser.addOption("Two Short", m_twoShort);
         // m_autoChooser.addOption("Two Long", m_twoLong);
         // m_autoChooser.setDefaultOption("One & Balance", m_oneBal);
         m_autoChooser2.setDefaultOption("One & Balance", m_autoBuilder.fullAuto(m_oneBal).andThen(new Balance(m_swerve)));
+        m_autoChooser2.addOption("Cube 2 Short", m_autoBuilder.fullAuto(m_cubeTwoShort));
         m_autoChooser2.addOption("Do Nothing", new WaitCommand(15));
 
         PathPlannerServer.startServer(5811);
@@ -188,25 +179,25 @@ public class RobotContainer {
 
         // new JoystickButton(m_driver, XboxController.Button.kA.value).onTrue(new BuddyDown(m_air)).onFalse(new BuddyUp(m_air));
 
-        new JoystickButton(m_driver, XboxController.Button.kRightBumper.value).toggleOnFalse(new SlowDrive(m_swerve));
+        new JoystickButton(m_driver, 6).toggleOnFalse(new SlowDrive(m_swerve));
         // new JoystickButton(m_driver, XboxController.Button.kB.value).whileTrue(new OrbitPiece(m_swerve, m_arm));
-        new JoystickButton(m_driver, XboxController.Button.kX.value).onTrue(new ToggleTilt(m_air));
-        new JoystickButton(m_driver, XboxController.Button.kStart.value).onTrue(new ZeroGyro(m_swerve));
-        new JoystickButton(m_driver, XboxController.Button.kBack.value).onTrue(new ResetEncoders(m_swerve));
-        new JoystickButton(m_driver, XboxController.Button.kA.value).whileTrue(new OpenClaw(m_air)).whileFalse(new CloseClaw(m_air));
+        new JoystickButton(m_driver, 1).onTrue(new ToggleTilt(m_air));
+        new JoystickButton(m_driver, 14).onTrue(new ZeroGyro(m_swerve));
+        new JoystickButton(m_driver, 9).onTrue(new ResetEncoders(m_swerve));
+        new JoystickButton(m_driver, 2).whileTrue(new OpenClaw(m_air)).whileFalse(new CloseClaw(m_air));
         // new JoystickButton(m_driver, XboxController.Button.kB.value).onTrue(new ToggleClaw(m_air));
 
         new JoystickButton(m_operator, 5).whileTrue(new BalanceProfiled(m_swerve));
 
-        new JoystickButton(m_operator, 2).onTrue(new StowArm(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 1).onTrue(new SlideStage(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 3).onTrue(new DropStage(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 2).onTrue(new StowArm(m_arm, m_lift, m_air, m_swerve));
+        new JoystickButton(m_operator, 1).onTrue(new SlideStage(m_arm, m_lift, m_air, m_swerve));
+        new JoystickButton(m_operator, 3).onTrue(new DropStage(m_arm, m_lift, m_air, m_swerve));
         // new JoystickButton(m_operator, 5).onTrue(new ClawUp(m_air));
-        new JoystickButton(m_operator, 11).onTrue(new Stage1(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 13).onTrue(new Stage2(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 15).onTrue(new Stage3(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 6).onTrue(new FloorHorizontal(m_arm, m_lift, m_air));
-        new JoystickButton(m_operator, 7).onTrue(new FloorVertical(m_arm, m_lift, m_air));
+        new JoystickButton(m_operator, 11).onTrue(new Stage1(m_arm, m_lift, m_air, m_swerve));
+        new JoystickButton(m_operator, 13).onTrue(new Stage2(m_arm, m_lift, m_air, m_swerve));
+        new JoystickButton(m_operator, 15).onTrue(new Stage3(m_arm, m_lift, m_air, m_swerve));
+        new JoystickButton(m_operator, 6).onTrue(new FloorHorizontal(m_arm, m_lift, m_air, m_swerve));
+        new JoystickButton(m_operator, 7).onTrue(new FloorVertical(m_arm, m_lift, m_air, m_swerve));
         new JoystickButton(m_operator, 4).onTrue(new RaiseCone(m_lift));
         new JoystickButton(m_operator, 9).onTrue(new LowerCone(m_lift));
         // new JoystickButton(m_operator, 10).onTrue(new ClawDown(m_air));

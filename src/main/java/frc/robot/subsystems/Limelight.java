@@ -32,7 +32,6 @@ public class Limelight extends SubsystemBase {
 
   private final GenericEntry m_tv; // Makes a shuffleboard object that tells if the limelight has a target.
 
-  //TODO: add limelight camera to the shuffleboard and get rid of the other camera
   /** Creates a new Limelight. */
   public Limelight() {
     m_tv = m_tab.add("Has Target", false).withPosition(5, 1).withSize(1, 1).getEntry(); // Adds a box to the shuffleboard to say if the limelight has a target.

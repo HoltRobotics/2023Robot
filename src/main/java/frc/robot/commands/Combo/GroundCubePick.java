@@ -11,9 +11,11 @@ import frc.robot.commands.Arm.SetAngle;
 import frc.robot.commands.Elevator.SetHeight;
 import frc.robot.commands.Pneumatics.ClawDown;
 import frc.robot.commands.Pneumatics.OpenClaw;
+import frc.robot.commands.Swerve.SetSlowDrive;
 import frc.robot.subsystems.ArmProfiled;
 import frc.robot.subsystems.ElevatorProfiled;
 import frc.robot.subsystems.Pneumatics;
+import frc.robot.subsystems.Swerve;
 
 public class GroundCubePick extends ParallelCommandGroup {
   /**
@@ -22,14 +24,15 @@ public class GroundCubePick extends ParallelCommandGroup {
    * @param lift The Elevator Subsystem
    * @param air The Pneumatics Subsystem
    */
-  public GroundCubePick(ArmProfiled arm, ElevatorProfiled lift, Pneumatics air) {
+  public GroundCubePick(ArmProfiled arm, ElevatorProfiled lift, Pneumatics air, Swerve drive) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new SetHeight(ElevatorConstants.kStage1Height, lift), // Sets the Elevator to the right height.
       new SetAngle(ArmConstants.kStage1Angle, arm), // Sets the arm to the right angle.
       new OpenClaw(air), // Makes sure the claw is open.
-      new ClawDown(air) // Sets the claw down.
+      new ClawDown(air), // Sets the claw down.
+      new SetSlowDrive(drive, true)
     );
   }
 }

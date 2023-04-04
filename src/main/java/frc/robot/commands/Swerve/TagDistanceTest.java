@@ -22,7 +22,6 @@ public class TagDistanceTest extends PIDCommand {
   public TagDistanceTest(Swerve swerve, Limelight light) {
     super(
         // The controller that the command will use
-        //TODO: tune theses should be the same as the translation pid
         new PIDController(0, 0, 0), // Makes the PID controller
         // This should return the measurement
         () -> light.getDistance(), // Gives the PID controller the distance of the robot as the input.

@@ -21,7 +21,6 @@ public class GyroBalance extends PIDCommand {
   public GyroBalance(Swerve swerve) {
     super(
         // The controller that the command will use
-         //TODO: tune these, needs the robot done
         new PIDController(0, 0, 0), // Makes the PID controller.
         // This should return the measurement
         () -> swerve.getPitch(), // Gives the PID controller the pitch of the robot as the input.
