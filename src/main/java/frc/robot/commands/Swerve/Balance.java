@@ -5,7 +5,9 @@
 package frc.robot.commands.Swerve;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 // import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 // import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -14,6 +16,7 @@ import frc.robot.subsystems.Swerve;
 public class Balance extends CommandBase {
   private final PIDController m_controller;
   private final Swerve m_swerve;
+  private final SwerveModuleState[] m_states;
   // private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
   // private boolean m_isPID = false;
 
@@ -26,6 +29,13 @@ public class Balance extends CommandBase {
     // m_tab.add("Balance", m_controller);
     m_swerve = swerve;
     addRequirements(m_swerve);
+    SwerveModuleState[] states = { // The states of each of the wheels that we want to set.
+      new SwerveModuleState(0, Rotation2d.fromDegrees(45)), // Front Left
+      new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), // Front Right
+      new SwerveModuleState(0, Rotation2d.fromDegrees(45)), // Back Left
+      new SwerveModuleState(0, Rotation2d.fromDegrees(-45)) // Back Right
+    };
+    m_states = states;
   }
 
   // Called when the command is initially scheduled.
@@ -48,10 +58,12 @@ public class Balance extends CommandBase {
     //   System.out.println("YES PID");
     // }
     // m_swerve.drive(new Translation2d(-m_controller.calculate(m_swerve.getPitch()) * 0.5, 0), 0, true, true);
+    System.out.println("Slow: " + m_swerve.getPitch());
     if(Math.abs(m_swerve.getPitch()) < 8) {
-      m_swerve.drive(new Translation2d(), Math.toRadians(90), true, true);
+      m_swerve.setModuleStates(m_states);
+      // m_swerve.drive(new Translation2d(), Math.toRadians(90), true, true);
     } else {
-      m_swerve.drive(new Translation2d(-0.50, 0), 0, true, true);
+      m_swerve.drive(new Translation2d(-0.55, 0), 0, true, true);
     }
   }
 

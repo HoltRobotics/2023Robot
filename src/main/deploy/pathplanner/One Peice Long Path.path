@@ -95,9 +95,7 @@
       "isLocked": false,
       "isStopPoint": true,
       "stopEvent": {
-        "names": [
-          "groundPick"
-        ],
+        "names": [],
         "executionBehavior": "parallel",
         "waitBehavior": "after",
         "waitTime": 1.0

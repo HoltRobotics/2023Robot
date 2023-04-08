@@ -10,8 +10,6 @@ import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import com.pathplanner.lib.server.PathPlannerServer;
 
-import edu.wpi.first.cscore.HttpCamera;
-import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -59,7 +57,6 @@ public class RobotContainer {
     private final SendableChooser<CommandBase> m_autoChooser2 = new SendableChooser<>();
     // private final SendableChooser<List<PathPlannerTrajectory>> m_autoChooser = new SendableChooser<>();
 
-    // private final UsbCamera m_camera;
 
     // private final List<PathPlannerTrajectory> m_testPath = PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3));
     // private final List<PathPlannerTrajectory> m_transPath = PathPlanner.loadPathGroup("Translation Path", new PathConstraints(3, 3));
@@ -70,6 +67,7 @@ public class RobotContainer {
     // private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(2, 1), new PathConstraints(2, 2), new PathConstraints(1.75, 2));
     private final List<PathPlannerTrajectory> m_oneBal = PathPlanner.loadPathGroup("One Cone Balance", new PathConstraints(2, 2), new PathConstraints(1.25, 2), new PathConstraints(0.65, 2));
     private final List<PathPlannerTrajectory> m_cubeTwoShort = PathPlanner.loadPathGroup("New Two Short", new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(1, 2),new PathConstraints(2, 2));
+    private final List<PathPlannerTrajectory> m_fullBalance = PathPlanner.loadPathGroup("New Balance", new PathConstraints(1, 1));
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -117,8 +115,6 @@ public class RobotContainer {
 
         m_led.setDefaultCommand(new Lights(m_led));
         
-        m_tab.add("Camrea", new HttpCamera("LimeLight", "http://10.60.78.107:5800/", HttpCameraKind.kMJPGStreamer)).withSize(3, 3);
-
         m_tab.add("Auton List", m_autoChooser2).withPosition(3, 2).withSize(2, 1).withWidget(BuiltInWidgets.kComboBoxChooser);
         // m_autoChooser.setDefaultOption("Test Path", m_testPath);
         // m_autoChooser.addOption("Translation Path", m_transPath);
@@ -131,14 +127,11 @@ public class RobotContainer {
         // m_autoChooser.addOption("Two Long", m_twoLong);
         // m_autoChooser.setDefaultOption("One & Balance", m_oneBal);
         m_autoChooser2.setDefaultOption("One & Balance", m_autoBuilder.fullAuto(m_oneBal).andThen(new Balance(m_swerve)));
+        m_autoChooser2.addOption("New Balance", m_autoBuilder.fullAuto(m_fullBalance).andThen(new NewBalance(m_swerve)));
         m_autoChooser2.addOption("Cube 2 Short", m_autoBuilder.fullAuto(m_cubeTwoShort));
         m_autoChooser2.addOption("Do Nothing", new WaitCommand(15));
 
         PathPlannerServer.startServer(5811);
-
-        // m_camera = CameraServer.startAutomaticCapture();
-
-        // m_tab.add("Camera", m_camera).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 7).withSize(3, 3);
 
         // m_eventMap.put("test1", new PrintCommand("Test 1"));
         // m_eventMap.put("test2", new PrintCommand("Test 2"));
@@ -187,7 +180,8 @@ public class RobotContainer {
         new JoystickButton(m_driver, 2).whileTrue(new OpenClaw(m_air)).whileFalse(new CloseClaw(m_air));
         // new JoystickButton(m_driver, XboxController.Button.kB.value).onTrue(new ToggleClaw(m_air));
 
-        new JoystickButton(m_operator, 5).whileTrue(new BalanceProfiled(m_swerve));
+        // new JoystickButton(m_operator, 5).whileTrue(new BalanceProfiled(m_swerve));
+        new JoystickButton(m_operator, 5).whileTrue(new SequentialCommandGroup(new FastBalance(m_swerve), new Balance(m_swerve)));
 
         new JoystickButton(m_operator, 2).onTrue(new StowArm(m_arm, m_lift, m_air, m_swerve));
         new JoystickButton(m_operator, 1).onTrue(new SlideStage(m_arm, m_lift, m_air, m_swerve));
@@ -196,8 +190,8 @@ public class RobotContainer {
         new JoystickButton(m_operator, 11).onTrue(new Stage1(m_arm, m_lift, m_air, m_swerve));
         new JoystickButton(m_operator, 13).onTrue(new Stage2(m_arm, m_lift, m_air, m_swerve));
         new JoystickButton(m_operator, 15).onTrue(new Stage3(m_arm, m_lift, m_air, m_swerve));
-        new JoystickButton(m_operator, 6).onTrue(new FloorHorizontal(m_arm, m_lift, m_air, m_swerve));
-        new JoystickButton(m_operator, 7).onTrue(new FloorVertical(m_arm, m_lift, m_air, m_swerve));
+        new JoystickButton(m_operator, 12).onTrue(new FloorHorizontal(m_arm, m_lift, m_air, m_swerve));
+        new JoystickButton(m_operator, 14).onTrue(new FloorVertical(m_arm, m_lift, m_air, m_swerve));
         new JoystickButton(m_operator, 4).onTrue(new RaiseCone(m_lift));
         new JoystickButton(m_operator, 9).onTrue(new LowerCone(m_lift));
         // new JoystickButton(m_operator, 10).onTrue(new ClawDown(m_air));
