@@ -25,9 +25,9 @@ public class NewBalance extends CommandBase {
   @Override
   public void execute() {
     if(m_drive.getPitch() >= 7) {
-      m_drive.drive(new Translation2d(0.6, 0), 0, false, true);
+      m_drive.drive(new Translation2d(0.55, 0), 0, false, true);
     } else if(m_drive.getPitch() <= -7) {
-      m_drive.drive(new Translation2d(-0.6, 0), 0, false, true);
+      m_drive.drive(new Translation2d(-0.55, 0), 0, false, true);
     } else {
       m_drive.drive(new Translation2d(), 0, false, true);
     }

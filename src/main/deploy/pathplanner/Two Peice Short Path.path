@@ -80,15 +80,15 @@
     },
     {
       "anchorPoint": {
-        "x": 5.98,
+        "x": 6.2,
         "y": 4.85
       },
       "prevControl": {
-        "x": 5.805555381879994,
+        "x": 6.025555381879994,
         "y": 4.806642845977999
       },
       "nextControl": {
-        "x": 6.1544446181200065,
+        "x": 6.374444618120006,
         "y": 4.893357154022
       },
       "holonomicAngle": 0,
@@ -160,12 +160,12 @@
     },
     {
       "anchorPoint": {
-        "x": 1.55,
-        "y": 4.1
+        "x": 1.25,
+        "y": 3.6
       },
       "prevControl": {
-        "x": 1.6830790804646463,
-        "y": 4.413815466179914
+        "x": 2.8341558396383553,
+        "y": 3.5550883802195554
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -175,7 +175,6 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "openClaw",
           "flipGyro"
         ],
         "executionBehavior": "sequential",

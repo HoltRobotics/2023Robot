@@ -41,7 +41,7 @@
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": true,
+      "isStopPoint": false,
       "stopEvent": {
         "names": [
           "stowArm"
@@ -64,7 +64,7 @@
         "x": 3.776280355981493,
         "y": 0.6861274778184357
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -89,11 +89,11 @@
         "x": 5.345638166311996,
         "y": 0.6689742908729738
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": true,
+      "isStopPoint": false,
       "stopEvent": {
         "names": [],
         "executionBehavior": "parallel",
@@ -103,18 +103,18 @@
     },
     {
       "anchorPoint": {
-        "x": 5.617230292948461,
-        "y": 0.9491430109821704
+        "x": 7.458339025094598,
+        "y": 0.7547402256002796
       },
       "prevControl": {
-        "x": 5.4566498544385516,
-        "y": 0.8588165143203479
+        "x": 7.297758586584688,
+        "y": 0.6644137289384572
       },
       "nextControl": {
-        "x": 5.800197620366711,
-        "y": 1.052062132654934
+        "x": 7.6413063525128475,
+        "y": 0.8576593472730433
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -130,12 +130,12 @@
     },
     {
       "anchorPoint": {
-        "x": 6.486325098185146,
-        "y": 0.9720139269094513
+        "x": 7.68704818436741,
+        "y": 5.5919389442202565
       },
       "prevControl": {
-        "x": 6.068216166389537,
-        "y": 0.8390767280821289
+        "x": 7.538387230840082,
+        "y": 3.099009108146604
       },
       "nextControl": null,
       "holonomicAngle": 0,
@@ -154,5 +154,12 @@
   "maxVelocity": 3.0,
   "maxAcceleration": 2.0,
   "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 0.5818181818181591,
+      "names": [
+        "stowArm"
+      ]
+    }
+  ]
 }

@@ -59,15 +59,16 @@ public class RobotContainer {
 
 
     // private final List<PathPlannerTrajectory> m_testPath = PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3));
-    // private final List<PathPlannerTrajectory> m_transPath = PathPlanner.loadPathGroup("Translation Path", new PathConstraints(3, 3));
-    // private final List<PathPlannerTrajectory> m_rotPath = PathPlanner.loadPathGroup("Rotation Path", new PathConstraints(1, 1));
+    private final List<PathPlannerTrajectory> m_transPath = PathPlanner.loadPathGroup("Translation Path", new PathConstraints(4, 3));
+    private final List<PathPlannerTrajectory> m_rotPath = PathPlanner.loadPathGroup("Rotation Path", new PathConstraints(1, 1));
     // private final List<PathPlannerTrajectory> m_dancePaths = PathPlanner.loadPathGroup("Dance Path", new PathConstraints(3, 3));
     private final List<PathPlannerTrajectory> m_oneLong = PathPlanner.loadPathGroup("One Peice Long Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
-    // private final List<PathPlannerTrajectory> m_oneShort = PathPlanner.loadPathGroup("One Peice Short Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
+    private final List<PathPlannerTrajectory> m_oneShort = PathPlanner.loadPathGroup("One Peice Short Path", new PathConstraints(2, 1));
     // private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(2, 1), new PathConstraints(2, 2), new PathConstraints(1.75, 2));
     private final List<PathPlannerTrajectory> m_oneBal = PathPlanner.loadPathGroup("One Cone Balance", new PathConstraints(2, 2), new PathConstraints(1.25, 2), new PathConstraints(0.65, 2));
     private final List<PathPlannerTrajectory> m_cubeTwoShort = PathPlanner.loadPathGroup("New Two Short", new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(1, 2),new PathConstraints(2, 2));
     private final List<PathPlannerTrajectory> m_fullBalance = PathPlanner.loadPathGroup("New Balance", new PathConstraints(1, 1));
+    private final List<PathPlannerTrajectory> m_moBalance = PathPlanner.loadPathGroup("New Mo Balance", new PathConstraints(2, 1));
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -82,18 +83,6 @@ public class RobotContainer {
         );
 
         // m_arm.setDefaultCommand(new AnalongArmMove(() -> m_driver.getLeftTriggerAxis(), () -> m_driver.getRightTriggerAxis(), m_arm));
-
-        m_autoBuilder = new SwerveAutoBuilder(
-            m_swerve::getPose,
-            m_swerve::resetOdometry,
-            SwerveConstants.swerveKinematics,
-            new PIDConstants(9, 0, 0),
-            new PIDConstants(12, 0, 0),
-            m_swerve::setModuleStates,
-            m_eventMap,
-            true,
-            m_swerve
-        );
 
         m_eventMap.put("test1", new PrintCommand("Test 1"));
         m_eventMap.put("test2", new PrintCommand("Test 2"));
@@ -114,44 +103,38 @@ public class RobotContainer {
         m_eventMap.put("flipGyro", new InstantCommand(() -> m_swerve.zeroGyro(180)));
 
         m_led.setDefaultCommand(new Lights(m_led));
+
+        m_autoBuilder = new SwerveAutoBuilder(
+            m_swerve::getPose,
+            m_swerve::resetOdometry,
+            SwerveConstants.swerveKinematics,
+            new PIDConstants(17, 0, 0),
+            // new PIDConstants(8.5, 0, 0),
+            new PIDConstants(6, 0, 0),
+            m_swerve::setModuleStates,
+            m_eventMap,
+            true,
+            m_swerve
+        );
         
         m_tab.add("Auton List", m_autoChooser2).withPosition(3, 2).withSize(2, 1).withWidget(BuiltInWidgets.kComboBoxChooser);
         // m_autoChooser.setDefaultOption("Test Path", m_testPath);
-        // m_autoChooser.addOption("Translation Path", m_transPath);
-        // m_autoChooser.addOption("Rotation Path", m_rotPath);
+        m_autoChooser2.addOption("Translation Path", m_autoBuilder.fullAuto(m_transPath));
+        m_autoChooser2.addOption("Rotation Path", m_autoBuilder.fullAuto(m_rotPath));
         // m_autoChooser.addOption("Dance Path", m_dancePaths);
         m_autoChooser2.addOption("One Peice Long", m_autoBuilder.fullAuto(m_oneLong));
-        // m_autoChooser.addOption("One Peice Short", m_oneShort);
+        m_autoChooser2.addOption("One Peice Short", m_autoBuilder.fullAuto(m_oneShort));
         // m_autoChooser2.addOption("Two Short", m_autoBuilder.fullAuto(m_twoShort));
         // m_autoChooser.addOption("Two Short", m_twoShort);
         // m_autoChooser.addOption("Two Long", m_twoLong);
         // m_autoChooser.setDefaultOption("One & Balance", m_oneBal);
         m_autoChooser2.setDefaultOption("One & Balance", m_autoBuilder.fullAuto(m_oneBal).andThen(new Balance(m_swerve)));
         m_autoChooser2.addOption("New Balance", m_autoBuilder.fullAuto(m_fullBalance).andThen(new NewBalance(m_swerve)));
+        m_autoChooser2.addOption("New Mo Balance", m_autoBuilder.fullAuto(m_moBalance).andThen(new NewBalance(m_swerve)));
         m_autoChooser2.addOption("Cube 2 Short", m_autoBuilder.fullAuto(m_cubeTwoShort));
         m_autoChooser2.addOption("Do Nothing", new WaitCommand(15));
 
         PathPlannerServer.startServer(5811);
-
-        // m_eventMap.put("test1", new PrintCommand("Test 1"));
-        // m_eventMap.put("test2", new PrintCommand("Test 2"));
-        // m_eventMap.put("test3", new PrintCommand("Test 3"));
-        // m_eventMap.put("timeout", new WaitCommand(0.15));
-        // m_eventMap.put("openClaw", new OpenClaw(m_air));
-        // m_eventMap.put("closeClaw", new CloseClaw(m_air));
-        // m_eventMap.put("clawDown", new ClawDown(m_air));
-        // m_eventMap.put("clawUp", new ClawUp(m_air));
-        // m_eventMap.put("stowArm", new StowArm(m_arm, m_lift, m_air));
-        // m_eventMap.put("stage1", new Stage1(m_arm, m_lift, m_air));
-        // m_eventMap.put("stage2", new Stage2(m_arm, m_lift, m_air));
-        // m_eventMap.put("stage3", new Stage3(m_arm, m_lift, m_air));
-        // m_eventMap.put("groundPick", new FloorHorizontal(m_arm, m_lift, m_air));
-        // m_eventMap.put("flipGyro", new InstantCommand(() -> m_swerve.zeroGyro(180)));
-        // m_eventMap.put("lowerCone", new LowerCone(m_lift));
-        // m_eventMap.put("balance", new Balance(m_swerve));
-        // m_eventMap.put("tippedCone", new FloorVertical(m_arm, m_lift, m_air));
-
-        
 
         // Configure the button bindings
         configureButtonBindings();

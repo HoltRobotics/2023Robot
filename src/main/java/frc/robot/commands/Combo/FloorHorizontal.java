@@ -28,7 +28,7 @@ public class FloorHorizontal extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetHeight(ElevatorConstants.kStage1Height - 0.1, lift), // Sets the Elevator to the right height.
+      new SetHeight(ElevatorConstants.kStage1Height - 0.05, lift), // Sets the Elevator to the right height.
       new SetAngle(ArmConstants.kStage1Angle, arm), // Sets the arm to the right angle.
       new OpenClaw(air), // Makes sure the claw is open.
       new ClawUp(air), // Sets the claw level.

@@ -211,12 +211,12 @@
     },
     {
       "anchorPoint": {
-        "x": 1.85,
-        "y": 3.808007501892322
+        "x": 1.75,
+        "y": 3.6
       },
       "prevControl": {
-        "x": 2.273111944654687,
-        "y": 3.7508302120741193
+        "x": 2.173111944654687,
+        "y": 3.5428227101817975
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -228,7 +228,6 @@
         "names": [
           "stage3",
           "secHalf",
-          "openClaw",
           "flipGyro"
         ],
         "executionBehavior": "sequential",
