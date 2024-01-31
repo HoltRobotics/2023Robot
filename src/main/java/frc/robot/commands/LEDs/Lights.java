@@ -6,10 +6,10 @@ package frc.robot.commands.LEDs;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.LEDs;
 
-public class Lights extends CommandBase {
+public class Lights extends Command {
   private final LEDs m_led;
 
   /** Creates a new AutonLights. */
@@ -27,7 +27,7 @@ public class Lights extends CommandBase {
   @Override
   public void execute() {
     if(DriverStation.isDisabled()) {
-      m_led.setColorTeleOP(Alliance.Invalid);
+      // m_led.setColorTeleOP(Alliance.Invalid);
     } else if(DriverStation.isAutonomous()) {
       m_led.setColorAuton(DriverStation.getAlliance());
     } else if (DriverStation.isTeleop()) {
@@ -38,7 +38,7 @@ public class Lights extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_led.setColorAuton(Alliance.Invalid);
+    m_led.setColorAuton(null);
   }
 
   // Returns true when the command should end.

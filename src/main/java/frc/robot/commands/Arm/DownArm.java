@@ -4,11 +4,11 @@
 
 package frc.robot.commands.Arm;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.*;
 import frc.robot.subsystems.ArmProfiled;
 
-public class DownArm extends CommandBase {
+public class DownArm extends Command {
   private final ArmProfiled m_arm; // Subsystem needed to control the arm.
   private boolean m_pastLimit = false; // Used to track if the arm goes past its limit.
 

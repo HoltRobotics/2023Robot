@@ -6,10 +6,10 @@ package frc.robot.commands.Arm;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ArmProfiled;
 
-public class AnalongArmMove extends CommandBase {
+public class AnalongArmMove extends Command {
   private final ArmProfiled m_arm;
   private DoubleSupplier m_upSpeed;
   private DoubleSupplier m_downSpeed;

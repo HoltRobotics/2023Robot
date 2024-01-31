@@ -6,13 +6,13 @@ package frc.robot.commands.Swerve;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Swerve;
 
-public class OrbitPiece extends CommandBase {
+public class OrbitPiece extends Command {
   private final Swerve m_swerve; // The subsystem needed to control the Swerve.
   private final Arm m_arm; // The subsystem needed to control the arm.
   private SwerveDriveKinematics m_kinematics; // The kinematics we want to set to the wheels.

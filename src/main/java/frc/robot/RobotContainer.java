@@ -3,12 +3,13 @@ package frc.robot;
 import java.util.HashMap;
 import java.util.List;
 
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.auto.PIDConstants;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
-import com.pathplanner.lib.server.PathPlannerServer;
+// import com.pathplanner.lib.path.PathConstraints;
+// import com.pathplanner.lib.path.PathPlannerPath;
+// import com.pathplanner.lib.PathPlanner;
+// import com.pathplanner.lib.path.PathPlannerTrajectory;
+// import com.pathplanner.lib.auto.AutoBuilder;
+// import com.pathplanner.lib.auto.PIDConstants;
+// import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -50,25 +51,25 @@ public class RobotContainer {
     private final Joystick m_driver = new Joystick(Constants.kDriverPort);
     private final Joystick m_operator = new Joystick(Constants.kOperatorPort);
 
-    private final SwerveAutoBuilder m_autoBuilder;
+    // private final AutoBuilder m_autoBuilder;
     private final HashMap<String, Command> m_eventMap = new HashMap<>();
 
     private final ShuffleboardTab m_tab = Shuffleboard.getTab("Main");
-    private final SendableChooser<CommandBase> m_autoChooser2 = new SendableChooser<>();
+    private final SendableChooser<Command> m_autoChooser2 = new SendableChooser<>();
     // private final SendableChooser<List<PathPlannerTrajectory>> m_autoChooser = new SendableChooser<>();
 
 
-    // private final List<PathPlannerTrajectory> m_testPath = PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3));
-    private final List<PathPlannerTrajectory> m_transPath = PathPlanner.loadPathGroup("Translation Path", new PathConstraints(4, 3));
-    private final List<PathPlannerTrajectory> m_rotPath = PathPlanner.loadPathGroup("Rotation Path", new PathConstraints(1, 1));
-    // private final List<PathPlannerTrajectory> m_dancePaths = PathPlanner.loadPathGroup("Dance Path", new PathConstraints(3, 3));
-    private final List<PathPlannerTrajectory> m_oneLong = PathPlanner.loadPathGroup("One Peice Long Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
-    private final List<PathPlannerTrajectory> m_oneShort = PathPlanner.loadPathGroup("One Peice Short Path", new PathConstraints(2, 1));
-    // private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(2, 1), new PathConstraints(2, 2), new PathConstraints(1.75, 2));
-    private final List<PathPlannerTrajectory> m_oneBal = PathPlanner.loadPathGroup("One Cone Balance", new PathConstraints(2, 2), new PathConstraints(1.25, 2), new PathConstraints(0.65, 2));
-    private final List<PathPlannerTrajectory> m_cubeTwoShort = PathPlanner.loadPathGroup("New Two Short", new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(1, 2),new PathConstraints(2, 2));
-    private final List<PathPlannerTrajectory> m_fullBalance = PathPlanner.loadPathGroup("New Balance", new PathConstraints(1, 1));
-    private final List<PathPlannerTrajectory> m_moBalance = PathPlanner.loadPathGroup("New Mo Balance", new PathConstraints(2, 1));
+    // // private final List<PathPlannerTrajectory> m_testPath = PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3));
+    // private final List<PathPlannerTrajectory> m_transPath = PathPlannerPath.loadPathGroup("Translation Path", new PathConstraints(4, 3));
+    // private final List<PathPlannerTrajectory> m_rotPath = PathPlannerPath.loadPathGroup("Rotation Path", new PathConstraints(1, 1));
+    // // private final List<PathPlannerTrajectory> m_dancePaths = PathPlanner.loadPathGroup("Dance Path", new PathConstraints(3, 3));
+    // private final List<PathPlannerTrajectory> m_oneLong = PathPlannerPath.loadPathGroup("One Peice Long Path", new PathConstraints(1, 1), new PathConstraints(3, 2));
+    // private final List<PathPlannerTrajectory> m_oneShort = PathPlannerPath.loadPathGroup("One Peice Short Path", new PathConstraints(2, 1));
+    // // private final List<PathPlannerTrajectory> m_twoShort = PathPlanner.loadPathGroup("Two Peice Short Path", new PathConstraints(2, 1), new PathConstraints(2, 2), new PathConstraints(1.75, 2));
+    // private final List<PathPlannerTrajectory> m_oneBal = PathPlannerPath.loadPathGroup("One Cone Balance", new PathConstraints(2, 2), new PathConstraints(1.25, 2), new PathConstraints(0.65, 2));
+    // private final List<PathPlannerTrajectory> m_cubeTwoShort = PathPlannerPath.loadPathGroup("New Two Short", new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(1, 2),new PathConstraints(2, 2));
+    // private final List<PathPlannerTrajectory> m_fullBalance = PathPlannerPath.loadPathGroup("New Balance", new PathConstraints(1, 1));
+    // private final List<PathPlannerTrajectory> m_moBalance = PathPlannerPath.loadPathGroup("New Mo Balance", new PathConstraints(2, 1));
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -104,37 +105,37 @@ public class RobotContainer {
 
         m_led.setDefaultCommand(new Lights(m_led));
 
-        m_autoBuilder = new SwerveAutoBuilder(
-            m_swerve::getPose,
-            m_swerve::resetOdometry,
-            SwerveConstants.swerveKinematics,
-            new PIDConstants(17, 0, 0),
-            // new PIDConstants(8.5, 0, 0),
-            new PIDConstants(6, 0, 0),
-            m_swerve::setModuleStates,
-            m_eventMap,
-            true,
-            m_swerve
-        );
+        // m_autoBuilder = new SwerveAutoBuilder(
+        //     m_swerve::getPose,
+        //     m_swerve::resetOdometry,
+        //     SwerveConstants.swerveKinematics,
+        //     new PIDConstants(17, 0, 0),
+        //     // new PIDConstants(8.5, 0, 0),
+        //     new PIDConstants(6, 0, 0),
+        //     m_swerve::setModuleStates,
+        //     m_eventMap,
+        //     true,
+        //     m_swerve
+        // );
         
         m_tab.add("Auton List", m_autoChooser2).withPosition(3, 2).withSize(2, 1).withWidget(BuiltInWidgets.kComboBoxChooser);
         // m_autoChooser.setDefaultOption("Test Path", m_testPath);
-        m_autoChooser2.addOption("Translation Path", m_autoBuilder.fullAuto(m_transPath));
-        m_autoChooser2.addOption("Rotation Path", m_autoBuilder.fullAuto(m_rotPath));
-        // m_autoChooser.addOption("Dance Path", m_dancePaths);
-        m_autoChooser2.addOption("One Peice Long", m_autoBuilder.fullAuto(m_oneLong));
-        m_autoChooser2.addOption("One Peice Short", m_autoBuilder.fullAuto(m_oneShort));
-        // m_autoChooser2.addOption("Two Short", m_autoBuilder.fullAuto(m_twoShort));
-        // m_autoChooser.addOption("Two Short", m_twoShort);
-        // m_autoChooser.addOption("Two Long", m_twoLong);
-        // m_autoChooser.setDefaultOption("One & Balance", m_oneBal);
-        m_autoChooser2.setDefaultOption("One & Balance", m_autoBuilder.fullAuto(m_oneBal).andThen(new Balance(m_swerve)));
-        m_autoChooser2.addOption("New Balance", m_autoBuilder.fullAuto(m_fullBalance).andThen(new NewBalance(m_swerve)));
-        m_autoChooser2.addOption("New Mo Balance", m_autoBuilder.fullAuto(m_moBalance).andThen(new NewBalance(m_swerve)));
-        m_autoChooser2.addOption("Cube 2 Short", m_autoBuilder.fullAuto(m_cubeTwoShort));
-        m_autoChooser2.addOption("Do Nothing", new WaitCommand(15));
+        // m_autoChooser2.addOption("Translation Path", m_autoBuilder.fullAuto(m_transPath));
+        // m_autoChooser2.addOption("Rotation Path", m_autoBuilder.fullAuto(m_rotPath));
+        // // m_autoChooser.addOption("Dance Path", m_dancePaths);
+        // m_autoChooser2.addOption("One Peice Long", m_autoBuilder.fullAuto(m_oneLong));
+        // m_autoChooser2.addOption("One Peice Short", m_autoBuilder.fullAuto(m_oneShort));
+        // // m_autoChooser2.addOption("Two Short", m_autoBuilder.fullAuto(m_twoShort));
+        // // m_autoChooser.addOption("Two Short", m_twoShort);
+        // // m_autoChooser.addOption("Two Long", m_twoLong);
+        // // m_autoChooser.setDefaultOption("One & Balance", m_oneBal);
+        // m_autoChooser2.setDefaultOption("One & Balance", m_autoBuilder.fullAuto(m_oneBal).andThen(new Balance(m_swerve)));
+        // m_autoChooser2.addOption("New Balance", m_autoBuilder.fullAuto(m_fullBalance).andThen(new NewBalance(m_swerve)));
+        // m_autoChooser2.addOption("New Mo Balance", m_autoBuilder.fullAuto(m_moBalance).andThen(new NewBalance(m_swerve)));
+        // m_autoChooser2.addOption("Cube 2 Short", m_autoBuilder.fullAuto(m_cubeTwoShort));
+        m_autoChooser2.setDefaultOption("Do Nothing", new WaitCommand(15));
 
-        PathPlannerServer.startServer(5811);
+        // PathPlannerServer.startServer(5811);
 
         // Configure the button bindings
         configureButtonBindings();

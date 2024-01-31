@@ -9,10 +9,10 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 
-public class TeleopSwerve extends CommandBase {    
+public class TeleopSwerve extends Command {    
     private DoubleSupplier m_translation; // Used to store the Translation value.
     private DoubleSupplier m_strafe; // Used to store the Strafe value.
     private DoubleSupplier m_rotation; // Used to store the Rotation value.

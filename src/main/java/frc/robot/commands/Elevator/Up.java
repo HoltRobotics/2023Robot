@@ -4,11 +4,11 @@
 
 package frc.robot.commands.Elevator;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.*;
 import frc.robot.subsystems.ElevatorProfiled;
 
-public class Up extends CommandBase {
+public class Up extends Command {
   private final ElevatorProfiled m_lift; // Subsystem needed to control the elevator.
   private boolean m_pastLimit = false; // Used to track if the elevator goes past its limit.
 
