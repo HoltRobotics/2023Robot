@@ -8,11 +8,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
-import com.ctre.phoenix6.hardware.Pigeon2;
-
-// import com.ctre.phoenix.sensors.Pigeon2;
-// import com.pathplanner.lib.PathPlannerTrajectory;
-// import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+import com.ctre.phoenix.sensors.Pigeon2;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -35,7 +33,7 @@ public class Swerve extends SubsystemBase {
     
     public Swerve() {
         m_gyro = new Pigeon2(Constants.SwerveConstants.pigeonID);
-        // m_gyro.configFactoryDefault();
+        m_gyro.configFactoryDefault();
         zeroGyro();
 
         m_swerveMods = new SwerveModule[] {
@@ -92,26 +90,26 @@ public class Swerve extends SubsystemBase {
         m_swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
     }
 
-    // public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath, boolean isRed) {
-    //     return new SequentialCommandGroup(
-    //         new InstantCommand(() -> {
-    //             if(isFirstPath) {
-    //                 resetOdometry(traj.getInitialHolonomicPose());
-    //             }
-    //         }),
-    //         new PPSwerveControllerCommand(
-    //             traj,
-    //             this::getPose,
-    //             Constants.SwerveConstants.swerveKinematics,
-    //             new PIDController(0, 0, 0),
-    //             new PIDController(0, 0, 0),
-    //             new PIDController(0, 0, 0),
-    //             this::setModuleStates,
-    //             isRed,
-    //             this
-    //         )
-    //     );
-    // }
+    public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath, boolean isRed) {
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> {
+                if(isFirstPath) {
+                    resetOdometry(traj.getInitialHolonomicPose());
+                }
+            }),
+            new PPSwerveControllerCommand(
+                traj,
+                this::getPose,
+                Constants.SwerveConstants.swerveKinematics,
+                new PIDController(0, 0, 0),
+                new PIDController(0, 0, 0),
+                new PIDController(0, 0, 0),
+                this::setModuleStates,
+                isRed,
+                this
+            )
+        );
+    }
 
     public SwerveModuleState[] getModuleStates(){
         SwerveModuleState[] states = new SwerveModuleState[4];
@@ -152,15 +150,15 @@ public class Swerve extends SubsystemBase {
     }
 
     public Rotation2d getYaw() {
-        return (Constants.SwerveConstants.invertGyro) ? Rotation2d.fromDegrees(360 - m_gyro.getYaw().getValueAsDouble()) : Rotation2d.fromDegrees(m_gyro.getYaw().getValueAsDouble());
+        return (Constants.SwerveConstants.invertGyro) ? Rotation2d.fromDegrees(360 - m_gyro.getYaw()) : Rotation2d.fromDegrees(m_gyro.getYaw());
     }
 
     public double getPitch() {
-        return m_gyro.getRoll().getValueAsDouble();
+        return m_gyro.getRoll();
     }
 
     public double getRoll() {
-        return m_gyro.getPitch().getValueAsDouble();
+        return m_gyro.getPitch();
     }
 
     public void stopDrive() {

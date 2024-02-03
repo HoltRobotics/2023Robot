@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.Optional;
 import java.util.Random;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -24,7 +23,8 @@ public class LEDs extends SubsystemBase {
   }
   
   // Sets the robot to the alliance color
-  public void setColorTeleOP(Optional<Alliance> color){
+  public void setColorTeleOP(Alliance color){
+
     // System.out.println(rand);
     m_blinkin.set(-0.99);
     // if(color == Alliance.Blue){
@@ -50,7 +50,7 @@ public class LEDs extends SubsystemBase {
   }
 
   // Sets the robot to the alliance color but blinking
-  public void setColorAuton(Optional<Alliance> color){
+  public void setColorAuton(Alliance color){
     // double rand = m_rand.nextInt(10 - 1 + 1) + 1;
     m_blinkin.set(-0.99);
     // if(color == Alliance.Blue){

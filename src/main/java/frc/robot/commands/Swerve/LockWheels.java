@@ -6,10 +6,10 @@ package frc.robot.commands.Swerve;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Swerve;
 
-public class LockWheels extends Command {
+public class LockWheels extends CommandBase {
   private final Swerve m_swerve; // The subsystem needed to control the Swerve.
   private final SwerveModuleState[] m_states = { // The states of each of the wheels that we want to set.
     new SwerveModuleState(0, Rotation2d.fromDegrees(45)), // Front Left

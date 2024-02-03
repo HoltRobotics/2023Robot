@@ -4,9 +4,9 @@
 
 package frc.robot.commands.Swerve;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ToggleSlowDrive extends Command {
+public class ToggleSlowDrive extends CommandBase {
   /** Creates a new ToggleSlowDrive. */
   public ToggleSlowDrive() {
     // Use addRequirements() here to declare subsystem dependencies.
